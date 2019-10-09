@@ -99,6 +99,17 @@ public class CommonResult {
         return WebResult.create(code).msg(msg);
     }
 
+    /**
+     * 转换成webresult视图
+     * @return
+     */
+    public IView toJsonView() {
+        if (attrs != null) {
+            return WebResult.create(code).msg(msg).attrs(attrs).toJSON();
+        }
+        return WebResult.create(code).msg(msg).toJSON();
+    }
+
     public int code() {
         return code;
     }
