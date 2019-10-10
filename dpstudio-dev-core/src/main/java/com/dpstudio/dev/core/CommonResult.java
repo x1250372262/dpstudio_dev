@@ -48,10 +48,19 @@ public class CommonResult {
      * @param page
      * @return
      */
-    public static IView listView(IResultSet<?> resultSet,int page){
+    public static IView listView(IResultSet resultSet,int page){
         return WebResult.succeed().data(resultSet.getResultData())
                 .attr("total", resultSet.getRecordCount())
                 .attr("page", page).toJSON();
+    }
+
+    /**
+     * 查询列表
+     * @param resultSet
+     * @return
+     */
+    public static IView listView(IResultSet resultSet){
+        return WebResult.succeed().data(resultSet.getResultData()).toJSON();
     }
 
     /**
