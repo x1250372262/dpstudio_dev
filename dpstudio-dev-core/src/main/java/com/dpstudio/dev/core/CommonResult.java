@@ -73,6 +73,14 @@ public class CommonResult {
     }
 
     /**
+     * 返回成功 并且带map参数
+     * @return
+     */
+    public static CommonResult mapResult(Map<String, Object> attrs) {
+        return CommonResult.successResult().attrs(attrs);
+    }
+
+    /**
      * 失败result
      * @return
      */
