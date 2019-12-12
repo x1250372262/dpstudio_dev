@@ -7,11 +7,11 @@
     <parent>
         <groupId>com.dpstudio.dev</groupId>
         <artifactId>dpstudio-dev</artifactId>
-        <version>1.0.0</version>
+        <version>1.0.1</version>
     </parent>
 
     <artifactId>dpstudio-dev-excel</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>dpstudio-dev-excel</name>

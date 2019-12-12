@@ -69,7 +69,7 @@ public class CommonResult {
      */
     public static CommonResult successResult() {
         return CommonResult.create(CommonCode.COMMON_OPTION_SUCCESS.getCode())
-                .msg(CommonCode.COMMON_OPTION_SUCCESS.getMessage());
+                .msg(CommonCode.COMMON_OPTION_SUCCESS.getMsg());
     }
 
     /**
@@ -86,7 +86,7 @@ public class CommonResult {
      */
     public static CommonResult errorResult() {
         return CommonResult.create(CommonCode.COMMON_OPTION_ERROR.getCode())
-                .msg(CommonCode.COMMON_OPTION_ERROR.getMessage());
+                .msg(CommonCode.COMMON_OPTION_ERROR.getMsg());
     }
 
     /**
