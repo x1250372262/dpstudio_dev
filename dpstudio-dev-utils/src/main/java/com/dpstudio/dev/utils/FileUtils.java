@@ -17,11 +17,11 @@ public class FileUtils {
      * @return 修改并创建的目标文件夹路径
      */
     public static String fixAndMkDir(String dir) {
-        File _file = new File(dir);
-        if (!_file.exists()) {
-            _file.mkdirs();
+        File file = new File(dir);
+        if (!file.exists()) {
+            file.mkdirs();
         }
-        return fixSeparator(_file.getPath());
+        return fixSeparator(file.getPath());
     }
 
     /**
