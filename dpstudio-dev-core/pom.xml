@@ -58,9 +58,5 @@
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-persistence-jdbc</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
     </dependencies>
 </project>

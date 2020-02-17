@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>dpstudio-dev</artifactId>
+        <groupId>com.dpstudio.dev</groupId>
+        <version>1.0.1</version>
+    </parent>
+
+    <modelVersion>4.0.0</modelVersion>
+    <version>1.0.0</version>
+    <artifactId>dpstudio-dev-doc</artifactId>
+    <packaging>jar</packaging>
+
+    <name>dpstudio-dev-doc</name>
+    <url>http://www.ymate.net/</url>
+    <description>文档生成工具</description>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.javaparser</groupId>
+            <artifactId>javaparser-core</artifactId>
+            <version>3.14.16</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.10.0</version>
+        </dependency>
+
+        <!--velocity-->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+            <optional>true</optional>
+        </dependency>
+
+        <!-- 工具 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
+        </dependency>
+
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.platform</groupId>
+            <artifactId>ymate-platform-webmvc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.platform</groupId>
+            <artifactId>ymate-platform-log-jcl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.platform</groupId>
+            <artifactId>ymate-platform-log-slf4j</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.platform</groupId>
+            <artifactId>ymate-platform-configuration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.framework</groupId>
+            <artifactId>ymate-framework-commons</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.framework</groupId>
+            <artifactId>ymate-framework-unpack</artifactId>
+            <version>2.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.framework</groupId>
+            <artifactId>ymate-framework-core</artifactId>
+        </dependency>
+    </dependencies>
+</project>

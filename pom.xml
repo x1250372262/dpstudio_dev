@@ -11,6 +11,7 @@
         <module>dpstudio-dev-core</module>
         <module>dpstudio-dev-utils</module>
         <module>dpstudio-dev-excel</module>
+        <module>dpstudio-dev-doc</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -115,11 +116,6 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>4.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>1.18.8</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
