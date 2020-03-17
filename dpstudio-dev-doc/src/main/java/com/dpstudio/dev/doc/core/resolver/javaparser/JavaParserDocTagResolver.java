@@ -59,9 +59,6 @@ public class JavaParserDocTagResolver implements DocTagResolver {
                 TypeDeclaration typeDeclaration = cu.getTypes().get(0);
                 final Class<?> moduleType = Class.forName(cu.getPackageDeclaration().get().getNameAsString() + "." + typeDeclaration.getNameAsString());
                 IgnoreApi ignoreApi = moduleType.getAnnotation(IgnoreApi.class);
-                if(ignoreApi!=null){
-
-                }
                 if (ignoreApi == null) {
                     //缓存"包名+类名"跟对应的.java文件的位置映射关系
                     JavaSourceFileManager.getInstance().put(moduleType.getName(), file);

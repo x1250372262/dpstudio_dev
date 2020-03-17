@@ -20,12 +20,12 @@ import java.util.Set;
 public class MarkdownFormat implements Format {
 
 
-    private VelocityTemplater templater = new VelocityTemplater("dps/api/ymp/format/api.vm");
+    private VelocityTemplater templater = new VelocityTemplater("com/dpstudio/dev/doc/ymp/format/markdown.vm");
 
     @Override
-    public String format(ApiDoc apiDoc) {
+    public String format(ApiResult apiResult) {
         StringBuilder sb = new StringBuilder();
-        for (ApiModule apiModule : apiDoc.getApiModules()) {
+        for (ApiModule apiModule : apiResult.getApiModuleList()) {
             sb.append(format(apiModule)).append("\n\n");
         }
         return sb.toString();

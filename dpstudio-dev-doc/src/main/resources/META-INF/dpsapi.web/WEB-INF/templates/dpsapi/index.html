@@ -33,7 +33,7 @@
 
 
     <div class="app-menu left-menu" id="left-menu">
-        <el-tree ref="apiTree" highlight-current default-expand-all :data="reverseMenus" :props="defaultProps"
+        <el-tree ref="apiTree" highlight-current  :data="reverseMenus" :props="defaultProps"
                  @current-change="checkChangeHandle" :filter-node-method="filterNode"></el-tree>
     </div>
     <div id="main" v-if="currentApiAction != null" @click="hideTest">
@@ -193,6 +193,7 @@
                 radio2: '1',
                 testRespbody: '',
                 apiModules: [],
+                apiInfoList: [],
                 testForm : {},
                 isOnline : true,
                 testClassName : 'test-off',
@@ -203,7 +204,7 @@
                 request : {
                     type : 'GET'
                 },
-                title : 'XDoc 接口文档',
+                title : '在线文档',
                 version: 'v1.0',
                 currentApiModule: null,
                 currentApiAction: null
@@ -239,24 +240,38 @@
             reverseMenus() {
                 var menu = [];
                 var id = 1;
-                for (var i = 0; i < this.apiModules.length; i++) {
-                    var apiModule = this.apiModules[i];
+
+                for (var i = 0; i < this.apiInfoList.length; i++) {
+                    var apiInfo = this.apiInfoList[i];
 
                     var children = [];
 
-                    for (var j = 0; j < apiModule.apiActions.length; j++) {
-                        var apiAction = apiModule.apiActions[j];
-                        apiAction.id = id++;//赋值一个ID
+                    for (var j = 0; j < apiInfo.apiModuleList.length; j++) {
+                        var apiModule = apiInfo.apiModuleList[j];
+                        apiModule.id = id++;//赋值一个ID
+
+                        var aid = 1;
+                        var child = []
+                        for(var k = 0;k<apiModule.apiActions.length;k++){
+                            var apiActions = apiModule.apiActions[k];
+                            apiActions.id = aid++;//赋值一个ID
+                            child.push({
+                                label: apiActions.comment,
+                                id: apiActions.id
+                            });
+                        }
+
                         children.push({
-                            label: apiAction.title,
-                            id: apiAction.id
+                            label: apiModule.comment,
+                            id: apiModule.id,
+                            children:child
                         });
                     }
 
                     var item = {
-                        label: apiModule.comment,
+                        label: apiInfo.docName,
                         children: children,
-                        data: apiAction
+                        data: apiModule
                     };
                     menu.push(item);
                 }
@@ -366,7 +381,8 @@
                 if (data.properties && data.properties.version != null) {
                     this.version = data.properties.version;
                 }
-                this.apiModules = data.apiModules;
+                this.apiModules = data.apiInfoList[0].apiModuleList;
+                this.apiInfoList = data.apiInfoList;
                 if (this.apiModules.length > 0 && this.apiModules[0].apiActions.length > 0) {
                     this.currentApiModule = this.apiModules[0];
                     this.currentApiAction = this.apiModules[0].apiActions[0];

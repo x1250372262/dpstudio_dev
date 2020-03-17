@@ -1,23 +1,19 @@
 package com.dpstudio.dev.doc.core;
 
-import com.dpstudio.dev.doc.core.format.Format;
 import com.dpstudio.dev.doc.core.framework.Framework;
 import com.dpstudio.dev.doc.core.model.ApiDoc;
 import com.dpstudio.dev.doc.core.model.ApiModule;
 import com.dpstudio.dev.doc.core.resolver.DocTagResolver;
 import com.dpstudio.dev.doc.core.resolver.JavaSourceFileManager;
 import com.dpstudio.dev.doc.core.resolver.javaparser.JavaParserDocTagResolver;
-import org.apache.commons.io.IOUtils;
+import com.dpstudio.dev.doc.web.ApiParams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author 徐建鹏
@@ -75,7 +71,7 @@ public class DpstudioDoc {
      *
      * @return API接口数据
      */
-    public ApiDoc resolve() {
+    public ApiDoc resolve(ApiParams apiParams) {
         List<String> files = new ArrayList<>();
         for (File dir : this.srcDirs) {
 
@@ -90,7 +86,7 @@ public class DpstudioDoc {
             }
 
             logger.info("开始解析源码路径:{}", dir.getAbsolutePath());
-            files.addAll(JavaSourceFileManager.getInstance().getAllJavaFiles(dir));
+            files.addAll(JavaSourceFileManager.getInstance().getAllJavaFiles(dir,apiParams.fileName()));
         }
 
         List<ApiModule> apiModules = this.docTagResolver.resolve(files, framework);
@@ -99,41 +95,6 @@ public class DpstudioDoc {
             apiModules = framework.extend(apiModules);
         }
         return new ApiDoc(apiModules);
-    }
-
-    /**
-     * 构建接口文档
-     *
-     * @param out    输出位置
-     * @param format 文档格式
-     */
-    public void build(OutputStream out, Format format) {
-        this.build(out, format, null);
-    }
-
-    /**
-     * 构建接口文档
-     *
-     * @param out        输出位置
-     * @param format     文档格式
-     * @param properties 文档属性
-     */
-    public void build(OutputStream out, Format format, Map<String, Object> properties) {
-        ApiDoc apiDoc = this.resolve();
-        if (properties != null) {
-            apiDoc.getProperties().putAll(properties);
-        }
-
-        if (apiDoc.getApiModules() != null && out != null && format != null) {
-            String s = format.format(apiDoc);
-            try {
-                IOUtils.write(s, out, CHARSET);
-            } catch (IOException e) {
-                logger.error("接口文档写入文件失败", e);
-            } finally {
-                IOUtils.closeQuietly(out);
-            }
-        }
     }
 
 

@@ -1,10 +1,9 @@
 package com.dpstudio.dev.doc.core.resolver;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author 徐建鹏
@@ -29,18 +28,28 @@ public class JavaSourceFileManager {
      * @param file 文件目录
      * @return 所有java文件
      */
-    public List<String> getAllJavaFiles(File file) {
+    public List<String> getAllJavaFiles(File file, String fileName) {
         if (!file.exists()) {
             return new ArrayList(0);
         }
-
         if (file.isFile()) {
-            if (file.getName().lastIndexOf(".java") > 0) {
-                List list = new ArrayList(1);
-                list.add(file.getAbsolutePath());
+            if (file.getName().lastIndexOf(".java") >= 0) {
+                List<String> fileFilters = new ArrayList<>();
+                if (StringUtils.isNotBlank(fileName)) {
+                    fileFilters.addAll(Arrays.asList(fileName.split(",")));
+                }
+                List list = new ArrayList();
+                boolean flag = false;
+                for (String fileFilter : fileFilters) {
+                    if (file.getName().lastIndexOf(fileFilter) >= 0) {
+                        flag = true;
+                        break;
+                    }
+                }
+                if (flag) {
+                    list.add(file.getAbsolutePath());
+                }
                 return list;
-            } else {
-                return new ArrayList(0);
             }
         }
 
@@ -49,7 +58,7 @@ public class JavaSourceFileManager {
             File[] files = file.listFiles();
             if (files != null) {
                 for (File f : files) {
-                    list.addAll(getAllJavaFiles(f));
+                    list.addAll(getAllJavaFiles(f, fileName));
                 }
             }
         }
