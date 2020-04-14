@@ -12,6 +12,7 @@
         <module>dpstudio-dev-utils</module>
         <module>dpstudio-dev-excel</module>
         <module>dpstudio-dev-doc</module>
+        <module>dpstudio-dev-wx-miniprogram</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -67,6 +68,11 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>net.ymate.platform</groupId>
+                <artifactId>ymate-platform-core</artifactId>
+                <version>${ymate.platform.version}</version>
+            </dependency>
             <dependency>
                 <groupId>net.ymate.platform</groupId>
                 <artifactId>ymate-platform-configuration</artifactId>
