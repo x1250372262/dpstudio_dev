@@ -13,6 +13,7 @@
         <module>dpstudio-dev-excel</module>
         <module>dpstudio-dev-doc</module>
         <module>dpstudio-dev-wx-miniprogram</module>
+        <module>dpstudio-dev-captcha</module>
     </modules>
     <packaging>pom</packaging>
 

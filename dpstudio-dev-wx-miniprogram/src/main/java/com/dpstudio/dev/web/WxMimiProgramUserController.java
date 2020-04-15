@@ -17,7 +17,7 @@ import net.ymate.platform.webmvc.view.IView;
  * @Description: 小程序用户接口
  */
 @Controller
-@RequestMapping("/wx/mimiprogram/user")
+@RequestMapping("/dpstudio/wx/mimiprogram/user")
 public class WxMimiProgramUserController {
 
     @Inject

@@ -14,7 +14,7 @@ import net.ymate.platform.core.YMP;
  */
 public interface IWxMimiProgram {
 
-    String MODULE_NAME = "wx_mimiprogram";
+    String MODULE_NAME = "dpstudio.wx_mimiprogram";
 
     /**
      * @return 返回所属YMP框架管理器实例
