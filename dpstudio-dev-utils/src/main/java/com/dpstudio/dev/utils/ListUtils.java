@@ -44,7 +44,6 @@ public class ListUtils {
         return bigResult;
 
     }
-
     /**
      * list 集合分组
      *
@@ -91,4 +90,6 @@ public class ListUtils {
     public interface GroupBy<K, V> {
         K groupBy(V row);
     }
+
+
 }

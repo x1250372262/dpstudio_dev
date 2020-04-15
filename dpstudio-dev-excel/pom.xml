@@ -47,5 +47,10 @@
             <groupId>org.jxls</groupId>
             <artifactId>jxls-reader</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.dpstudio.dev</groupId>
+            <artifactId>dpstudio-dev-utils</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 </project>

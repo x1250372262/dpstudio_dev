@@ -6,7 +6,7 @@ import java.io.File;
  * @Author: 徐建鹏.
  * @Date: 2018/3/26.
  * @Time: 15:04.
- * @Description: 文件工具类
+ * @Description:
  */
 public class FileUtils {
 
@@ -17,11 +17,11 @@ public class FileUtils {
      * @return 修改并创建的目标文件夹路径
      */
     public static String fixAndMkDir(String dir) {
-        File file = new File(dir);
-        if (!file.exists()) {
-            file.mkdirs();
+        File _file = new File(dir);
+        if (!_file.exists()) {
+            _file.mkdirs();
         }
-        return fixSeparator(file.getPath());
+        return fixSeparator(_file.getPath());
     }
 
     /**
