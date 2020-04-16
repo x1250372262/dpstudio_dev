@@ -7,10 +7,25 @@ import java.lang.annotation.*;
 @Documented
 public @interface Query {
 
-    String prefix() default "";
+    /**
+     * 表名
+     *
+     * @return
+     */
+    String tableName() default "";
 
-    String from() default "";
-
+    /**
+     * 别名
+     *
+     * @return
+     */
     String alias() default "";
+
+
+    /**
+     * join集合
+     * @return
+     */
+    Join[] joins() default {};
 
 }

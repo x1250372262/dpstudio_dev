@@ -24,10 +24,6 @@
         </dependency>
         <dependency>
             <groupId>net.ymate.platform</groupId>
-            <artifactId>ymate-platform-webmvc</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-core</artifactId>
             <version>${ymate.platform.version}</version>
         </dependency>
@@ -42,6 +38,14 @@
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-configuration</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.platform</groupId>
+            <artifactId>ymate-platform-persistence</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.platform</groupId>
+            <artifactId>ymate-platform-persistence-jdbc</artifactId>
         </dependency>
         <dependency>
             <groupId>net.ymate.framework</groupId>
