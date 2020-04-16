@@ -222,6 +222,10 @@ public class SelectHelper {
         Select select = Select.create(prefix, query.tableName(), query.alias());
         select.field(createFields());
         select = createJoin(select, query);
+        net.ymate.platform.persistence.jdbc.query.Where where = createWhere(null);
+        if (where != null) {
+            select.where(where);
+        }
         return select;
     }
 }

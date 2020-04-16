@@ -11,7 +11,7 @@ public @interface OrderBy {
 
     String dbFiled() default "";
 
-    TYPE type();
+    TYPE type() default TYPE.ASC;
 
     enum TYPE {
         ASC,DESC

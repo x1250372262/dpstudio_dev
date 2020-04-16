@@ -23,7 +23,7 @@ public class SqlHelper<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public <T> IResultSet<T> query(Params params, Page page) throws Exception {
+    public <T> IResultSet<T> find(Params params, Page page) throws Exception {
         return JDBC.get().openSession(session -> {
             String prefix = session.getConnectionHolder().getDataSourceCfgMeta().getTablePrefix();
             Select select = SelectHelper.init(cls, prefix).create(params);
@@ -36,7 +36,7 @@ public class SqlHelper<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public IResultSet<T> query(Params params) throws Exception {
+    public IResultSet<T> find(Params params) throws Exception {
         return JDBC.get().openSession(session -> {
             String prefix = session.getConnectionHolder().getDataSourceCfgMeta().getTablePrefix();
             Select select = SelectHelper.init(cls, prefix).create(params);
@@ -46,7 +46,7 @@ public class SqlHelper<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public IResultSet<T> query(Page page) throws Exception {
+    public IResultSet<T> find(Page page) throws Exception {
         return JDBC.get().openSession(session -> {
             String prefix = session.getConnectionHolder().getDataSourceCfgMeta().getTablePrefix();
             Select select = SelectHelper.init(cls, prefix).create();
@@ -59,11 +59,33 @@ public class SqlHelper<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public IResultSet<T> query() throws Exception {
+    public IResultSet<T> find() throws Exception {
         return JDBC.get().openSession(session -> {
             String prefix = session.getConnectionHolder().getDataSourceCfgMeta().getTablePrefix();
             Select select = SelectHelper.init(cls, prefix).create();
             return session.find(SQL.create(select), new BeanResultSetHandler<T>((Class<T>) cls));
+
+        });
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public T findFirst() throws Exception {
+        return JDBC.get().openSession(session -> {
+            String prefix = session.getConnectionHolder().getDataSourceCfgMeta().getTablePrefix();
+            Select select = SelectHelper.init(cls, prefix).create();
+            return session.findFirst(SQL.create(select), new BeanResultSetHandler<T>((Class<T>) cls));
+
+        });
+    }
+
+
+    @SuppressWarnings("unchecked")
+    public T findFirst(Params params) throws Exception {
+        return JDBC.get().openSession(session -> {
+            String prefix = session.getConnectionHolder().getDataSourceCfgMeta().getTablePrefix();
+            Select select = SelectHelper.init(cls, prefix).create(params);
+            return session.findFirst(SQL.create(select), new BeanResultSetHandler<T>((Class<T>) cls));
 
         });
     }
