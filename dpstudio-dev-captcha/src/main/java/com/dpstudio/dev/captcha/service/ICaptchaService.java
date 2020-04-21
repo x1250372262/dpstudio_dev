@@ -17,8 +17,9 @@ public interface ICaptchaService {
      * @param type
      * @param scope
      * @param target
+     * @param target
      * @return
      * @throws Exception
      */
-    IView send(ICaptcha.Type type, String scope, String target) throws Exception;
+    IView send(ICaptcha.Type type, String scope, String target,String attach) throws Exception;
 }

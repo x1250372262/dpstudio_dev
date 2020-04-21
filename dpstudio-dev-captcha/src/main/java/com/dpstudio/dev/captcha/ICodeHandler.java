@@ -15,6 +15,6 @@ public interface ICodeHandler {
      * @return
      * @throws Exception
      */
-    CommonResult allowSendCode(String mobile) throws Exception;
+    CommonResult allowSendCode(String mobile,String attach) throws Exception;
 
 }

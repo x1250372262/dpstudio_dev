@@ -74,15 +74,18 @@ public class CaptchaController {
      *
      * @param scope  作用域标识，用于区分不同客户端及数据存储范围
      * @param mobile 手机号码
+     * @param attach 附加信息
      * @return 发送手机短信验证码
      * @throws Exception 可能产生的任何异常
      */
     @RequestMapping(value = "/sms_code", method = Type.HttpMethod.POST)
-    public IView sms(@VLength(max = 32) @RequestParam String scope,
+    public IView sms(@VLength(max = 32)
+                     @RequestParam String scope,
+                     @VRequired(msg = "手机号不能为空")
+                     @RequestParam String mobile,
+                     @RequestParam String attach) throws Exception {
 
-                     @VRequired @RequestParam String mobile) throws Exception {
-
-        return iCaptchaService.send(ICaptcha.Type.SMS, scope, mobile);
+        return iCaptchaService.send(ICaptcha.Type.SMS, scope, mobile,attach);
     }
 
     /**

@@ -39,13 +39,13 @@ public class CaptchaServiceImpl implements ICaptchaService {
     }
 
     @Override
-    public IView send(ICaptcha.Type type, String scope, String target) throws Exception {
-        ICodeHandler iCodeHandler = Captcha.get().getCodeHandler();
-        //可以发送验证码
-        if (iCodeHandler == null) {
-            return doCaptchaSend(type, scope, target);
-        } else {
-            CommonResult commonResult = iCodeHandler.allowSendCode(target);
+    public IView send(ICaptcha.Type type, String scope, String target,String attach) throws Exception {
+                ICodeHandler iCodeHandler = Captcha.get().getCodeHandler();
+                //可以发送验证码
+                if (iCodeHandler == null) {
+                    return doCaptchaSend(type, scope, target);
+                } else {
+                    CommonResult commonResult = iCodeHandler.allowSendCode(target,attach);
             if (commonResult == null || commonResult.code() == CommonCode.COMMON_OPTION_SUCCESS.getCode()) {
                 return doCaptchaSend(type, scope, target);
             }
