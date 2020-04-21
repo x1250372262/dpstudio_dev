@@ -11,13 +11,33 @@ import java.util.*;
 public class ListUtils {
 
     /**
+     * 判断集合是否为空
+     *
+     * @param list
+     * @return
+     */
+    public static boolean isEmpty(List<?> list) {
+        return list == null || list.isEmpty();
+    }
+
+    /**
+     * 判断集合是否不为空
+     *
+     * @param list
+     * @return
+     */
+    public static boolean isNotEmpty(List<?> list) {
+        return !isEmpty(list);
+    }
+
+    /**
      * 判断集合是否包含另一个集合
      *
      * @param bigResult   大集合
      * @param smallResult 小集合
      * @return
      */
-    public static Boolean checkSame(List<?> bigResult, List<?> smallResult) {
+    public static boolean checkSame(List<?> bigResult, List<?> smallResult) {
         return bigResult.containsAll(smallResult);
     }
 
@@ -112,7 +132,7 @@ public class ListUtils {
         int count = 0;
         int key = 0;
         while (count < list.size()) {
-            Map<String,  List<Object>> map = new HashMap<>();
+            Map<String, List<Object>> map = new HashMap<>();
             List<Object> wrapList = (List<Object>) list.subList(count, (count + quantity) > list.size() ? list.size() : count + quantity);
             map.put(key + "", wrapList);
             mapList.add(map);
