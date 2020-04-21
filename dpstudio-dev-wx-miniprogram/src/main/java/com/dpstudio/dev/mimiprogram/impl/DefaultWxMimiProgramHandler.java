@@ -11,6 +11,7 @@ import com.dpstudio.dev.mimiprogram.model.MimiprogramUser;
 import net.ymate.platform.core.util.DateTimeUtils;
 import net.ymate.platform.core.util.UUIDUtils;
 import net.ymate.platform.log.Logs;
+import net.ymate.platform.persistence.Fields;
 
 /**
  * @Author: 徐建鹏.
@@ -30,6 +31,7 @@ public class DefaultWxMimiProgramHandler implements IWxMimiProgramHandler {
                         .avatarUrl(wxUserInfo.getAvatarUrl())
                         .city(wxUserInfo.getCity())
                         .country(wxUserInfo.getCountry())
+                        .lastModifyTime(DateTimeUtils.currentTimeMillis())
                         .createTime(DateTimeUtils.currentTimeMillis())
                         .gender(wxUserInfo.getGender())
                         .nickName(wxUserInfo.getNickName())
@@ -37,12 +39,25 @@ public class DefaultWxMimiProgramHandler implements IWxMimiProgramHandler {
                         .province(wxUserInfo.getProvince())
                         .unionId(wxUserInfo.getUnionId())
                         .build().save();
+            } else {
+                mimiprogramUser.setAvatarUrl(wxUserInfo.getAvatarUrl());
+                mimiprogramUser.setCity(wxUserInfo.getCity());
+                mimiprogramUser.setCountry(wxUserInfo.getCountry());
+                mimiprogramUser.setLastModifyTime(DateTimeUtils.currentTimeMillis());
+                mimiprogramUser.setGender(wxUserInfo.getGender());
+                mimiprogramUser.setNickName(wxUserInfo.getNickName());
+                mimiprogramUser.setProvince(wxUserInfo.getProvince());
+                mimiprogramUser.setUnionId(wxUserInfo.getUnionId());
+                mimiprogramUser.update(Fields.create(MimiprogramUser.FIELDS.AVATAR_URL,MimiprogramUser.FIELDS.CITY,MimiprogramUser.FIELDS.COUNTRY,
+                        MimiprogramUser.FIELDS.LAST_MODIFY_TIME,MimiprogramUser.FIELDS.GENDER,MimiprogramUser.FIELDS.NICK_NAME,MimiprogramUser.FIELDS.PROVINCE,
+                        MimiprogramUser.FIELDS.UNION_ID));
             }
         } else {
             Logs.get().getLogger().debug("默认数据处理实现输出微信用户信息:" + JSONObject.toJSONString(wxUserInfo));
         }
 
-        return CommonResult.create(CommonCode.COMMON_OPTION_SUCCESS.getCode()).attr("login_key", wxUserInfo.getOpenId());
+        return CommonResult.create(CommonCode.COMMON_OPTION_SUCCESS.getCode())
+                .attr("login_key", wxUserInfo.getOpenId());
     }
 
     @Override
@@ -62,8 +77,21 @@ public class DefaultWxMimiProgramHandler implements IWxMimiProgramHandler {
                         .openId(wxUserInfo.getOpenId())
                         .province(wxUserInfo.getProvince())
                         .unionId(wxUserInfo.getUnionId())
-                        .photo(wxPhoneInfo.getPhoneNumber())
+                        .mobile(wxPhoneInfo.getPhoneNumber())
                         .build().save();
+            }else{
+                mimiprogramUser.setMobile(wxPhoneInfo.getPhoneNumber());
+                mimiprogramUser.setAvatarUrl(wxUserInfo.getAvatarUrl());
+                mimiprogramUser.setCity(wxUserInfo.getCity());
+                mimiprogramUser.setCountry(wxUserInfo.getCountry());
+                mimiprogramUser.setLastModifyTime(DateTimeUtils.currentTimeMillis());
+                mimiprogramUser.setGender(wxUserInfo.getGender());
+                mimiprogramUser.setNickName(wxUserInfo.getNickName());
+                mimiprogramUser.setProvince(wxUserInfo.getProvince());
+                mimiprogramUser.setUnionId(wxUserInfo.getUnionId());
+                mimiprogramUser.update(Fields.create(MimiprogramUser.FIELDS.AVATAR_URL,MimiprogramUser.FIELDS.CITY,MimiprogramUser.FIELDS.COUNTRY,
+                        MimiprogramUser.FIELDS.LAST_MODIFY_TIME,MimiprogramUser.FIELDS.GENDER,MimiprogramUser.FIELDS.NICK_NAME,MimiprogramUser.FIELDS.PROVINCE,
+                        MimiprogramUser.FIELDS.UNION_ID,MimiprogramUser.FIELDS.MOBILE));
             }
         } else {
             Logs.get().getLogger().debug("默认数据处理实现输出微信用户信息:" + JSONObject.toJSONString(wxUserInfo));

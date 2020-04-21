@@ -3,13 +3,13 @@
 <head>
     <meta charset="utf-8">
     <title>接口文档</title>
-    <link rel="stylesheet" href="/dpsapi/element-ui.css">
-    <script type="text/javascript" src="/dpsapi/vue.min.js"></script>
-    <script src="/dpsapi/element-ui.js"></script>
+    <link rel="stylesheet" href="/dpsapi/css/element-ui.css">
+    <script type="text/javascript" src="/dpsapi/js/vue.min.js"></script>
+    <script src="/dpsapi/js/element-ui.js"></script>
 </head>
 <body>
 <div id="app">
-    <input id="title" type="hidden" v-model="title" />
+    <input id="title" type="hidden" v-model="title"/>
     <div>
         <el-menu id="header" mode="horizontal">
             <p class="logo-text">{{title}}</p>
@@ -33,12 +33,12 @@
 
 
     <div class="app-menu left-menu" id="left-menu">
-        <el-tree ref="apiTree" highlight-current  :data="reverseMenus" :props="defaultProps"
+        <el-tree ref="apiTree" highlight-current :data="reverseMenus" :props="defaultProps"
                  @current-change="checkChangeHandle" :filter-node-method="filterNode"></el-tree>
     </div>
     <div id="main" v-if="currentApiAction != null" @click="hideTest">
         <h2 class="action-title">{{currentApiAction.title}}</h2>
-        <p class="comment">描述:  {{currentApiAction.comment}}</p>
+        <p class="comment">描述: {{currentApiAction.comment}}</p>
         <p class="uri" v-if="currentApiAction.methods.length > 0">只支持:
             <span v-for="m in currentApiAction.methods">{{m}} </span>
         </p>
@@ -83,6 +83,12 @@
         </el-collapse>
     </div>
 
+    <div id="main" v-if="currentApiAction == null" @click="hideTest">
+        <h2 class="action-title">不知道写点啥</h2>
+        <p class="comment">1.不知道干什么用的</p>
+        <p class="comment">2.就是现在这放着</p>
+    </div>
+
     <div id="test" :class="testClassName" v-if="currentApiAction != null && isOnline" @click="showTest">
         <h2>测试</h2>
         <br/>
@@ -108,7 +114,8 @@
             <h3>返回内容</h3>
             <br/>
             <div class="test-respbody">
-                <el-input ref="respbpdy" v-model="testRespbody" type="textarea" :rows="10" placeholder="返回内容..."></el-input>
+                <el-input ref="respbpdy" v-model="testRespbody" type="textarea" :rows="10"
+                          placeholder="返回内容..."></el-input>
             </div>
         </div>
     </div>
@@ -116,7 +123,7 @@
 
 <script>
     window.Http = {};
-    Http.ajax = function(url, params, method) {
+    Http.ajax = function (url, params, method) {
 
         var config = {
             method: method,
@@ -130,7 +137,7 @@
         var search = '';
         if (params) {
             for (var p in params) {
-                if (params[p] == null || typeof(params[p]) === 'undefined') {
+                if (params[p] == null || typeof (params[p]) === 'undefined') {
                     delete params[p];
                 } else {
                     search += p + '=' + encodeURIComponent(params[p]) + '&';
@@ -169,7 +176,7 @@
      * @param {String} url 请求地址
      * @param {object} params 请求参数
      */
-    Http.Post = function(url, params) {
+    Http.Post = function (url, params) {
         return Http.ajax(url, params, 'POST');
     }
 
@@ -179,7 +186,7 @@
      * @param {String} url 请求地址
      * @param {Object} params 请求参数
      */
-    Http.Get = function(url, params) {
+    Http.Get = function (url, params) {
         return Http.ajax(url, params, 'GET');
     }
 </script>
@@ -194,29 +201,30 @@
                 testRespbody: '',
                 apiModules: [],
                 apiInfoList: [],
-                testForm : {},
-                isOnline : true,
-                testClassName : 'test-off',
+                testForm: {},
+                isOnline: true,
+                testClassName: 'test-off',
                 defaultProps: {
                     children: 'children',
                     label: 'label'
                 },
-                request : {
-                    type : 'GET'
+                request: {
+                    type: 'GET'
                 },
-                title : '在线文档',
+                title: '在线文档',
                 version: 'v1.0',
                 currentApiModule: null,
-                currentApiAction: null
+                currentApiAction: null,
+                url : 'http://localhost:8083'
             }
         },
 
         mounted() {
             if (!window.apis) {
                 var self = this;
-                fetch('apis').then(function(response) {
+                fetch(this.url + '/dpstudio/api/v1/apis').then(function (response) {
                     return response.json();
-                }).then(function(data) {
+                }).then(function (data) {
                     // if (typeof(data) == 'string') {//兼容后端返回数据出问题
                     //     data = JSON.parse(data);
                     // }
@@ -227,7 +235,7 @@
                     if (titleEl && titleEl.value) {
                         document.title = titleEl.value;
                     }
-                }).catch(function(e) {
+                }).catch(function (e) {
                     self.$message.error('系统错误,请求api列表 接口失败');
                 });
             } else {
@@ -237,6 +245,11 @@
         },
 
         computed: {
+
+            /**
+             * 设置左右菜单数据
+             * @returns {[]}
+             */
             reverseMenus() {
                 var menu = [];
                 var id = 1;
@@ -252,9 +265,9 @@
 
                         var aid = 1;
                         var child = []
-                        for(var k = 0;k<apiModule.apiActions.length;k++){
+                        for (var k = 0; k < apiModule.apiActions.length; k++) {
                             var apiActions = apiModule.apiActions[k];
-                            apiActions.id = aid++;//赋值一个ID
+                            apiActions.id = id + '_' + aid++;//赋值一个ID
                             child.push({
                                 label: apiActions.comment,
                                 id: apiActions.id
@@ -264,7 +277,7 @@
                         children.push({
                             label: apiModule.comment,
                             id: apiModule.id,
-                            children:child
+                            children: child
                         });
                     }
 
@@ -306,7 +319,7 @@
                                     continue;
                                 }
                                 data.push({
-                                    paramName : fieldInfo.name,
+                                    paramName: fieldInfo.name,
                                     paramDesc: fieldInfo.comment,
                                     require: fieldInfo.require,
                                     paramType: fieldInfo.simpleTypeName
@@ -352,7 +365,7 @@
                             paramName: par.name,
                             paramDesc: par.comment,
                             paramType: par.simpleTypeName,
-                            require : par.require
+                            require: par.require
                         });
                     }
                 }
@@ -364,7 +377,7 @@
                     try {
                         var obj = JSON.parse(this.currentApiAction.respbody);
                         return JSON.stringify(obj, null, 4);
-                    } catch(e) {
+                    } catch (e) {
 
                     }
                     return this.currentApiAction.respbody;
@@ -374,6 +387,10 @@
 
         methods: {
 
+            /**
+             * 准备数据
+             * @param data
+             */
             fullData(data) {
                 if (data.properties && data.properties.title != null) {
                     this.title = data.properties.title;
@@ -381,17 +398,23 @@
                 if (data.properties && data.properties.version != null) {
                     this.version = data.properties.version;
                 }
-                this.apiModules = data.apiInfoList[0].apiModuleList;
+                // this.apiModules = data.apiInfoList[0].apiModuleList;
                 this.apiInfoList = data.apiInfoList;
-                if (this.apiModules.length > 0 && this.apiModules[0].apiActions.length > 0) {
-                    this.currentApiModule = this.apiModules[0];
-                    this.currentApiAction = this.apiModules[0].apiActions[0];
-                    if (this.currentApiAction.methods.length > 0) {
-                        this.request.type = this.currentApiAction.methods[0];
-                    }
-                }
+                // if (this.apiModules.length > 0 && this.apiModules[0].apiActions.length > 0) {
+                //     this.currentApiModule = this.apiModules[0];
+                //     this.currentApiAction = this.apiModules[0].apiActions[0];
+                //     if (this.currentApiAction.methods.length > 0) {
+                //         this.request.type = this.currentApiAction.methods[0];
+                //     }
+                // }
             },
 
+            /**
+             * 点击菜单事件
+             * @param data
+             * @param checked
+             * @param indeterminate
+             */
             checkChangeHandle(data, checked, indeterminate) {
                 var array = this.findModuleAndActionById(data.id);
                 if (array) {
@@ -406,13 +429,23 @@
                 }
             },
 
+            /**
+             * 寻找接口信息
+             * @param id
+             * @returns {(*)[]}
+             */
             findModuleAndActionById(id) {
-                for (var i = 0; i < this.apiModules.length; i++) {
-                    var apiModule = this.apiModules[i];
+                for (var i = 0; i < this.apiInfoList.length; i++) {
+                    var apiInfo = this.apiInfoList[i];
 
-                    for (var j = 0; j < apiModule.apiActions.length; j++) {
-                        if (apiModule.apiActions[j].id == id) {
-                            return [apiModule, apiModule.apiActions[j]]
+                    for (var j = 0; j < apiInfo.apiModuleList.length; j++) {
+
+                        var apiModule = apiInfo.apiModuleList[j];
+
+                        for (var k = 0; k < apiModule.apiActions.length; k++) {
+                            if (apiModule.apiActions[k].id == id) {
+                                return [apiModule, apiModule.apiActions[k]]
+                            }
                         }
                     }
                 }
@@ -432,14 +465,14 @@
             },
 
             rebuild() {
-                window.location = '/dpstudio/api/v1/rebuild';
+                window.location = this.url +  '/dpstudio/api/v1/rebuild';
             },
             downhtml() {
-                window.location = '/dpstudio/api/v1/download/page';
+                window.location = this.url +  '/dpstudio/api/v1/download/page';
             },
 
             downmark() {
-                window.location = '/dpstudio/api/v1/download/mark';
+                window.location = this.url + '/dpstudio/api/v1/download/mark';
             },
             resetTestForm() {
                 if (this.$refs.testForm) {
@@ -469,7 +502,7 @@
             }
         },
 
-        watch : {
+        watch: {
             search(val) {
                 this.$refs.apiTree.filter(val);
             },
@@ -482,13 +515,13 @@
     * {
         padding: 0;
         margin: 0;
-        font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+        font-family: Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Microsoft YaHei, SimSun, sans-serif;
     }
 
     .logo-text {
         float: left;
         height: 60px;
-        color: hsla(0,0%,40%,.7);
+        color: hsla(0, 0%, 40%, .7);
         line-height: 60px;
         padding-left: 32px;
         font-size: 22px;
@@ -541,38 +574,38 @@
         top: 60px;
         bottom: 0px;
         overflow: auto;
-        background-color:#FFF;
-        border-left : 2px solid #eef1f6;
-        transition:all .2s ease;
-        -webkit-transition:all .2s ease;
-        z-index : 1;
+        background-color: #FFF;
+        border-left: 2px solid #eef1f6;
+        transition: all .2s ease;
+        -webkit-transition: all .2s ease;
+        z-index: 1;
     }
 
     .test-off {
-        width : 20px;
+        width: 20px;
         cursor: pointer;
     }
 
     .test-on {
-        width : 800px;
+        width: 800px;
         cursor: auto;
     }
 
     .test-off .test-main {
-        display : none;
+        display: none;
     }
 
     .test-on .test-main {
-        display : auto;
+        display: auto;
     }
 
     .test-form {
-        width : 80%;
+        width: 80%;
     }
 
     .test-respbody {
-        padding-left : 50px;
-        width : 700px;
+        padding-left: 50px;
+        width: 700px;
     }
 
     .action-title {

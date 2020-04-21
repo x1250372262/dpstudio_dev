@@ -23,7 +23,7 @@ public class DefaultWxMimiProgramModuleCfg implements IWxMimiProgramModuleCfg {
 
     private boolean defaultHandlerByDatabase;
 
-    public DefaultWxMimiProgramModuleCfg(YMP owner) throws Exception {
+    public DefaultWxMimiProgramModuleCfg(YMP owner) {
         IConfigReader moduleCfg = MapSafeConfigReader.bind(owner.getConfig().getModuleConfigs(IWxMimiProgram.MODULE_NAME));
         appId = StringUtils.trimToEmpty(moduleCfg.getString(APP_ID));
         appSecret = StringUtils.trimToEmpty(moduleCfg.getString(APP_SECRET));

@@ -11,7 +11,7 @@
  Target Server Version : 50724
  File Encoding         : 65001
 
- Date: 02/04/2020 18:22:08
+ Date: 20/04/2020 13:44:42
 */
 
 SET NAMES utf8mb4;
@@ -26,7 +26,7 @@ CREATE TABLE `juncheng_mimiprogram_user` (
   `open_id` varchar(256) NOT NULL,
   `union_id` varchar(32) DEFAULT NULL,
   `nick_name` varchar(32) DEFAULT NULL COMMENT '昵称',
-  `photo` varchar(11) DEFAULT NULL COMMENT '32',
+  `mobile` varchar(11) DEFAULT NULL COMMENT '手机号',
   `gender` smallint(1) unsigned DEFAULT '0' COMMENT '性别',
   `avatar_url` varchar(255) DEFAULT NULL COMMENT '头像',
   `country` varchar(32) DEFAULT NULL COMMENT '国家',

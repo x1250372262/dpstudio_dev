@@ -17,7 +17,7 @@ public class ListUtils {
      * @param smallResult 小集合
      * @return
      */
-    public Boolean checkSame(List<?> bigResult, List<?> smallResult) {
+    public static Boolean checkSame(List<?> bigResult, List<?> smallResult) {
         return bigResult.containsAll(smallResult);
     }
 
@@ -28,7 +28,7 @@ public class ListUtils {
      * @param smallResult 小集合
      * @return
      */
-    public List<?> doRemove(List<?> bigResult, List<?> smallResult) {
+    public static List<?> doRemove(List<?> bigResult, List<?> smallResult) {
         if (checkSame(bigResult, smallResult)) {
             LinkedList<?> bigResultLink = new LinkedList<>(bigResult);
             HashSet<?> smallResultLink = new HashSet<>(smallResult);
@@ -44,6 +44,7 @@ public class ListUtils {
         return bigResult;
 
     }
+
     /**
      * list 集合分组
      *
@@ -91,5 +92,64 @@ public class ListUtils {
         K groupBy(V row);
     }
 
+
+    /**
+     * 根据数量分组
+     *
+     * @param list
+     * @param quantity
+     * @return
+     */
+    public static List<Map<String, List<Object>>> groupByQuantityMap(List<?> list, int quantity) {
+        List<Map<String, List<Object>>> mapList = new ArrayList<>();
+        if (list == null || list.size() == 0) {
+            return mapList;
+        }
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Wrong quantity.");
+        }
+
+        int count = 0;
+        int key = 0;
+        while (count < list.size()) {
+            Map<String,  List<Object>> map = new HashMap<>();
+            List<Object> wrapList = (List<Object>) list.subList(count, (count + quantity) > list.size() ? list.size() : count + quantity);
+            map.put(key + "", wrapList);
+            mapList.add(map);
+            key++;
+            count += quantity;
+        }
+
+        return mapList;
+    }
+
+
+    /**
+     * 根据数量分组
+     *
+     * @param list
+     * @param quantity
+     * @return
+     */
+    public static List<List<Object>> groupByQuantity(List<?> list, int quantity) {
+        List<List<Object>> mapList = new ArrayList<>();
+        if (list == null || list.size() == 0) {
+            return mapList;
+        }
+        if (quantity <= 0) {
+            throw new IllegalArgumentException("Wrong quantity.");
+        }
+
+        int count = 0;
+        int key = 0;
+        while (count < list.size()) {
+            List<Object> wrapList = (List<Object>) list.subList(count, (count + quantity) > list.size() ? list.size() : count + quantity);
+            mapList.add(wrapList);
+            key++;
+            count += quantity;
+        }
+
+        return mapList;
+    }
 
 }
