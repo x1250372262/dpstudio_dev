@@ -11,9 +11,17 @@ import com.dpstudio.dev.core.CommonResult;
 public interface IWxMimiProgramUserService {
 
     /**
-     * 授权
-     *
+     * 获取session
      * @param code
+     * @return
+     * @throws Exception
+     */
+    CommonResult getSession(String code) throws Exception;
+
+    /**
+     * 用户信息
+     *
+     * @param sessionKey
      * @param rawData
      * @param signature
      * @param encrypteData
@@ -21,5 +29,14 @@ public interface IWxMimiProgramUserService {
      * @return
      * @throws Exception
      */
-    CommonResult oauth(String scope, String code, String rawData, String signature, String encrypteData, String iv) throws Exception;
+    CommonResult userInfo(String sessionKey, String rawData, String signature, String encrypteData, String iv) throws Exception;
+
+    /**
+     * 手机号信息
+     * @param encryptedData
+     * @param ivStr
+     * @return
+     * @throws Exception
+     */
+    CommonResult mobileInfo(String token,String sessionKey,String encryptedData, String ivStr) throws Exception;
 }

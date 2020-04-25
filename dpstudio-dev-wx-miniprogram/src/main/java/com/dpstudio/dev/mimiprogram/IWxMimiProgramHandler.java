@@ -22,11 +22,12 @@ public interface IWxMimiProgramHandler {
     CommonResult handlerUserData(WxUserInfo wxUserInfo) throws Exception;
 
     /**
-     * 处理用户信息
+     * 处理手机号信息
      *
-     * @param wxUserInfo
+     * @param openId
+     * @param wxPhoneInfo
      * @return
      * @throws Exception
      */
-    CommonResult handlerUserData(WxUserInfo wxUserInfo, WxPhoneInfo wxPhoneInfo) throws Exception;
+    CommonResult handlerMobileData(String openId,WxPhoneInfo wxPhoneInfo) throws Exception;
 }
