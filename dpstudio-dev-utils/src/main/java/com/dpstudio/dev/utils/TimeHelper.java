@@ -13,6 +13,14 @@ import java.util.Calendar;
  */
 public class TimeHelper {
 
+    public static TimeHelper create(){
+        return new TimeHelper();
+    }
+
+    private TimeHelper(){
+
+    }
+
     public long DateTimeHelper(long date, int days) {
         Calendar __calendar = Calendar.getInstance();
         if (String.valueOf(date).length() <= 10) {
