@@ -11,7 +11,7 @@
     </parent>
 
     <artifactId>dpstudio-dev-excel</artifactId>
-    <version>1.0.1</version>
+    <version>1.0-SNAPSHOT-</version>
     <packaging>jar</packaging>
 
     <name>dpstudio-dev-excel</name>
