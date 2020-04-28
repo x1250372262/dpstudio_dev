@@ -16,6 +16,7 @@
         <module>dpstudio-dev-captcha</module>
         <module>dpstudio-dev-jdbc</module>
         <module>dpstudio-dev-bug</module>
+        <module>dpstudio-dev-security</module>
     </modules>
     <packaging>pom</packaging>
 
