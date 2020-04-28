@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8">
     <title>接口文档</title>
-    <link rel="stylesheet" href="/dpsapi/css/element-ui.css">
-    <script type="text/javascript" src="/dpsapi/js/vue.min.js"></script>
-    <script src="/dpsapi/js/element-ui.js"></script>
+    <link rel="stylesheet" href="/dpstudio/doc/css/element-ui.css">
+    <script type="text/javascript" src="/dpstudio/doc/js/vue.min.js"></script>
+    <script src="/dpstudio/doc/js/element-ui.js"></script>
 </head>
 <body>
 <div id="app">
@@ -214,15 +214,14 @@
                 title: '在线文档',
                 version: 'v1.0',
                 currentApiModule: null,
-                currentApiAction: null,
-                url : 'http://localhost:8083'
+                currentApiAction: null
             }
         },
 
         mounted() {
             if (!window.apis) {
                 var self = this;
-                fetch(this.url + '/dpstudio/api/v1/apis').then(function (response) {
+                fetch('/dpstudio/wd/apis').then(function (response) {
                     return response.json();
                 }).then(function (data) {
                     // if (typeof(data) == 'string') {//兼容后端返回数据出问题
@@ -465,14 +464,14 @@
             },
 
             rebuild() {
-                window.location = this.url +  '/dpstudio/api/v1/rebuild';
+                window.location = '/dpstudio/wd/rebuild';
             },
             downhtml() {
-                window.location = this.url +  '/dpstudio/api/v1/download/page';
+                window.location = '/dpstudio/wd/download/page';
             },
 
             downmark() {
-                window.location = this.url + '/dpstudio/api/v1/download/mark';
+                window.location = '/dpstudio/wd/download/mark';
             },
             resetTestForm() {
                 if (this.$refs.testForm) {

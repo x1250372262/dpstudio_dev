@@ -26,7 +26,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 @Controller
-@RequestMapping("dpstudio/api/v1/")
+@RequestMapping("dpstudio/wd/")
 @Before(AjaxAllowCrossDomainInterceptor.class)
 public class ApiController {
 
@@ -43,7 +43,7 @@ public class ApiController {
     @RequestMapping(value = "index", method = Type.HttpMethod.GET)
     public IView index() throws Exception {
         apiResult = new ApiService().createDoc();
-        return HtmlView.bind(WebMVC.get(), "/dpsapi/index.html");
+        return HtmlView.bind(WebMVC.get(), "/dpstudio/wd/index.html");
     }
 
     /**
@@ -54,7 +54,7 @@ public class ApiController {
 //        if (!init) {
 //            init();
 //        }
-        return View.redirectView("/dps/api/index");
+        return View.redirectView("/dpstudio/wd/index");
     }
 
 
@@ -76,7 +76,7 @@ public class ApiController {
      */
     @RequestMapping(value = "rebuild", method = Type.HttpMethod.GET)
     public IView rebuild() throws Exception {
-        return View.redirectView("/dps/api/create");
+        return View.redirectView("/dpstudio/wd/create");
     }
 
     /**

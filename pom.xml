@@ -15,6 +15,7 @@
         <module>dpstudio-dev-wx-miniprogram</module>
         <module>dpstudio-dev-captcha</module>
         <module>dpstudio-dev-jdbc</module>
+        <module>dpstudio-dev-bug</module>
     </modules>
     <packaging>pom</packaging>
 

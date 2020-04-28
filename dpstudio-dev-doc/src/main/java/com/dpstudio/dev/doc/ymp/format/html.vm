@@ -224,7 +224,7 @@
         mounted() {
             if (!window.apis) {
                 var self = this;
-                fetch(this.url + '/dpstudio/api/v1/apis').then(function (response) {
+                fetch(this.url + '/dpstudio/wd/apis').then(function (response) {
                     return response.json();
                 }).then(function (data) {
                     // if (typeof(data) == 'string') {//兼容后端返回数据出问题
@@ -467,14 +467,14 @@
             },
 
             rebuild() {
-                window.location = this.url +  '/dpstudio/api/v1/rebuild';
+                window.location = this.url +  '/dpstudio/wd/rebuild';
             },
             downhtml() {
-                window.location = this.url +  '/dpstudio/api/v1/download/page';
+                window.location = this.url +  '/dpstudio/wd/download/page';
             },
 
             downmark() {
-                window.location = this.url + '/dpstudio/api/v1/download/mark';
+                window.location = this.url + '/dpstudio/wd/download/mark';
             },
             resetTestForm() {
                 if (this.$refs.testForm) {
