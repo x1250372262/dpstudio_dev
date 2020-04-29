@@ -4,6 +4,7 @@ import com.dpstudio.dev.core.code.CommonCode;
 import net.ymate.platform.persistence.IResultSet;
 import net.ymate.platform.webmvc.util.WebResult;
 import net.ymate.platform.webmvc.view.IView;
+import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.HashMap;
@@ -164,6 +165,11 @@ public class CommonResult {
 
     public CommonResult attr(String attrKey, Object attrValue) {
         this.attrs.put(attrKey, attrValue);
+        return this;
+    }
+
+    public CommonResult attr(String attrKey, Object attrValue,Object defaultValue) {
+        this.attrs.put(attrKey, ObjectUtils.defaultIfNull(attrValue,defaultValue));
         return this;
     }
 
