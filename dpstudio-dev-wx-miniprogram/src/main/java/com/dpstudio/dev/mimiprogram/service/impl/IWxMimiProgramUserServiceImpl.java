@@ -33,7 +33,7 @@ public class IWxMimiProgramUserServiceImpl implements IWxMimiProgramUserService 
     }
 
     @Override
-    public CommonResult userInfo(String sessionKey, String rawData, String signature, String encrypteData, String iv) throws Exception {
+    public CommonResult userInfo(String sessionKey, String rawData, String signature, String encrypteData, String iv, String attach) throws Exception {
 
         IWxMimiProgram iWxMimiProgram = WxMimiProgram.get();
         if (iWxMimiProgram == null) {
@@ -48,13 +48,13 @@ public class IWxMimiProgramUserServiceImpl implements IWxMimiProgramUserService 
             return CommonResult.create(ErrorCode.USER_INFO_ERROR.getCode()).msg(ErrorCode.USER_INFO_ERROR.getMsg());
         }
 
-        CommonResult commonResult = iWxMimiProgram.getHandler().handlerUserData(wxUserInfo);
+        CommonResult commonResult = iWxMimiProgram.getHandler().handlerUserData(wxUserInfo,attach);
         return CommonResult.create(commonResult.code()).msg(commonResult.msg()).attrs(commonResult.attrs());
 
     }
 
     @Override
-    public CommonResult mobileInfo(String token,String sessionKey, String encryptedData, String ivStr) throws Exception {
+    public CommonResult mobileInfo(String attach, String token, String sessionKey, String encryptedData, String ivStr) throws Exception {
         IWxMimiProgram iWxMimiProgram = WxMimiProgram.get();
         if (iWxMimiProgram == null) {
             return CommonResult.create(ErrorCode.INIT_ERROR.getCode()).msg(ErrorCode.INIT_ERROR.getMsg());
@@ -63,7 +63,7 @@ public class IWxMimiProgramUserServiceImpl implements IWxMimiProgramUserService 
         if (wxPhoneInfo == null) {
             return CommonResult.create(ErrorCode.USER_INFO_ERROR.getCode()).msg(ErrorCode.USER_INFO_ERROR.getMsg());
         }
-        CommonResult commonResult = iWxMimiProgram.getHandler().handlerMobileData(token,wxPhoneInfo);
+        CommonResult commonResult = iWxMimiProgram.getHandler().handlerMobileData(attach,token, wxPhoneInfo);
         return CommonResult.create(commonResult.code()).msg(commonResult.msg()).attrs(commonResult.attrs());
     }
 }

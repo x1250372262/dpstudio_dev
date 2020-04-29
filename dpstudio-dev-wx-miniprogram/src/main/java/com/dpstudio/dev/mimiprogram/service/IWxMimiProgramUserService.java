@@ -29,7 +29,7 @@ public interface IWxMimiProgramUserService {
      * @return
      * @throws Exception
      */
-    CommonResult userInfo(String sessionKey, String rawData, String signature, String encrypteData, String iv) throws Exception;
+    CommonResult userInfo(String sessionKey, String rawData, String signature, String encrypteData, String iv,String attach) throws Exception;
 
     /**
      * 手机号信息
@@ -38,5 +38,5 @@ public interface IWxMimiProgramUserService {
      * @return
      * @throws Exception
      */
-    CommonResult mobileInfo(String token,String sessionKey,String encryptedData, String ivStr) throws Exception;
+    CommonResult mobileInfo(String attach,String token,String sessionKey,String encryptedData, String ivStr) throws Exception;
 }

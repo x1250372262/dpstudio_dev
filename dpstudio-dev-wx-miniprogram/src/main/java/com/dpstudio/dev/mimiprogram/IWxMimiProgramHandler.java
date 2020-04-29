@@ -19,15 +19,15 @@ public interface IWxMimiProgramHandler {
      * @return
      * @throws Exception
      */
-    CommonResult handlerUserData(WxUserInfo wxUserInfo) throws Exception;
+    CommonResult handlerUserData(WxUserInfo wxUserInfo,String attach) throws Exception;
 
     /**
      * 处理手机号信息
      *
-     * @param openId
+     * @param token
      * @param wxPhoneInfo
      * @return
      * @throws Exception
      */
-    CommonResult handlerMobileData(String openId,WxPhoneInfo wxPhoneInfo) throws Exception;
+    CommonResult handlerMobileData(String attach,String token,WxPhoneInfo wxPhoneInfo) throws Exception;
 }

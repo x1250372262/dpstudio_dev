@@ -60,8 +60,9 @@ public class WxMimiProgramUserController {
                           @VRequired(msg = "用户敏感信息不能为空")
                           @RequestParam(value = "encrypteData") String encrypteData,
                           @VRequired(msg = "解密算法的向量不能为空")
-                          @RequestParam(value = "iv") String iv) throws Exception {
-        CommonResult commonResult = iWxMimiProgramUserService.userInfo(sessionKey, rawData, signature, encrypteData, iv);
+                          @RequestParam(value = "iv") String iv,
+                          @RequestParam String attach) throws Exception {
+        CommonResult commonResult = iWxMimiProgramUserService.userInfo(sessionKey, rawData, signature, encrypteData, iv,attach);
         return commonResult.toJsonView();
 
     }
@@ -82,8 +83,9 @@ public class WxMimiProgramUserController {
                             @RequestParam(value = "encrypteData") String encrypteData,
                             @VRequired(msg = "解密算法的向量不能为空")
                             @RequestParam(value = "iv") String iv,
-                            @RequestParam String token) throws Exception {
-        CommonResult commonResult = iWxMimiProgramUserService.mobileInfo(token,sessionKey, encrypteData, iv);
+                            @RequestParam String token,
+                            @RequestParam String attach) throws Exception {
+        CommonResult commonResult = iWxMimiProgramUserService.mobileInfo(attach,token,sessionKey, encrypteData, iv);
         return commonResult.toJsonView();
 
     }

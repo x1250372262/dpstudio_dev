@@ -22,7 +22,7 @@ import org.apache.commons.lang.StringUtils;
  */
 public class DefaultWxMimiProgramHandler implements IWxMimiProgramHandler {
     @Override
-    public CommonResult handlerUserData(WxUserInfo wxUserInfo) throws Exception {
+    public CommonResult handlerUserData(WxUserInfo wxUserInfo,String attach) throws Exception {
         boolean defaultHandlerByDatabase = WxMimiProgram.get().getModuleCfg().defaultHandlerByDatabase();
         if (defaultHandlerByDatabase) {
             MimiprogramUser mimiprogramUser = MimiprogramUser.builder().openId(wxUserInfo.getOpenId()).build().findFirst();
@@ -62,7 +62,7 @@ public class DefaultWxMimiProgramHandler implements IWxMimiProgramHandler {
     }
 
     @Override
-    public CommonResult handlerMobileData(String token, WxPhoneInfo wxPhoneInfo) throws Exception {
+    public CommonResult handlerMobileData(String attach,String token, WxPhoneInfo wxPhoneInfo) throws Exception {
         boolean defaultHandlerByDatabase = WxMimiProgram.get().getModuleCfg().defaultHandlerByDatabase();
         if (defaultHandlerByDatabase) {
             if (StringUtils.isNotBlank(token)) {
