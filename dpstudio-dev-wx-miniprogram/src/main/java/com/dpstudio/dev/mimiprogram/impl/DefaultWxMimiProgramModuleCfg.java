@@ -7,6 +7,7 @@ import net.ymate.platform.core.YMP;
 import net.ymate.platform.core.support.IConfigReader;
 import net.ymate.platform.core.support.impl.MapSafeConfigReader;
 import net.ymate.platform.core.util.ClassUtils;
+import net.ymate.platform.core.util.RuntimeUtils;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -31,8 +32,8 @@ public class DefaultWxMimiProgramModuleCfg implements IWxMimiProgramModuleCfg {
         IConfigReader moduleCfg = MapSafeConfigReader.bind(owner.getConfig().getModuleConfigs(IWxMimiProgram.MODULE_NAME));
         appId = StringUtils.trimToEmpty(moduleCfg.getString(APP_ID));
         appSecret = StringUtils.trimToEmpty(moduleCfg.getString(APP_SECRET));
-        qrCodePath = StringUtils.trimToEmpty(moduleCfg.getString(QRCODE_PATH));
-        qrCodeFormat = StringUtils.defaultIfBlank(moduleCfg.getString(QRCODE_FORMAT),"jpg");
+        qrCodePath = RuntimeUtils.replaceEnvVariable(StringUtils.defaultIfBlank(moduleCfg.getString(QRCODE_PATH), "${root}/qr_path"));
+        qrCodeFormat = StringUtils.defaultIfBlank(moduleCfg.getString(QRCODE_FORMAT), "jpg");
         String dataHandlerClass = moduleCfg.getString(DATA_HANDLER_CLASS);
         if (StringUtils.isNotBlank(dataHandlerClass)) {
             iWxMimiProgramHandler = ClassUtils.impl(dataHandlerClass, IWxMimiProgramHandler.class, this.getClass());
@@ -40,7 +41,7 @@ public class DefaultWxMimiProgramModuleCfg implements IWxMimiProgramModuleCfg {
         if (iWxMimiProgramHandler == null) {
             iWxMimiProgramHandler = new DefaultWxMimiProgramHandler();
         }
-        defaultHandlerByDatabase = moduleCfg.getBoolean(DATA_HANDLER_DEFAULT_TYPE,false);
+        defaultHandlerByDatabase = moduleCfg.getBoolean(DATA_HANDLER_DEFAULT_TYPE, false);
     }
 
     @Override
