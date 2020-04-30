@@ -211,7 +211,7 @@ public class BugController {
             bug.setHandlerTime(DateTimeUtils.currentTimeMillis());
             bug.setLastModifyTime(DateTimeUtils.currentTimeMillis());
             bug.setLastModifyUser(UserSessionBean.current().getUid());
-            bug.update(Fields.create(Bug.FIELDS.STATUS, Bug.FIELDS.LAST_MODIFY_TIME, Bug.FIELDS.LAST_MODIFY_USER));
+            bug.update(Fields.create(Bug.FIELDS.STATUS, Bug.FIELDS.LAST_MODIFY_TIME, Bug.FIELDS.LAST_MODIFY_USER,Bug.FIELDS.HANDLER_TIME,Bug.FIELDS.HANDLER_USER));
 
             BugLog.builder()
                     .id(UUIDUtils.UUID())
