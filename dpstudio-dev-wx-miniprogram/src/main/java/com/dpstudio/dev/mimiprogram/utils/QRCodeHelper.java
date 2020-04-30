@@ -61,8 +61,8 @@ public class QRCodeHelper {
         if (StringUtils.isBlank(path)) {
             throw new NullPointerException("qrcode_path");
         }
-        String fileName = DigestUtils.md5Hex(params);
         String format = WxMimiProgram.get().getModuleCfg().qrCodeFormat();
+        String fileName = DigestUtils.md5Hex(params.concat(format));
         String fileUrl = path.concat("/").concat(fileName).concat(".").concat(format);
         saveBit(inputStream, fileUrl);
         String qrCodeUrl = WebUtils.baseURL(WebContext.getRequest()).concat("dpstudio/wx/mimiprogram/qrcode/show/" + fileName + "/" + format + "");
