@@ -19,6 +19,8 @@ public class DefaultWxMimiProgramModuleCfg implements IWxMimiProgramModuleCfg {
 
     private String appSecret;
 
+    private String qrCodePath;
+
     private IWxMimiProgramHandler iWxMimiProgramHandler;
 
     private boolean defaultHandlerByDatabase;
@@ -27,6 +29,7 @@ public class DefaultWxMimiProgramModuleCfg implements IWxMimiProgramModuleCfg {
         IConfigReader moduleCfg = MapSafeConfigReader.bind(owner.getConfig().getModuleConfigs(IWxMimiProgram.MODULE_NAME));
         appId = StringUtils.trimToEmpty(moduleCfg.getString(APP_ID));
         appSecret = StringUtils.trimToEmpty(moduleCfg.getString(APP_SECRET));
+        qrCodePath = StringUtils.trimToEmpty(moduleCfg.getString(QRCODE_PATH));
         String dataHandlerClass = moduleCfg.getString(DATA_HANDLER_CLASS);
         if (StringUtils.isNotBlank(dataHandlerClass)) {
             iWxMimiProgramHandler = ClassUtils.impl(dataHandlerClass, IWxMimiProgramHandler.class, this.getClass());
@@ -55,5 +58,10 @@ public class DefaultWxMimiProgramModuleCfg implements IWxMimiProgramModuleCfg {
     @Override
     public String appSecret() {
         return appSecret;
+    }
+
+    @Override
+    public String qrCodePath() {
+        return qrCodePath;
     }
 }

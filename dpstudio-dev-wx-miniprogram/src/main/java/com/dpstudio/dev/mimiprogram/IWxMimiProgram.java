@@ -1,9 +1,15 @@
 package com.dpstudio.dev.mimiprogram;
 
 
+import com.alibaba.fastjson.JSON;
 import com.dpstudio.dev.mimiprogram.bean.WxCodeSession;
 import com.dpstudio.dev.mimiprogram.bean.WxPhoneInfo;
 import com.dpstudio.dev.mimiprogram.bean.WxUserInfo;
+import com.dpstudio.dev.mimiprogram.result.QRCodeResult;
+import net.ymate.framework.commons.HttpClientHelper;
+import net.ymate.framework.commons.IHttpResponse;
+import net.ymate.module.wechat.Wechat;
+import net.ymate.module.wechat.base.WechatAccessToken;
 import net.ymate.platform.core.YMP;
 
 /**
@@ -49,6 +55,30 @@ public interface IWxMimiProgram {
      * @return
      */
     WxUserInfo getUserInfo(String sessionKey, String encryptedData, String ivStr) throws Exception;
+
+
+    /**
+     * 获取access_token
+     *
+     * @return
+     */
+    String getAccessToken();
+
+    /**
+     * 获取小程序码 业务数量多 永久有效 参数限制
+     *
+     * @return
+     * @throws Exception
+     */
+    QRCodeResult createACodeLimit(String scene) throws Exception;
+
+    /**
+     * 获取小程序码 业务数量多 永久有效 参数限制
+     *
+     * @return
+     * @throws Exception
+     */
+    QRCodeResult createACodeLimit(String scene, String page, int width, boolean autoColor, String lineColor, boolean isHyaline) throws Exception;
 
 
     /**

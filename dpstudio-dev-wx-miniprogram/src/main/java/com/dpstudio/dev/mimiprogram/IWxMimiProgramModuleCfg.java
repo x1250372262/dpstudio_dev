@@ -18,6 +18,8 @@ public interface IWxMimiProgramModuleCfg {
     String DATA_HANDLER_CLASS = "data_handler_class";
     //默认实现是否存储到数据库 默认flase
     String DATA_HANDLER_DEFAULT_TYPE = "data_handler_default_by_databases";
+    //二维码存放位置
+    String QRCODE_PATH = "qrcode_path";
 
     boolean defaultHandlerByDatabase();
 
@@ -26,5 +28,7 @@ public interface IWxMimiProgramModuleCfg {
     String appId();
 
     String appSecret();
+
+    String qrCodePath();
 
 }
