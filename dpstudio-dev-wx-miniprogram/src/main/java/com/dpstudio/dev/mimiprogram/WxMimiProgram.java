@@ -1,19 +1,16 @@
 package com.dpstudio.dev.mimiprogram;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dpstudio.dev.mimiprogram.bean.WxCodeSession;
 import com.dpstudio.dev.mimiprogram.bean.WxPhoneInfo;
 import com.dpstudio.dev.mimiprogram.bean.WxUserInfo;
 import com.dpstudio.dev.mimiprogram.impl.DefaultWxMimiProgramModuleCfg;
-import com.dpstudio.dev.mimiprogram.result.QRCodeResult;
 import com.dpstudio.dev.mimiprogram.utils.PKCS7Encoder;
+import com.dpstudio.dev.mimiprogram.utils.QRCodeHelper;
 import net.ymate.framework.commons.HttpClientHelper;
 import net.ymate.framework.commons.IHttpResponse;
-import net.ymate.module.wechat.IWechat;
 import net.ymate.module.wechat.Wechat;
 import net.ymate.module.wechat.base.WechatAccessToken;
-import net.ymate.module.wechat.base.WechatAccessTokenResult;
 import net.ymate.platform.core.Version;
 import net.ymate.platform.core.YMP;
 import net.ymate.platform.core.lang.BlurObject;
@@ -165,17 +162,13 @@ public class WxMimiProgram implements IModule, IWxMimiProgram {
         return token == null ? null : token.getToken();
     }
 
-    public QRCodeResult createACodeLimit(String scene) throws Exception {
-        String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=".concat(getAccessToken());
+    public String createACodeLimit(String scene) throws Exception {
         JSONObject params = new JSONObject();
         params.put("scene", scene);
-        IHttpResponse _response = HttpClientHelper.create().post(url, params.toJSONString());
-        QRCodeResult _result = new QRCodeResult(JSON.parseObject(_response.getContent()));
-        return _result;
+        return QRCodeHelper.createACodeLimit(params.toJSONString());
     }
 
-    public QRCodeResult createACodeLimit(String scene, String page, int width, boolean autoColor, String lineColor, boolean isHyaline) throws Exception {
-        String url = "https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=".concat(getAccessToken());
+    public String createACodeLimit(String scene, String page, int width, boolean autoColor, String lineColor, boolean isHyaline) throws Exception {
         JSONObject params = new JSONObject();
         params.put("scene", scene);
         params.put("page", page);
@@ -183,9 +176,7 @@ public class WxMimiProgram implements IModule, IWxMimiProgram {
         params.put("auto_color", BlurObject.bind(autoColor).toStringValue());
         params.put("line_color", lineColor);
         params.put("is_hyaline", BlurObject.bind(isHyaline).toStringValue());
-        IHttpResponse _response = HttpClientHelper.create().post(url,params.toJSONString() );
-        QRCodeResult _result = new QRCodeResult(JSON.parseObject(_response.getContent()));
-        return _result;
+        return QRCodeHelper.createACodeLimit(params.toJSONString());
     }
 
     /**

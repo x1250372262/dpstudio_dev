@@ -21,6 +21,8 @@ public class DefaultWxMimiProgramModuleCfg implements IWxMimiProgramModuleCfg {
 
     private String qrCodePath;
 
+    private String qrCodeFormat;
+
     private IWxMimiProgramHandler iWxMimiProgramHandler;
 
     private boolean defaultHandlerByDatabase;
@@ -30,6 +32,7 @@ public class DefaultWxMimiProgramModuleCfg implements IWxMimiProgramModuleCfg {
         appId = StringUtils.trimToEmpty(moduleCfg.getString(APP_ID));
         appSecret = StringUtils.trimToEmpty(moduleCfg.getString(APP_SECRET));
         qrCodePath = StringUtils.trimToEmpty(moduleCfg.getString(QRCODE_PATH));
+        qrCodeFormat = StringUtils.defaultIfBlank(moduleCfg.getString(QRCODE_FORMAT),"jpg");
         String dataHandlerClass = moduleCfg.getString(DATA_HANDLER_CLASS);
         if (StringUtils.isNotBlank(dataHandlerClass)) {
             iWxMimiProgramHandler = ClassUtils.impl(dataHandlerClass, IWxMimiProgramHandler.class, this.getClass());
@@ -63,5 +66,10 @@ public class DefaultWxMimiProgramModuleCfg implements IWxMimiProgramModuleCfg {
     @Override
     public String qrCodePath() {
         return qrCodePath;
+    }
+
+    @Override
+    public String qrCodeFormat() {
+        return qrCodeFormat;
     }
 }
