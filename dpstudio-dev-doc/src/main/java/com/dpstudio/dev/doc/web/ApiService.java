@@ -8,6 +8,7 @@ import com.dpstudio.dev.doc.core.model.ApiResult;
 import com.dpstudio.dev.doc.ymp.framework.YmpWebFramework;
 import com.dpstudio.dev.utils.ListUtils;
 import com.dpstudio.dev.utils.ObjectUtils;
+import org.apache.commons.lang.NullArgumentException;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -70,7 +71,7 @@ public class ApiService {
 
         String sourcePath = apiParams.sourcePath();
         if (StringUtils.isBlank(sourcePath)) {
-            throw new NullPointerException("sourcePath不能为空");
+            throw new NullArgumentException("sourcePath不能为空");
         }
         List<String> paths = Arrays.asList(sourcePath.split(","));
         List<File> srcDirs = new ArrayList<>(paths.size());

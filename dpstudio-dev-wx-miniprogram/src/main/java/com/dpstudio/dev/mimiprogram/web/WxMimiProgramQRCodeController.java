@@ -9,6 +9,7 @@ import net.ymate.platform.webmvc.annotation.RequestParam;
 import net.ymate.platform.webmvc.view.IView;
 import net.ymate.platform.webmvc.view.View;
 import net.ymate.platform.webmvc.view.impl.BinaryView;
+import org.apache.commons.lang.NullArgumentException;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -31,7 +32,7 @@ public class WxMimiProgramQRCodeController {
 
         String qrPath = WxMimiProgram.get().getModuleCfg().qrCodePath();
         if (StringUtils.isBlank(qrPath)) {
-            throw new NullPointerException("qrcode_path");
+            throw new NullArgumentException("qrcode_path");
         }
         format = StringUtils.defaultIfBlank(format, WxMimiProgram.get().getModuleCfg().qrCodeFormat());
         File qrCodeFile = new File(qrPath, fileName.concat(".").concat(format));

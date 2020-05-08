@@ -9,6 +9,7 @@ import net.ymate.platform.core.util.RuntimeUtils;
 import net.ymate.platform.webmvc.context.WebContext;
 import net.ymate.platform.webmvc.util.WebUtils;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.NullArgumentException;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.File;
@@ -46,7 +47,7 @@ public class QrCodeFactory {
 
     public QrCodeResult create(String content, String characterSet, int width, int height, int margin, ErrorCorrectionLevel level, String format) throws Exception {
         if (StringUtils.isBlank(content)) {
-            throw new NullPointerException("二维码内容不能为空");
+            throw new NullArgumentException("二维码内容不能为空");
         }
         characterSet = StringUtils.defaultIfBlank(characterSet, defaultCharset);
         width = width > 0 ? width : defaultWidth;

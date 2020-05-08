@@ -22,10 +22,12 @@ public interface IWxMimiProgramModuleCfg {
     String QRCODE_PATH = "qrcode_path";
     //二维码图片后缀
     String QRCODE_FORMAT = "qrcode_format";
+    //支付处理
+    String PAY_HANDLER_CLASS = "pay_handler_class";
 
     boolean defaultHandlerByDatabase();
 
-    IWxMimiProgramHandler handler();
+    IWxMimiProgramHandler iWxMimiProgramHandler();
 
     String appId();
 
@@ -34,5 +36,7 @@ public interface IWxMimiProgramModuleCfg {
     String qrCodePath();
 
     String qrCodeFormat();
+
+    IWxMimiProgramPayHandler iWxMimiProgramPayHandler();
 
 }

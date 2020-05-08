@@ -5,6 +5,7 @@ import net.ymate.platform.core.util.UUIDUtils;
 import net.ymate.platform.webmvc.context.WebContext;
 import net.ymate.platform.webmvc.util.WebUtils;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.lang.NullArgumentException;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.*;
@@ -59,7 +60,7 @@ public class QRCodeHelper {
         InputStream inputStream = httpURLConnection.getInputStream();
         String path = WxMimiProgram.get().getModuleCfg().qrCodePath();
         if (StringUtils.isBlank(path)) {
-            throw new NullPointerException("qrcode_path");
+            throw new NullArgumentException("qrcode_path");
         }
         String format = WxMimiProgram.get().getModuleCfg().qrCodeFormat();
         String fileName = DigestUtils.md5Hex(params.concat(format));

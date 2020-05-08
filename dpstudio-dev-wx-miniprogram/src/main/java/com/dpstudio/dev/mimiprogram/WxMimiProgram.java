@@ -206,6 +206,11 @@ public class WxMimiProgram implements IModule, IWxMimiProgram {
 
     @Override
     public IWxMimiProgramHandler getHandler() throws Exception {
-        return __moduleCfg.handler();
+        return __moduleCfg.iWxMimiProgramHandler();
+    }
+
+    @Override
+    public IWxMimiProgramPayHandler getPayHandler() throws Exception {
+        return __moduleCfg.iWxMimiProgramPayHandler();
     }
 }

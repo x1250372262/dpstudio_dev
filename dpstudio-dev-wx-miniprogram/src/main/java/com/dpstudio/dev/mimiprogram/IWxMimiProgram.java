@@ -104,6 +104,14 @@ public interface IWxMimiProgram {
     IWxMimiProgramHandler getHandler() throws Exception;
 
     /**
+     * 获取支付处理
+     *
+     * @return
+     * @throws Exception
+     */
+    IWxMimiProgramPayHandler getPayHandler() throws Exception;
+
+    /**
      * api接口
      */
     interface WX_API {
