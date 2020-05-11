@@ -51,9 +51,7 @@ public class ApiController {
      */
     @RequestMapping(value = "create", method = Type.HttpMethod.GET)
     public IView create() throws Exception {
-//        if (!init) {
-//            init();
-//        }
+        apiResult = new ApiService().createDoc();
         return View.redirectView("/dpstudio/wd/index");
     }
 

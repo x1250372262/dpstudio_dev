@@ -1,6 +1,7 @@
 package com.dpstudio.dev.doc.web;
 
 import com.dpstudio.dev.doc.core.DpstudioDoc;
+import com.dpstudio.dev.doc.core.annotation.Doc;
 import com.dpstudio.dev.doc.core.model.ApiDoc;
 import com.dpstudio.dev.doc.core.model.ApiInfo;
 import com.dpstudio.dev.doc.core.model.ApiModule;
@@ -40,7 +41,16 @@ public class ApiService {
         Map<String, List<ApiModule>> apiModuleMap = ListUtils.groupBy(apiModules, new ListUtils.GroupBy<String, ApiModule>() {
             @Override
             public String groupBy(ApiModule row) {
-                return row.getType().getPackage().getName();
+                String packageName = row.getType().getPackage().getName();
+                Package p = Package.getPackage(packageName);
+                if (p == null) {
+                    return packageName;
+                }
+                Doc doc = p.getAnnotation(Doc.class);
+                if (doc == null || StringUtils.isBlank(doc.name())) {
+                    return packageName;
+                }
+                return doc.name();
             }
         });
         List<ApiInfo> apiInfoList = new ArrayList<>();
@@ -54,8 +64,8 @@ public class ApiService {
 
         }
         apiResult = new ApiResult(apiInfoList)
-                .attr("title",apiParams.title())
-                .attr("version",apiParams.version());
+                .attr("title", apiParams.title())
+                .attr("version", apiParams.version());
         apiResult.setApiModuleList(apiModules);
         init = true;
         return apiResult;
