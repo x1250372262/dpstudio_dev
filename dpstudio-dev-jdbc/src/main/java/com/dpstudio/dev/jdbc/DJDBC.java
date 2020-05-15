@@ -1,23 +1,21 @@
 package com.dpstudio.dev.jdbc;
 
+import com.dpstudio.dev.jdbc.session.IDSession;
+import com.dpstudio.dev.jdbc.session.impl.DSessionImpl;
 import net.ymate.platform.persistence.Fields;
 import net.ymate.platform.persistence.IResultSet;
 import net.ymate.platform.persistence.IShardingable;
 import net.ymate.platform.persistence.Page;
 import net.ymate.platform.persistence.base.IEntity;
-import net.ymate.platform.persistence.base.ShardingList;
 import net.ymate.platform.persistence.jdbc.ISession;
-import net.ymate.platform.persistence.jdbc.JDBC;
 import net.ymate.platform.persistence.jdbc.base.IResultSetHandler;
 import net.ymate.platform.persistence.jdbc.query.BatchSQL;
 import net.ymate.platform.persistence.jdbc.query.EntitySQL;
 import net.ymate.platform.persistence.jdbc.query.SQL;
 import net.ymate.platform.persistence.jdbc.query.Where;
 import net.ymate.platform.persistence.jdbc.support.BaseEntity;
-import org.apache.commons.lang.ArrayUtils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,18 +29,35 @@ public class DJDBC {
 
     private static ISession iSession;
 
+    private IDSession idSession = new DSessionImpl();
+
     public static DJDBC get() {
         return new DJDBC();
     }
 
-    public ISession session(){
+    public static DJDBC get(String dsName) {
+        return new DJDBC(dsName);
+    }
+
+    public ISession session() {
         return iSession;
     }
 
     private DJDBC() {
         try {
-            if(iSession == null){
-                iSession = JDBC.get().openSession();
+            if (iSession == null) {
+                iSession = idSession.get();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("jdbc初始化失败" + e.getMessage());
+        }
+    }
+
+    private DJDBC(String dsName) {
+        try {
+            if (iSession == null) {
+                iSession = idSession.get(dsName);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -219,18 +234,6 @@ public class DJDBC {
     }
 
 
-    public <T extends IEntity> List<T> update(ShardingList<T> entities, Fields filter) throws Exception {
-        List<T> _results = new ArrayList<T>();
-        for (ShardingList.ShardingElement<T> _element : entities) {
-            T _entity = this.update(_element.getElement(), filter, _element);
-            if (_entity != null) {
-                _results.add(_entity);
-            }
-        }
-        return _results;
-    }
-
-
     public <T extends IEntity> T insert(T entity) throws Exception {
         return insert(entity, null, (entity instanceof IShardingable ? (IShardingable) entity : null));
     }
@@ -254,14 +257,9 @@ public class DJDBC {
 
 
     public <T extends IEntity> List<T> insert(List<T> entities) throws Exception {
-        return insert(entities, null);
+        List<T> returnValue = insert(entities, null);
+        return returnValue;
     }
-
-
-    public <T extends IEntity> List<T> insert(ShardingList<T> entities) throws Exception {
-        return this.insert(entities, null);
-    }
-
 
     @SuppressWarnings("unchecked")
     public <T extends IEntity> List<T> insert(List<T> entities, Fields filter) throws Exception {
@@ -270,31 +268,11 @@ public class DJDBC {
         return returnValue;
     }
 
-
-    public <T extends IEntity> List<T> insert(ShardingList<T> entities, Fields filter) throws Exception {
-        List<T> _results = new ArrayList<T>();
-        for (ShardingList.ShardingElement<T> _element : entities) {
-            T _entity = this.insert(_element.getElement(), filter, _element);
-            if (_entity != null) {
-                _results.add(_entity);
-            }
-        }
-        return _results;
+    public int insertAll(List<?> entities) throws Exception {
+        int result = idSession.insertAll(entities);
+        iSession.close();
+        return result;
     }
-
-
-    public <T extends IEntity> T delete(T entity) throws Exception {
-        return delete(entity, (entity instanceof IShardingable ? (IShardingable) entity : null));
-    }
-
-
-    public <T extends IEntity> T delete(T entity, IShardingable shardingable) throws Exception {
-        if (this.delete(entity.getClass(), entity.getId(), shardingable) > 0) {
-            return entity;
-        }
-        return null;
-    }
-
 
     public <T extends IEntity> int delete(Class<T> entityClass, Serializable id) throws Exception {
         return delete(entityClass, id, null);
@@ -315,31 +293,10 @@ public class DJDBC {
     }
 
 
-    public <T extends IEntity> List<T> delete(ShardingList<T> entities) throws Exception {
-        List<T> _results = new ArrayList<T>();
-        for (ShardingList.ShardingElement<T> _element : entities) {
-            T _entity = this.delete(_element.getElement(), _element);
-            if (_entity != null) {
-                _results.add(_entity);
-            }
-        }
-        return _results;
-    }
-
-
     public <T extends IEntity> int[] delete(Class<T> entityClass, Serializable[] ids) throws Exception {
         int[] returnValue = iSession.delete(entityClass, ids);
         iSession.close();
         return returnValue;
-    }
-
-
-    public <T extends IEntity> int[] delete(Class<T> entityClass, ShardingList<Serializable> ids) throws Exception {
-        List<Integer> _results = new ArrayList<Integer>();
-        for (ShardingList.ShardingElement<Serializable> _element : ids) {
-            _results.add(this.delete(entityClass, _element.getElement(), _element));
-        }
-        return ArrayUtils.toPrimitive(_results.toArray(new Integer[0]));
     }
 
 

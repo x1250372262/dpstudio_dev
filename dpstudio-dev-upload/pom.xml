@@ -1,15 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
     <parent>
-        <artifactId>dpstudio-dev</artifactId>
         <groupId>com.dpstudio.dev</groupId>
+        <artifactId>dpstudio-dev</artifactId>
         <version>1.0.1</version>
     </parent>
-    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dpstudio-dev-upload</artifactId>
     <version>1.0.0</version>
-    <artifactId>dpstudio-dev-captcha</artifactId>
+    <packaging>jar</packaging>
+
+    <name>dpstudio-dev-upload</name>
+    <url>http://www.ymate.net/</url>
+    <description>YMP Quickstart Archetype</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,7 +36,6 @@
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-core</artifactId>
-            <version>${ymate.platform.version}</version>
         </dependency>
         <dependency>
             <groupId>net.ymate.platform</groupId>
@@ -62,14 +68,14 @@
             <version>1.0.1</version>
         </dependency>
         <dependency>
-            <groupId>net.ymate.module</groupId>
-            <artifactId>ymate-module-captcha-web</artifactId>
-            <version>1.0.1</version>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>5.6.22</version>
         </dependency>
         <dependency>
-            <artifactId>ymate-thirdparty-sms</artifactId>
-            <groupId>net.ymate.thirdparty</groupId>
-            <version>2.0.0</version>
+            <groupId>com.qcloud</groupId>
+            <artifactId>qcloud-java-sdk</artifactId>
+            <version>2.0.7</version>
         </dependency>
     </dependencies>
 </project>

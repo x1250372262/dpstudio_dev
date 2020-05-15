@@ -10,7 +10,7 @@
         <version>1.0.1</version>
     </parent>
     <artifactId>dpstudio-dev-excel</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
     <name>dpstudio-dev-excel</name>

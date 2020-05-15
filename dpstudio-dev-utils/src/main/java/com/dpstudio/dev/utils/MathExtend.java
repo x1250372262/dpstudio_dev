@@ -20,7 +20,7 @@ public class MathExtend {
      * @param v2
      * @return 两个参数的和
      */
-    public double add(double v1, double v2) {
+    public static double add(double v1, double v2) {
         BigDecimal b1 = new BigDecimal(Double.toString(v1));
         BigDecimal b2 = new BigDecimal(Double.toString(v2));
         return b1.add(b2).doubleValue();
@@ -33,7 +33,7 @@ public class MathExtend {
      * @param v2
      * @return 两个参数数学加和，以字符串格式返回
      */
-    public String add(String v1, String v2) {
+    public static String add(String v1, String v2) {
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
         return b1.add(b2).toString();
@@ -46,7 +46,7 @@ public class MathExtend {
      * @param v2
      * @return 两个参数的差
      */
-    public double subtract(double v1, double v2) {
+    public static double subtract(double v1, double v2) {
         BigDecimal b1 = new BigDecimal(Double.toString(v1));
         BigDecimal b2 = new BigDecimal(Double.toString(v2));
         return b1.subtract(b2).doubleValue();
@@ -59,7 +59,7 @@ public class MathExtend {
      * @param v2
      * @return 两个参数数学差，以字符串格式返回
      */
-    public String subtract(String v1, String v2) {
+    public static String subtract(String v1, String v2) {
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
         return b1.subtract(b2).toString();
@@ -72,7 +72,7 @@ public class MathExtend {
      * @param v2
      * @return 两个参数的积
      */
-    public double multiply(double v1, double v2) {
+    public static double multiply(double v1, double v2) {
         BigDecimal b1 = new BigDecimal(Double.toString(v1));
         BigDecimal b2 = new BigDecimal(Double.toString(v2));
         return b1.multiply(b2).doubleValue();
@@ -85,7 +85,7 @@ public class MathExtend {
      * @param v2
      * @return 两个参数的数学积，以字符串格式返回
      */
-    public String multiply(String v1, String v2) {
+    public static String multiply(String v1, String v2) {
         BigDecimal b1 = new BigDecimal(v1);
         BigDecimal b2 = new BigDecimal(v2);
         return b1.multiply(b2).toString();
@@ -98,7 +98,7 @@ public class MathExtend {
      * @param v2
      * @return 两个参数的商
      */
-    public double divide(double v1, double v2) {
+    public static double divide(double v1, double v2) {
         return divide(v1, v2, DEFAULT_DIV_SCALE);
     }
 
@@ -110,7 +110,7 @@ public class MathExtend {
      * @param scale 表示需要精确到小数点以后几位
      * @return 两个参数的商
      */
-    public double divide(double v1, double v2, int scale) {
+    public static double divide(double v1, double v2, int scale) {
         return divide(v1, v2, scale, BigDecimal.ROUND_HALF_EVEN);
     }
 
@@ -123,7 +123,7 @@ public class MathExtend {
      * @param round_mode 表示用户指定的舍入模式
      * @return 两个参数的商
      */
-    public double divide(double v1, double v2, int scale, int round_mode) {
+    public static double divide(double v1, double v2, int scale, int round_mode) {
         if (scale < 0) {
             throw new IllegalArgumentException("The scale must be a positive integer or zero");
         }
@@ -139,7 +139,7 @@ public class MathExtend {
      * @param v2
      * @return 两个参数的商，以字符串格式返回
      */
-    public String divide(String v1, String v2) {
+    public static String divide(String v1, String v2) {
         return divide(v1, v2, DEFAULT_DIV_SCALE);
     }
 
@@ -151,7 +151,7 @@ public class MathExtend {
      * @param scale 表示需要精确到小数点以后几位
      * @return 两个参数的商，以字符串格式返回
      */
-    public String divide(String v1, String v2, int scale) {
+    public static String divide(String v1, String v2, int scale) {
         return divide(v1, v2, scale, BigDecimal.ROUND_HALF_EVEN);
     }
 
@@ -164,7 +164,7 @@ public class MathExtend {
      * @param round_mode 表示用户指定的舍入模式
      * @return 两个参数的商，以字符串格式返回
      */
-    public String divide(String v1, String v2, int scale, int round_mode) {
+    public static String divide(String v1, String v2, int scale, int round_mode) {
         if (scale < 0) {
             throw new IllegalArgumentException("The scale must be a positive integer or zero");
         }
@@ -180,7 +180,7 @@ public class MathExtend {
      * @param scale 小数点后保留几位
      * @return 四舍五入后的结果
      */
-    public double round(double v, int scale) {
+    public static double round(double v, int scale) {
         return round(v, scale, BigDecimal.ROUND_HALF_EVEN);
     }
 
@@ -192,7 +192,7 @@ public class MathExtend {
      * @param round_mode 指定的舍入模式
      * @return 四舍五入后的结果
      */
-    public double round(double v, int scale, int round_mode) {
+    public static double round(double v, int scale, int round_mode) {
         if (scale < 0) {
             throw new IllegalArgumentException("The scale must be a positive integer or zero");
         }
@@ -207,7 +207,7 @@ public class MathExtend {
      * @param scale 小数点后保留几位
      * @return 四舍五入后的结果，以字符串格式返回
      */
-    public String round(String v, int scale) {
+    public static String round(String v, int scale) {
         return round(v, scale, BigDecimal.ROUND_HALF_EVEN);
     }
 
@@ -219,7 +219,7 @@ public class MathExtend {
      * @param round_mode 指定的舍入模式
      * @return 四舍五入后的结果，以字符串格式返回
      */
-    public String round(String v, int scale, int round_mode) {
+    public static String round(String v, int scale, int round_mode) {
         if (scale < 0) {
             throw new IllegalArgumentException("The scale must be a positive integer or zero");
         }
