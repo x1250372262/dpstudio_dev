@@ -5,6 +5,7 @@ import net.ymate.platform.core.util.ClassUtils;
 import net.ymate.platform.persistence.annotation.Property;
 import net.ymate.platform.persistence.jdbc.ISession;
 import net.ymate.platform.persistence.jdbc.JDBC;
+import org.apache.commons.lang.StringUtils;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
@@ -21,8 +22,11 @@ public class DSessionImpl implements IDSession {
 
     private static ISession iSession;
 
+    private static String _ds;
+
     @Override
     public ISession get(String ds) throws Exception {
+        _ds = ds;
         return iSession != null ? iSession : JDBC.get().openSession(ds);
     }
 
@@ -53,6 +57,13 @@ public class DSessionImpl implements IDSession {
 
     @Override
     public int insertAll(List<?> entities) throws Exception {
+        if(iSession == null){
+            if(StringUtils.isNotBlank(_ds)){
+                iSession = get(_ds);
+            }else{
+                iSession = get();
+            }
+        }
         if (entities != null || entities.size() > 0) {
             Object entity = entities.get(0);
             Class cls = entity.getClass();
