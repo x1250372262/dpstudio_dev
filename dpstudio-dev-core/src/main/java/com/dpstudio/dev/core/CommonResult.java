@@ -7,6 +7,7 @@ import net.ymate.platform.webmvc.view.IView;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ import java.util.Map;
  * @Time: 17:49.
  * @Description: 通用返回结果
  */
-public class CommonResult {
+public class CommonResult implements Serializable {
 
     private int code;
 
