@@ -31,27 +31,27 @@ import java.util.zip.ZipOutputStream;
 public class ExcelAliExportHelper implements Closeable {
 
     private List<List<?>> resultData;
-    //excle临时文件目录
-    private String excleFilePath;
+    //excel临时文件目录
+    private String excelFilePath;
     //zip临时文件目录
     private String zipFilePath;
 
     private static Class<?> dataClass;
 
-    private ExcelAliExportHelper(String excleFilePath, String zipFilePath) {
-        this.excleFilePath = excleFilePath;
+    private ExcelAliExportHelper(String excelFilePath, String zipFilePath) {
+        this.excelFilePath = excelFilePath;
         this.zipFilePath = zipFilePath;
     }
 
-    public static ExcelAliExportHelper init(String excleFilePath, String zipFilePath) {
-        return new ExcelAliExportHelper(excleFilePath, zipFilePath);
+    public static ExcelAliExportHelper init(String excelFilePath, String zipFilePath) {
+        return new ExcelAliExportHelper(excelFilePath, zipFilePath);
     }
 
     public static ExcelAliExportHelper init(Class<?> classes) {
         dataClass= classes;
-        String excleFilePath = RuntimeUtils.getRootPath() + File.separator + "export" + File.separator;
+        String excelFilePath = RuntimeUtils.getRootPath() + File.separator + "export" + File.separator;
         String zipFilePath = RuntimeUtils.getRootPath() + File.separator + "zip" + File.separator;
-        return new ExcelAliExportHelper(excleFilePath, zipFilePath);
+        return new ExcelAliExportHelper(excelFilePath, zipFilePath);
     }
 
     public ExcelAliExportHelper addData(List<?> data) {
@@ -63,7 +63,7 @@ public class ExcelAliExportHelper implements Closeable {
     }
 
     public File export(String fileName) throws Exception {
-        FileUtils.fixAndMkDir(excleFilePath);
+        FileUtils.fixAndMkDir(excelFilePath);
         FileUtils.fixAndMkDir(zipFilePath);
         List<File> files = new ArrayList<>();
         if (resultData != null && resultData.size() > 0) {
@@ -75,7 +75,7 @@ public class ExcelAliExportHelper implements Closeable {
                 if (data == null || data.isEmpty()) {
                     break;
                 }
-                File outFile = new File(excleFilePath, fileName + idx +DateTimeUtils.formatTime( DateTimeUtils.currentTimeMillis(),"yyyyMMddHHmmss") + ".xlsx");
+                File outFile = new File(excelFilePath, fileName + idx +DateTimeUtils.formatTime( DateTimeUtils.currentTimeMillis(),"yyyyMMddHHmmss") + ".xlsx");
 
                 EasyExcel.write(outFile.getPath(), dataClass).sheet(fileName+idx).doWrite(data);
                 //输出信息

@@ -1,11 +1,11 @@
 package com.dpstudio.dev.excel.analysis.impl;
 
 import com.dpstudio.dev.excel.analysis.ISheetHandler;
-import com.dpstudio.dev.excel.analysis.annotation.Excle;
+import com.dpstudio.dev.excel.analysis.annotation.Excel;
 import com.dpstudio.dev.excel.analysis.annotation.ImportColumn;
 import com.dpstudio.dev.excel.analysis.annotation.Validate;
 import com.dpstudio.dev.excel.analysis.bean.*;
-import com.dpstudio.dev.excel.exception.ExcleException;
+import com.dpstudio.dev.excel.exception.ExcelException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -24,27 +24,27 @@ import static com.dpstudio.dev.excel.utils.ExcleUtils.isRowNotEmpty;
  * @Author: 徐建鹏.
  * @Date: 2019-07-10.
  * @Time: 17:01.
- * @Description: 默认excle导入处理实现
+ * @Description: 默认excel导入处理实现
  */
 public class DefaultSheetHandler implements ISheetHandler {
 
     /**
      * exlce取值方式
      */
-    private Excle.TYPE type;
+    private Excel.TYPE type;
 
     /**
      * vo对象class
      */
     private Class cls;
 
-    public DefaultSheetHandler create(Class cls) throws ExcleException {
+    public DefaultSheetHandler create(Class cls) throws ExcelException {
         this.cls = cls;
-        Excle excle = (Excle) cls.getAnnotation(Excle.class);
-        if (excle == null) {
-            throw new ExcleException("vo对象未包含Excle注解");
+        Excel excel = (Excel) cls.getAnnotation(Excel.class);
+        if (excel == null) {
+            throw new ExcelException("vo对象未包含Excle注解");
         }
-        this.type = excle.type();
+        this.type = excel.type();
         return this;
     }
 
@@ -81,7 +81,7 @@ public class DefaultSheetHandler implements ISheetHandler {
     private CellResult parseCell(Field field, Cell cell, String title) throws Exception {
         ImportColumn importColumn = field.getAnnotation(ImportColumn.class);
         if (importColumn == null) {
-            throw new ExcleException("vo类注解错误");
+            throw new ExcelException("vo类注解错误");
         }
         HandlerBean importHandlerBean = HandlerBean.create(importColumn);
         Validate validate = field.getAnnotation(Validate.class);
@@ -134,7 +134,7 @@ public class DefaultSheetHandler implements ISheetHandler {
                     for (int _cellIdx = _row.getFirstCellNum(); _cellIdx <= _row.getLastCellNum(); _cellIdx++) {
                         Field field = fieldMap.get(_cellIdx);
                         Object title = getTitle(sheet.getRow(sheet.getFirstRowNum()).getCell(_cellIdx));
-                        if (type.equals(Excle.TYPE.TITLE)) {
+                        if (type.equals(Excel.TYPE.TITLE)) {
                             field = fieldMap.get(title);
                         }
                         if (field != null) {

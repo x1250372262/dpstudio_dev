@@ -9,7 +9,7 @@ import org.apache.poi.ss.usermodel.Row;
  * @Author: 徐建鹏.
  * @Date: 2019-07-18.
  * @Time: 11:32.
- * @Description: excle工具类
+ * @Description: excel工具类
  */
 public class ExcleUtils {
 

@@ -7,7 +7,7 @@ import org.apache.poi.ss.usermodel.Sheet;
  * @Author: 徐建鹏.
  * @Date: 2019-07-10.
  * @Time: 16:32.
- * @Description: excle导入处理接口
+ * @Description: excel导入处理接口
  */
 public interface ISheetHandler {
 

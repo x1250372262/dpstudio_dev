@@ -7,12 +7,12 @@ package com.dpstudio.dev.excel.exception;
  * @Time: 09:34.
  * @Description:
  */
-public class ExcleException extends Exception {
+public class ExcelException extends Exception {
 
-    public ExcleException() {
+    public ExcelException() {
         super();
     }
-    public ExcleException(String msg) {
+    public ExcelException(String msg) {
         super(msg);
     }
 }

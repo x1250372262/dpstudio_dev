@@ -4,7 +4,7 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Excle {
+public @interface Excel {
 
     /**
      * exlce取值方式

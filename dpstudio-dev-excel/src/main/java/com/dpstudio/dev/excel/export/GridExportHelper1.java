@@ -1,7 +1,7 @@
 package com.dpstudio.dev.excel.export;
 
 
-import com.dpstudio.dev.excel.exception.ExcleException;
+import com.dpstudio.dev.excel.exception.ExcelException;
 import com.dpstudio.dev.utils.FileUtils;
 import net.ymate.platform.core.util.DateTimeUtils;
 import net.ymate.platform.core.util.RuntimeUtils;
@@ -42,25 +42,25 @@ public class GridExportHelper1 implements Closeable {
 
     //模板文件路径
     private String templatePath;
-    //excle临时文件目录
-    private String excleFilePath;
+    //excel临时文件目录
+    private String excelFilePath;
     //zip临时文件目录
     private String zipFilePath;
 
-    private GridExportHelper1(String templatePath, String excleFilePath, String zipFilePath) {
+    private GridExportHelper1(String templatePath, String excelFilePath, String zipFilePath) {
         this.templatePath = templatePath;
-        this.excleFilePath = excleFilePath;
+        this.excelFilePath = excelFilePath;
         this.zipFilePath = zipFilePath;
     }
 
-    public static GridExportHelper1 init(String templatePath, String excleFilePath, String zipFilePath) {
-        return new GridExportHelper1(templatePath, excleFilePath, zipFilePath);
+    public static GridExportHelper1 init(String templatePath, String excelFilePath, String zipFilePath) {
+        return new GridExportHelper1(templatePath, excelFilePath, zipFilePath);
     }
 
     public static GridExportHelper1 init(String templatePath) {
-        String excleFilePath = RuntimeUtils.getRootPath() + File.separator + "export" + File.separator;
+        String excelFilePath = RuntimeUtils.getRootPath() + File.separator + "export" + File.separator;
         String zipFilePath = RuntimeUtils.getRootPath() + File.separator + "zip" + File.separator;
-        return new GridExportHelper1(templatePath, excleFilePath, zipFilePath);
+        return new GridExportHelper1(templatePath, excelFilePath, zipFilePath);
     }
 
     private Boolean checkInitHeaders() {
@@ -115,12 +115,12 @@ public class GridExportHelper1 implements Closeable {
 
 
     public File export(String fileName, String cellRef) throws Exception {
-        FileUtils.fixAndMkDir(excleFilePath);
+        FileUtils.fixAndMkDir(excelFilePath);
         FileUtils.fixAndMkDir(zipFilePath);
         //输入信息
         File inFile = getTemplate(templatePath);
         if (inFile == null) {
-            throw new ExcleException("Excel 模板未找到。");
+            throw new ExcelException("Excel 模板未找到。");
         }
         InputStream is = new FileInputStream(inFile);
 
@@ -135,7 +135,7 @@ public class GridExportHelper1 implements Closeable {
                     break;
                 }
                 //输出信息
-                File outFile = new File(excleFilePath, fileName + idx + ".xlsx");
+                File outFile = new File(excelFilePath, fileName + idx + ".xlsx");
                 if (StringUtils.isNotBlank(cellRef) && data.get("headers") != null) {
                     files.add(exportExcel(is, outFile, data, cellRef));
                 }
