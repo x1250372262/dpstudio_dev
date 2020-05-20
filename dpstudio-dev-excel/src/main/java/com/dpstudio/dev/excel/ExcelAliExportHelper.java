@@ -36,7 +36,7 @@ public class ExcelAliExportHelper implements Closeable {
     //zip临时文件目录
     private String zipFilePath;
 
-    private Class<?> dataClass;
+    private static Class<?> dataClass;
 
     private ExcelAliExportHelper(String excleFilePath, String zipFilePath) {
         this.excleFilePath = excleFilePath;
@@ -47,7 +47,8 @@ public class ExcelAliExportHelper implements Closeable {
         return new ExcelAliExportHelper(excleFilePath, zipFilePath);
     }
 
-    public static ExcelAliExportHelper init() {
+    public static ExcelAliExportHelper init(Class<?> classes) {
+        dataClass= classes;
         String excleFilePath = RuntimeUtils.getRootPath() + File.separator + "export" + File.separator;
         String zipFilePath = RuntimeUtils.getRootPath() + File.separator + "zip" + File.separator;
         return new ExcelAliExportHelper(excleFilePath, zipFilePath);
@@ -74,8 +75,9 @@ public class ExcelAliExportHelper implements Closeable {
                 if (data == null || data.isEmpty()) {
                     break;
                 }
-                File outFile = new File(excleFilePath, fileName + idx + ".xlsx");
-                EasyExcel.write(outFile.getName(), dataClass).sheet(fileName).doWrite(data);
+                File outFile = new File(excleFilePath, fileName + idx +DateTimeUtils.formatTime( DateTimeUtils.currentTimeMillis(),"yyyyMMddHHmmss") + ".xlsx");
+
+                EasyExcel.write(outFile.getPath(), dataClass).sheet(fileName+idx).doWrite(data);
                 //输出信息
                 files.add(outFile);
             }
