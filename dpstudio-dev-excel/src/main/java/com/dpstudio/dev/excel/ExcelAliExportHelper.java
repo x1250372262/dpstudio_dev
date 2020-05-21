@@ -59,7 +59,7 @@ public class ExcelAliExportHelper<T> implements Closeable {
      * @return
      * @throws Exception
      */
-    public File exportOneSFile(String fileName) throws Exception {
+    public File exportOneFile(String fileName) throws Exception {
         FileUtils.fixAndMkDir(excelFilePath);
         fileName = fileName + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMddHHmmss");
         File outFile = new File(excelFilePath, fileName + ".xlsx");
