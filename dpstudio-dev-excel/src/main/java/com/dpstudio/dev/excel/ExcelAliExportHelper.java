@@ -6,19 +6,10 @@ import com.dpstudio.dev.utils.FileUtils;
 import net.ymate.platform.core.util.DateTimeUtils;
 import net.ymate.platform.core.util.RuntimeUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.jexl3.JexlBuilder;
-import org.apache.commons.jexl3.JexlEngine;
-import org.jxls.common.Context;
-import org.jxls.expression.JexlExpressionEvaluator;
-import org.jxls.transform.Transformer;
-import org.jxls.transform.poi.PoiTransformer;
-import org.jxls.util.JxlsHelper;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -28,9 +19,9 @@ import java.util.zip.ZipOutputStream;
  * @Time: 14:30.
  * @Description: Excel文件导出助手类
  */
-public class ExcelAliExportHelper implements Closeable {
+public class ExcelAliExportHelper<T> implements Closeable {
 
-    private List<List<?>> resultData;
+    private List<List<T>> resultData;
     //excel临时文件目录
     private String excelFilePath;
     //zip临时文件目录
@@ -48,18 +39,46 @@ public class ExcelAliExportHelper implements Closeable {
     }
 
     public static ExcelAliExportHelper init(Class<?> classes) {
-        dataClass= classes;
+        dataClass = classes;
         String excelFilePath = RuntimeUtils.getRootPath() + File.separator + "export" + File.separator;
         String zipFilePath = RuntimeUtils.getRootPath() + File.separator + "zip" + File.separator;
         return new ExcelAliExportHelper(excelFilePath, zipFilePath);
     }
 
-    public ExcelAliExportHelper addData(List<?> data) {
+    public ExcelAliExportHelper addData(List<T> data) {
         if (resultData == null) {
             resultData = new ArrayList<>();
         }
         resultData.add(data);
         return this;
+    }
+
+    /**
+     * 导出一个文件  可能会占用cpu和内存  不建议使用
+     * @param fileName
+     * @return
+     * @throws Exception
+     */
+    public File exportOneSFile(String fileName) throws Exception {
+        FileUtils.fixAndMkDir(excelFilePath);
+        fileName = fileName + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMddHHmmss");
+        File outFile = new File(excelFilePath, fileName + ".xlsx");
+        if (resultData != null && resultData.size() > 0) {
+            List<T> data = new ArrayList<>();
+            for (int idx = 0; ; idx++) {
+                if (resultData.size() <= idx) {
+                    break;
+                }
+                List<T> tempData = resultData.get(idx);
+                if (tempData == null || tempData.isEmpty()) {
+                    break;
+                }
+
+                data.addAll(tempData);
+            }
+            EasyExcel.write(outFile.getPath(), dataClass).sheet(fileName).doWrite(data);
+        }
+        return outFile;
     }
 
     public File export(String fileName) throws Exception {
@@ -71,13 +90,13 @@ public class ExcelAliExportHelper implements Closeable {
                 if (resultData.size() <= idx) {
                     break;
                 }
-                List<?> data = resultData.get(idx);
+                List<T> data = resultData.get(idx);
                 if (data == null || data.isEmpty()) {
                     break;
                 }
-                File outFile = new File(excelFilePath, fileName + idx +DateTimeUtils.formatTime( DateTimeUtils.currentTimeMillis(),"yyyyMMddHHmmss") + ".xlsx");
+                File outFile = new File(excelFilePath, fileName + idx + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMddHHmmss") + ".xlsx");
 
-                EasyExcel.write(outFile.getPath(), dataClass).sheet(fileName+idx).doWrite(data);
+                EasyExcel.write(outFile.getPath(), dataClass).sheet(fileName + idx).doWrite(data);
                 //输出信息
                 files.add(outFile);
             }
