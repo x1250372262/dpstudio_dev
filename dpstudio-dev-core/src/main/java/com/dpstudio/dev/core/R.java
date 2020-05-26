@@ -1,6 +1,6 @@
 package com.dpstudio.dev.core;
 
-import com.dpstudio.dev.core.code.CommonCode;
+import com.dpstudio.dev.core.code.C;
 import net.ymate.platform.persistence.IResultSet;
 import net.ymate.platform.webmvc.util.WebResult;
 import net.ymate.platform.webmvc.view.IView;
@@ -17,8 +17,7 @@ import java.util.Map;
  * @Time: 17:49.
  * @Description: 通用返回结果
  */
-@Deprecated
-public class CommonResult implements Serializable {
+public class R implements Serializable {
 
     private int code;
 
@@ -26,32 +25,34 @@ public class CommonResult implements Serializable {
 
     private Map<String, Object> attrs = new HashMap<String, Object>();
 
-    private CommonResult() {
+    private R() {
     }
 
-    private CommonResult(int code) {
+    private R(int code) {
         this.code = code;
     }
 
     /**
      * 根据参数返回成功还是失败
+     *
      * @param object
      * @return
      */
-    public static CommonResult toResult(Object object) {
+    public static R result(Object object) {
         if (object != null) {
-            return CommonResult.successResult();
+            return R.ok();
         }
-        return CommonResult.errorResult();
+        return R.fail();
     }
 
     /**
      * 查询列表
+     *
      * @param resultSet
      * @param page
      * @return
      */
-    public static IView listView(IResultSet resultSet,int page){
+    public static IView listView(IResultSet resultSet, int page) {
         return WebResult.succeed().data(resultSet.getResultData())
                 .attr("total", resultSet.getRecordCount())
                 .attr("page", page).toJSON();
@@ -59,60 +60,67 @@ public class CommonResult implements Serializable {
 
     /**
      * 查询列表
+     *
      * @param resultSet
      * @return
      */
-    public static IView listView(IResultSet resultSet){
+    public static IView listView(IResultSet resultSet) {
         return WebResult.succeed().data(resultSet.getResultData()).toJSON();
     }
 
     /**
      * 成功result
+     *
      * @return
      */
-    public static CommonResult successResult() {
-        return CommonResult.create(CommonCode.COMMON_OPTION_SUCCESS.getCode())
-                .msg(CommonCode.COMMON_OPTION_SUCCESS.getMsg());
+    public static R ok() {
+        return R.create(C.SUCCESS.getCode())
+                .msg(C.SUCCESS.getMsg());
     }
 
     /**
      * 返回成功 并且带map参数
+     *
      * @return
      */
-    public static CommonResult mapResult(Map<String, Object> attrs) {
-        return CommonResult.successResult().attrs(attrs);
+    public static R mapResult(Map<String, Object> attrs) {
+        return R.ok().attrs(attrs);
     }
 
     /**
      * 失败result
+     *
      * @return
      */
-    public static CommonResult errorResult() {
-        return CommonResult.create(CommonCode.COMMON_OPTION_ERROR.getCode())
-                .msg(CommonCode.COMMON_OPTION_ERROR.getMsg());
+    public static R fail() {
+        return R.create(C.ERROR.getCode())
+                .msg(C.ERROR.getMsg());
     }
 
     /**
      * 成功view
+     *
      * @return
      */
-    public static IView successView() {
-        return CommonResult.successResult().toWebResult().toJSON();
+    public static IView okJson() {
+        return R.ok().webResult().toJSON();
     }
 
     /**
      * 失败view
+     *
      * @return
      */
-    public static IView errorView() {
-        return CommonResult.errorResult().toWebResult().toJSON();
+    public static IView failJson() {
+        return R.fail().webResult().toJSON();
     }
 
     /**
      * 转换成webresult
+     *
      * @return
      */
-    public WebResult toWebResult() {
+    public WebResult webResult() {
         if (attrs != null) {
             return WebResult.create(code).msg(msg).attrs(attrs);
         }
@@ -121,9 +129,10 @@ public class CommonResult implements Serializable {
 
     /**
      * 转换成webresult视图
+     *
      * @return
      */
-    public IView toJsonView() {
+    public IView json() {
         if (attrs != null) {
             return WebResult.create(code).msg(msg).attrs(attrs).toJSON();
         }
@@ -134,15 +143,15 @@ public class CommonResult implements Serializable {
         return code;
     }
 
-    public static CommonResult create() {
-        return new CommonResult();
+    public static R create() {
+        return new R();
     }
 
-    public static CommonResult create(int code) {
-        return new CommonResult(code);
+    public static R create(int code) {
+        return new R(code);
     }
 
-    public CommonResult code(int code) {
+    public R code(int code) {
         this.code = code;
         return this;
     }
@@ -151,7 +160,7 @@ public class CommonResult implements Serializable {
         return StringUtils.trimToEmpty(msg);
     }
 
-    public CommonResult msg(String msg) {
+    public R msg(String msg) {
         this.msg = msg;
         return this;
     }
@@ -165,17 +174,17 @@ public class CommonResult implements Serializable {
         return (T) this.attrs.get(attrKey);
     }
 
-    public CommonResult attr(String attrKey, Object attrValue) {
+    public R attr(String attrKey, Object attrValue) {
         this.attrs.put(attrKey, attrValue);
         return this;
     }
 
-    public CommonResult attr(String attrKey, Object attrValue,Object defaultValue) {
-        this.attrs.put(attrKey, ObjectUtils.defaultIfNull(attrValue,defaultValue));
+    public R attr(String attrKey, Object attrValue, Object defaultValue) {
+        this.attrs.put(attrKey, ObjectUtils.defaultIfNull(attrValue, defaultValue));
         return this;
     }
 
-    public CommonResult attrs(Map<String, Object> attrs) {
+    public R attrs(Map<String, Object> attrs) {
         this.attrs = attrs;
         return this;
     }
