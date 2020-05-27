@@ -1,6 +1,5 @@
 package com.dpstudio.dev.spi;
 
-import net.ymate.platform.core.util.ClassUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.Objects;
@@ -45,7 +44,7 @@ public class SpiLoader {
                 returnValue = t;
                 break;
             }
-            String spiClassName = StringUtils.defaultIfBlank(spi.className(),t.getClass().getName());
+            String spiClassName = StringUtils.defaultIfBlank(spi.className(), t.getClass().getName());
             if (Objects.equals(spiClassName, className)) {
                 returnValue = t;
             }
