@@ -8,7 +8,9 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +25,8 @@ public class R implements Serializable {
 
     private String msg;
 
+    private Map<String, String> logMap = new HashMap<>();
+
     private Map<String, Object> attrs = new HashMap<String, Object>();
 
     private R() {
@@ -30,6 +34,20 @@ public class R implements Serializable {
 
     private R(int code) {
         this.code = code;
+    }
+
+    public R logIds(String key, String logId) {
+        logMap.put(key, logId);
+        return this;
+    }
+
+    public R logIds(String logId) {
+        logMap.put("default", logId);
+        return this;
+    }
+
+    public Map<String, String> logMap() {
+        return logMap;
     }
 
     /**
