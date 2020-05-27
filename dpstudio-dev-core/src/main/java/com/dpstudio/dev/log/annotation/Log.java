@@ -33,7 +33,7 @@ public @interface Log {
      *
      * @return
      */
-    String action();
+    String action() default "";
 
 
     /**
