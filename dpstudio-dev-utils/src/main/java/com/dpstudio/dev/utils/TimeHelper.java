@@ -21,13 +21,21 @@ public class TimeHelper {
 
     }
 
-    public long DateTimeHelper(long date, int days) {
+    public long DateTimeHelper(long date, int type) {
         Calendar __calendar = Calendar.getInstance();
         if (String.valueOf(date).length() <= 10) {
             date *= 1000;
         }
         __calendar.setTimeInMillis(date);
-        __calendar.add(Calendar.DATE, days);
+
+        if(type==1){
+            __calendar.add(Calendar.YEAR, 0);
+            __calendar.set(Calendar.DAY_OF_YEAR, 1);
+        }else if(type==0){
+            __calendar.add(Calendar.MONTH, 0);
+            __calendar.set(Calendar.DAY_OF_MONTH, 1);
+        }
+
         return __calendar.getTimeInMillis();
     }
 
