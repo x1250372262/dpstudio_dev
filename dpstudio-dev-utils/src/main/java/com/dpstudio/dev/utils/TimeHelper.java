@@ -20,7 +20,6 @@ public class TimeHelper {
     private TimeHelper(){
 
     }
-
     public long DateTimeHelper(long date, int type) {
         Calendar __calendar = Calendar.getInstance();
         if (String.valueOf(date).length() <= 10) {
