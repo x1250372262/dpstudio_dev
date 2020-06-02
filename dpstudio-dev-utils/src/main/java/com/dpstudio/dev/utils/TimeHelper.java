@@ -44,7 +44,7 @@ public class TimeHelper {
      * @throws Exception
      */
     public Long getThisMonthFrist() throws Exception{
-        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), -1), "yyyy-MM"), "yyyy-MM").getTime();
+        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), 0), "yyyy-MM"), "yyyy-MM").getTime();
     }
 
     /**
@@ -53,7 +53,7 @@ public class TimeHelper {
      * @throws Exception
      */
     public Long getNextMonthFrist() throws Exception{
-        Long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), -1), "yyyy-MM"), "yyyy-MM").getTime();
+        Long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), 0), "yyyy-MM"), "yyyy-MM").getTime();
         Calendar _calendar = Calendar.getInstance();
         _calendar.setTimeInMillis(beginTime);
         _calendar.add(Calendar.MONTH, 1);
@@ -67,16 +67,16 @@ public class TimeHelper {
      * @throws Exception
      */
     public Long getThisYearFrist() throws Exception{
-        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), -1), "yyyy"), "yyyy").getTime();
+        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), 1), "yyyy"), "yyyy").getTime();
     }
 
     /**
-     * 下年月第一天
+     * 下年第一天
      * @return
      * @throws Exception
      */
     public Long getNextYearFrist() throws Exception{
-        Long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), -1), "yyyy"), "yyyy").getTime();
+        Long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), 1), "yyyy"), "yyyy").getTime();
         Calendar _calendar = Calendar.getInstance();
         _calendar.setTimeInMillis(beginTime);
         _calendar.add(Calendar.YEAR, 1);
