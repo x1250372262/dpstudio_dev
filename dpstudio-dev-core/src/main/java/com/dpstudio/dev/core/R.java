@@ -8,15 +8,13 @@ import org.apache.commons.lang.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @Author: 徐建鹏.
  * @Date: 2019-04-23.
- * @Time: 17:49.
+ * @Time: 17:49.¬
  * @Description: 通用返回结果
  */
 public class R implements Serializable {
