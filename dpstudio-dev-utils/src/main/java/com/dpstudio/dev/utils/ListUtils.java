@@ -120,6 +120,7 @@ public class ListUtils {
      * @param quantity
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static List<Map<String, List<Object>>> groupByQuantityMap(List<?> list, int quantity) {
         List<Map<String, List<Object>>> mapList = new ArrayList<>();
         if (list == null || list.size() == 0) {
@@ -133,7 +134,7 @@ public class ListUtils {
         int key = 0;
         while (count < list.size()) {
             Map<String, List<Object>> map = new HashMap<>();
-            List<Object> wrapList = (List<Object>) list.subList(count, (count + quantity) > list.size() ? list.size() : count + quantity);
+            List<Object> wrapList = (List<Object>) list.subList(count, Math.min((count + quantity), list.size()));
             map.put(key + "", wrapList);
             mapList.add(map);
             key++;
@@ -151,6 +152,7 @@ public class ListUtils {
      * @param quantity
      * @return
      */
+    @SuppressWarnings("unchecked")
     public static List<List<Object>> groupByQuantity(List<?> list, int quantity) {
         List<List<Object>> mapList = new ArrayList<>();
         if (list == null || list.size() == 0) {
@@ -163,7 +165,7 @@ public class ListUtils {
         int count = 0;
         int key = 0;
         while (count < list.size()) {
-            List<Object> wrapList = (List<Object>) list.subList(count, (count + quantity) > list.size() ? list.size() : count + quantity);
+            List<Object> wrapList = (List<Object>) list.subList(count, Math.min((count + quantity), list.size()));
             mapList.add(wrapList);
             key++;
             count += quantity;
@@ -171,5 +173,4 @@ public class ListUtils {
 
         return mapList;
     }
-
 }
