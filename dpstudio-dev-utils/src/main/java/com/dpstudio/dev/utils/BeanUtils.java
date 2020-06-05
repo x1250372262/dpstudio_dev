@@ -26,11 +26,25 @@ public class BeanUtils {
         void callBack(S s, T t);
     }
 
-
+    /**
+     * 复制bean
+     *
+     * @param source 要复制的
+     * @param target 目标对象
+     * @return 目标对象
+     */
     public static <S, T> T copy(S source, Supplier<T> target) {
         return copy(source, target, null);
     }
 
+    /**
+     * 复制bean
+     *
+     * @param source   要复制的
+     * @param target   目标对象
+     * @param callBack 处理额外数据接口
+     * @return 目标对象
+     */
     public static <S, T> T copy(S source, Supplier<T> target, BeanUtilCallBack<S, T> callBack) {
         T t = ClassUtils.wrapper(source).duplicate(target.get());
         if (callBack != null) {
@@ -41,11 +55,11 @@ public class BeanUtils {
     }
 
     /**
-     * 集合数据的拷贝
+     * 复制集合
      *
-     * @param sources: 数据源类
-     * @param target:  目标类::new(eg: UserVO::new)
-     * @return
+     * @param sources 要复制的
+     * @param target  目标对象
+     * @return 目标对象
      */
     public static <S, T> List<T> copyList(List<S> sources, Supplier<T> target) {
         return copyList(sources, target, null);
@@ -53,12 +67,12 @@ public class BeanUtils {
 
 
     /**
-     * 带回调函数的集合数据的拷贝（可自定义字段拷贝规则）
+     * 复制集合
      *
-     * @param sources:  数据源类
-     * @param target:   目标类::new(eg: UserVO::new)
-     * @param callBack: 回调函数
-     * @return
+     * @param sources  要复制的
+     * @param target   目标对象
+     * @param callBack 处理额外数据接口
+     * @return 目标对象
      */
     public static <S, T> List<T> copyList(List<S> sources, Supplier<T> target, BeanUtilCallBack<S, T> callBack) {
         List<T> list = new ArrayList<>(sources.size());
