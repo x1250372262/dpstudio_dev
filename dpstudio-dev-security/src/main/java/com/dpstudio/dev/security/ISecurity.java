@@ -1,6 +1,8 @@
 package com.dpstudio.dev.security;
 
+import com.alibaba.fastjson.JSONArray;
 import com.dpstudio.dev.security.bean.GroupBean;
+import com.dpstudio.dev.security.bean.MenuBean;
 import com.dpstudio.dev.security.bean.PermissionBean;
 import net.ymate.platform.core.YMP;
 
@@ -53,5 +55,27 @@ public interface ISecurity {
      * @return
      */
     List<PermissionBean> getPermissonList(String groupId);
+
+    /**
+     * 菜单列表
+     *
+     * @return
+     */
+    List<MenuBean> menuList();
+
+    /**
+     * 带权限的菜单
+     *
+     * @return
+     */
+    List<MenuBean> permissionMenu();
+
+    /**
+     * 带权限的菜单
+     * @param isFounder 是否总管理
+     * @param userPermissions 拥有的权限
+     * @return
+     */
+    List<MenuBean> permissionMenu(boolean isFounder,List<String> userPermissions);
 
 }

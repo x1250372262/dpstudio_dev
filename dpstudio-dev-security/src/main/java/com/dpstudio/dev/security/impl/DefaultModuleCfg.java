@@ -6,6 +6,7 @@ import com.dpstudio.dev.security.ISecurityModuleCfg;
 import net.ymate.platform.core.YMP;
 import net.ymate.platform.core.support.IConfigReader;
 import net.ymate.platform.core.support.impl.MapSafeConfigReader;
+import net.ymate.platform.core.util.RuntimeUtils;
 import org.apache.commons.lang.NullArgumentException;
 
 /**
@@ -20,18 +21,21 @@ public class DefaultModuleCfg implements ISecurityModuleCfg {
 
     private String packageName;
 
+    private String menuFilePath;
+
     private IAuthenticator authenticator;
 
-    private boolean isDisabled;
+    private boolean enabled;
 
     public DefaultModuleCfg(YMP owner) {
         IConfigReader _moduleCfgs = MapSafeConfigReader.bind(owner.getConfig().getModuleConfigs(ISecurity.MODULE_NAME));
         packageName = _moduleCfgs.getString("package_name");
+        menuFilePath = _moduleCfgs.getString("menu_file_path", "${root}/menu/menu.xml");
+        enabled = _moduleCfgs.getBoolean("enabled",false);
         authenticator = _moduleCfgs.getClassImpl("authenticator_class", IAuthenticator.class);
-        if (authenticator == null) {
+        if (authenticator == null && enabled) {
             throw new NullArgumentException("authenticator_class");
         }
-        isDisabled = _moduleCfgs.getBoolean("disabled");
     }
 
     @Override
@@ -45,7 +49,12 @@ public class DefaultModuleCfg implements ISecurityModuleCfg {
     }
 
     @Override
-    public boolean isDisabled() {
-        return isDisabled;
+    public boolean enabled() {
+        return enabled;
+    }
+
+    @Override
+    public String menuFilePath() {
+        return menuFilePath;
     }
 }

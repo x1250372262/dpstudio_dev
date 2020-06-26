@@ -17,7 +17,7 @@
         <module>dpstudio-dev-jdbc</module>
         <module>dpstudio-dev-bug</module>
         <module>dpstudio-dev-security</module>
-        <module>dpstudio-dev-upload</module>
+        <module>dpstudio-dev-generator</module>
     </modules>
     <packaging>pom</packaging>
 

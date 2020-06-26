@@ -49,7 +49,7 @@ public class SecurityProxy implements IProxy {
 
     @Override
     public Object doProxy(IProxyChain proxyChain) throws Throwable {
-        if (com.dpstudio.dev.security.Security.get().getModuleCfg().isDisabled()) {
+        if (!com.dpstudio.dev.security.Security.get().getModuleCfg().enabled()) {
             return proxyChain.doProxyChain();
         }
         if (proxyChain.getTargetClass().isAnnotationPresent(Security.class)) {

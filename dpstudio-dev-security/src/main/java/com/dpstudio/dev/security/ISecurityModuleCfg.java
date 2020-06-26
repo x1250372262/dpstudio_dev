@@ -21,5 +21,7 @@ public interface ISecurityModuleCfg {
     IAuthenticator getAuthenticator();
 
 
-    boolean isDisabled();
+    boolean enabled();
+
+    String menuFilePath();
 }

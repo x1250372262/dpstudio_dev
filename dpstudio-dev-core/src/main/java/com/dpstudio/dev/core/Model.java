@@ -4,6 +4,7 @@ import net.ymate.platform.webmvc.context.WebContext;
 import org.apache.commons.lang.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,20 +17,27 @@ import java.util.Map;
  */
 public class Model {
 
-    private static boolean __session;
-
     private Model() {
 
+    }
+
+    private static Type __type;
+
+    public enum Type {
+        SESSION,
+        REQUEST,
+        RESPONSE
     }
 
     private Map<String, Object> attrs = new HashMap<String, Object>();
 
     public static Model get() {
+        __type = Type.REQUEST;
         return new Model();
     }
 
-    public static Model get(boolean session) {
-        __session = session;
+    public static Model get(Type type) {
+        __type = type;
         return new Model();
     }
 
@@ -53,14 +61,43 @@ public class Model {
     }
 
     public void ok() {
-        if (__session) {
-            HttpSession session = WebContext.getRequest().getSession();
-            if (session != null) {
-                attrs.forEach(session::setAttribute);
-            }
-        } else {
-            HttpServletRequest request = WebContext.getRequest();
+        switch (__type) {
+            case REQUEST:
+                request();
+                break;
+            case SESSION:
+                session();
+                break;
+            case RESPONSE:
+                response();
+                break;
+            default:
+                request();
+                break;
+
+        }
+    }
+
+    private void request() {
+        HttpServletRequest request = WebContext.getRequest();
+        if (request != null) {
             attrs.forEach(request::setAttribute);
+        }
+    }
+
+    private void session() {
+        HttpSession session = WebContext.getRequest().getSession();
+        if (session != null) {
+            attrs.forEach(session::setAttribute);
+        }
+    }
+
+    private void response() {
+        HttpServletResponse response = WebContext.getResponse();
+        if (response != null) {
+            attrs.forEach((k, v) -> {
+                response.setHeader(k, v.toString());
+            });
         }
     }
 }

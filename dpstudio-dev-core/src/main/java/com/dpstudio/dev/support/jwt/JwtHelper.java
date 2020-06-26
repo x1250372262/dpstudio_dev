@@ -2,6 +2,7 @@ package com.dpstudio.dev.support.jwt;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.dpstudio.dev.core.R;
 import io.jsonwebtoken.*;
 import net.ymate.platform.core.util.DateTimeUtils;
 import org.apache.commons.lang.StringUtils;
@@ -35,7 +36,7 @@ public class JwtHelper {
 
 
 
-    public Map<String, Object> parse(String token) {
+    public R parse(String token) {
         SecretKey secretKey = generalKey();
         try {
             Claims claims = Jwts.parser()
@@ -47,17 +48,18 @@ public class JwtHelper {
             if (StringUtils.isBlank(jsonString)) {
                 return null;
             }
-            return JSONObject.parseObject(jsonString);
+            return R.ok().attrs(JSONObject.parseObject(jsonString));
 
         } catch (MalformedJwtException e) {
-            throw new RuntimeException("jwt 签名错误或解析错误");
+            return R.create(-551).msg("jwt 签名错误或解析错误");
         } catch (ExpiredJwtException e) {
-            throw new RuntimeException("jwt 已经过期");
+            return R.create(-552).msg("jwt 已经过期");
         }
     }
 
     public String create(Map<String, Object> map) {
 
+        
         SecretKey secretKey = generalKey();
 
         SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;

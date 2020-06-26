@@ -1,8 +1,11 @@
 package com.dpstudio.dev.utils;
 
+import net.ymate.platform.core.lang.BlurObject;
+
 import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: 徐建鹏.
@@ -41,5 +44,22 @@ public class ObjectUtils {
 
     public static boolean isNotEmpty(Object obj) {
         return !isEmpty(obj);
+    }
+
+
+    public static String get(Object value, String defaultValue) {
+        return Objects.isNull(value) ? defaultValue : BlurObject.bind(value).toStringValue();
+    }
+
+    public static int get(Object value, int defaultValue) {
+        return Objects.isNull(value) ? defaultValue : BlurObject.bind(value).toIntValue();
+    }
+
+    public static long get(Object value, long defaultValue) {
+        return Objects.isNull(value) ? defaultValue : BlurObject.bind(value).toLongValue();
+    }
+
+    public static boolean get(Object value, boolean defaultValue) {
+        return Objects.isNull(value) ? defaultValue : BlurObject.bind(value).toBooleanValue();
     }
 }

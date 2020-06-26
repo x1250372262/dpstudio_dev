@@ -84,7 +84,7 @@ public class PermissionMeta {
      * @return
      */
     private static void create(ISecurityModuleCfg moduleCfg) {
-        if (!moduleCfg.isDisabled()) {
+        if (moduleCfg.enabled()) {
             String packageName = moduleCfg.getPackageName();
 
             Reflections reflections = new Reflections(packageName);
