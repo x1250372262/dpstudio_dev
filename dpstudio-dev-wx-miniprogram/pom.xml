@@ -7,11 +7,11 @@
     <parent>
         <groupId>com.dpstudio.dev</groupId>
         <artifactId>dpstudio-dev</artifactId>
-        <version>1.0.1</version>
+        <version>2.0.0</version>
     </parent>
 
     <artifactId>dpstudio-dev-wx-miniprogram</artifactId>
-    <version>1.0.0</version>
+    <version>2.0.0</version>
     <packaging>jar</packaging>
 
     <name>dpstudio-dev-wx-miniprogram</name>
@@ -60,12 +60,12 @@
         <dependency>
             <groupId>com.dpstudio.dev</groupId>
             <artifactId>dpstudio-dev-utils</artifactId>
-            <version>1.0.1</version>
+            <version>2.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.dpstudio.dev</groupId>
             <artifactId>dpstudio-dev-core</artifactId>
-            <version>1.0.1</version>
+            <version>2.0.0</version>
         </dependency>
         <dependency>
             <groupId>net.ymate.module</groupId>

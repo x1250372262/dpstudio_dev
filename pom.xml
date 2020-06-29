@@ -6,7 +6,7 @@
 
     <groupId>com.dpstudio.dev</groupId>
     <artifactId>dpstudio-dev</artifactId>
-    <version>1.0.1</version>
+    <version>2.0.0</version>
     <modules>
         <module>dpstudio-dev-core</module>
         <module>dpstudio-dev-utils</module>
