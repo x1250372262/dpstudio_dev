@@ -13,5 +13,12 @@ import java.util.Map;
  */
 public interface ILogHandler {
 
+    /**
+     * 创建日志
+     *
+     * @param logGroup 日志分组
+     * @param logMap   日志数据
+     * @throws Exception 创建异常
+     */
     void create(LogGroup logGroup, Map<String, String> logMap) throws Exception;
 }

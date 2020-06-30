@@ -22,10 +22,14 @@ import java.util.zip.ZipOutputStream;
 public class ExcelAliExportHelper<T> implements Closeable {
 
     private List<List<T>> resultData;
-    //excel临时文件目录
-    private String excelFilePath;
-    //zip临时文件目录
-    private String zipFilePath;
+    /**
+     * excel临时文件目录
+     */
+    private final String excelFilePath;
+    /**
+     * zip临时文件目录
+     */
+    private final String zipFilePath;
 
     private static Class<?> dataClass;
 
@@ -106,28 +110,36 @@ public class ExcelAliExportHelper<T> implements Closeable {
 
     private File toZip(List<File> files, String fileName) throws Exception {
         File zipFile = new File(zipFilePath, fileName + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMdd-HHmmss") + ".zip");
-        ZipOutputStream _outputStream = null;
+        ZipOutputStream outputStream = null;
         try {
-            _outputStream = new ZipOutputStream(new FileOutputStream(zipFile));
+            outputStream = new ZipOutputStream(new FileOutputStream(zipFile));
             for (File file : files) {
-                ZipEntry _zipEntry = new ZipEntry(file.getName());
-                _outputStream.putNextEntry(_zipEntry);
+                ZipEntry zipEntry = new ZipEntry(file.getName());
+                outputStream.putNextEntry(zipEntry);
                 //
-                InputStream _inputStream = null;
+                InputStream inputStream = null;
                 try {
-                    _inputStream = new FileInputStream(file);
-                    IOUtils.copyLarge(_inputStream, _outputStream);
+                    inputStream = new FileInputStream(file);
+                    IOUtils.copyLarge(inputStream, outputStream);
                 } finally {
-                    IOUtils.closeQuietly(_inputStream);
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
                 }
             }
         } finally {
-            IOUtils.closeQuietly(_outputStream);
+            if (outputStream != null) {
+                outputStream.close();
+            }
         }
         return zipFile;
     }
 
-    //获取jxls模版文件
+    /**
+     * 获取jxls模版文件
+     * @param path
+     * @return
+     */
     private static File getTemplate(String path) {
         File template = new File(path);
         if (template.exists()) {

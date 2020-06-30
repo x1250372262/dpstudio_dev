@@ -12,6 +12,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 public interface ISheetHandler {
 
     /**
+     * 处理导入数据
      * @param sheet Sheet页接口对象
      * @return 处理Sheet页并返回数据
      * @throws Exception 可能产生的任何异常

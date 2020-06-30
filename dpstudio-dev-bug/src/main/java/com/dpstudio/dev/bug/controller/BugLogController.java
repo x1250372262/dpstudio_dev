@@ -1,6 +1,6 @@
 package com.dpstudio.dev.bug.controller;
 
-import com.dpstudio.dev.bug.interCeptor.SessionCheckInterceptor;
+import com.dpstudio.dev.bug.interceptor.SessionCheckInterceptor;
 import com.dpstudio.dev.bug.model.BugLog;
 import com.dpstudio.dev.core.L;
 import net.ymate.platform.core.beans.annotation.Before;

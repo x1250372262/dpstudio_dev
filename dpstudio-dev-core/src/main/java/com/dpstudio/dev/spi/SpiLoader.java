@@ -6,6 +6,12 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.Objects;
 import java.util.ServiceLoader;
 
+/**
+ * @author xujianpeng
+ * @Date 2020.06.30
+ * @Time: 17:30
+ * @Description: spi加载器
+ */
 public class SpiLoader {
 
 

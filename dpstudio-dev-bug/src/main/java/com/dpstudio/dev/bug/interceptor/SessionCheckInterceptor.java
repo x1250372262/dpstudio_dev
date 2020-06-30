@@ -1,15 +1,11 @@
-package com.dpstudio.dev.bug.interCeptor;
+package com.dpstudio.dev.bug.interceptor;
 
 //import net.ymate.framework.webmvc.support.UserSessionBean;
 import net.ymate.platform.core.beans.intercept.IInterceptor;
 import net.ymate.platform.core.beans.intercept.InterceptContext;
 import net.ymate.platform.core.beans.intercept.InterceptException;
-import net.ymate.platform.webmvc.base.Type;
-import net.ymate.platform.webmvc.context.WebContext;
 //import net.ymate.platform.webmvc.util.ErrorCode;
-import net.ymate.platform.webmvc.util.WebResult;
-import net.ymate.platform.webmvc.util.WebUtils;
-import net.ymate.platform.webmvc.view.View;
+
 
 /**
  * @Author: 徐建鹏.

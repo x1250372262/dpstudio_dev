@@ -1,5 +1,11 @@
 package com.dpstudio.dev.support.jwt;
 
+ /**
+  * @author xujianpeng
+  * @Date 2020.06.30
+  * @Time: 17:30
+  * @Description: jwt配置
+  */
 public class JwtConfig {
 
     public static final String ISUUED_AT = "isuuedAt";

@@ -1,4 +1,4 @@
-package com.dpstudio.dev.bug.interCeptor;
+package com.dpstudio.dev.bug.interceptor;
 
 import net.ymate.platform.core.beans.annotation.Before;
 import net.ymate.platform.core.beans.annotation.Clean;

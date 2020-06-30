@@ -49,10 +49,6 @@ public class MapExportImpl implements IPoiExport {
         sheet.setDefaultColumnWidth(15);
         // 生成一个样式
         HSSFCellStyle style = wb.createCellStyle();
-//        style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-                          /*
-          合并第一行单元格标题
-          */
         HSSFRow row = sheet.createRow(0);
         HSSFCell cell;
         cell = row.createCell(0);
@@ -62,8 +58,10 @@ public class MapExportImpl implements IPoiExport {
         wb.getSheet(sheetName).addMergedRegion(new CellRangeAddress(0, 0, 0, headersNameMap.size() - 1));
         //创建列标题栏所在行
         row = sheet.createRow(1);
-        Collection c = headersNameMap.values();//拿到表格所有标题的value的集合
-        Iterator<String> headersNameIt = c.iterator();//表格标题的迭代器
+        //拿到表格所有标题的value的集合
+        Collection c = headersNameMap.values();
+        //表格标题的迭代器
+        Iterator<String> headersNameIt = c.iterator();
         /*
             （四）导出数据：包括导出标题栏以及内容栏
           */
@@ -71,34 +69,35 @@ public class MapExportImpl implements IPoiExport {
         int size = 0;
         while (headersNameIt.hasNext()) {
             cell = row.createCell(size);
-            cell.setCellValue(headersNameIt.next().toString());
+            cell.setCellValue(headersNameIt.next());
             cell.setCellStyle(style);
             size++;
         }
         //表格一行的字段的集合，以便拿到迭代器
         Collection headersFieldCo = titleFieldMap.values();
-        Iterator<Map<String, Object>> dtoMapIt = dtoList.iterator();//总记录的迭代器
-        int zdRow = 2;//内容栏 真正数据记录的行序号
-        while (dtoMapIt.hasNext()) {//记录的迭代器，遍历总记录
-            Map<String, Object> mapTemp = dtoMapIt.next();//拿到一条记录
+        //总记录的迭代器
+        Iterator<Map<String, Object>> dtoMapIt = dtoList.iterator();
+        int zdRow = 2;
+        //记录的迭代器，遍历总记录
+        while (dtoMapIt.hasNext()) {
+            Map<String, Object> mapTemp = dtoMapIt.next();
             row = sheet.createRow(zdRow);
             zdRow++;
             int zdCell = 0;
-            Iterator<String> headersFieldIt = headersFieldCo.iterator();//一条记录的字段的集合的迭代器
+            Iterator<String> headersFieldIt = headersFieldCo.iterator();
             while (headersFieldIt.hasNext()) {
-                String tempField = headersFieldIt.next();//字段的暂存
+                String tempField = headersFieldIt.next();
                 if (mapTemp.get(tempField) != null) {
-                    row.createCell(zdCell).setCellValue(String.valueOf(mapTemp.get(tempField)));//写进excel对象
+                    row.createCell(zdCell).setCellValue(String.valueOf(mapTemp.get(tempField)));
                     zdCell++;
                 } else {
                     //字段内容值为null时，进行处理
-                    row.createCell(zdCell).setCellValue("*");//写进excel对象
+                    row.createCell(zdCell).setCellValue("*");
                 }
                 zdCell++;
             }
         }
         //行列分组
-        //wb.getSheet(sheetName).groupColumn(4, 7);
         try {
             FileOutputStream exportXls = new FileOutputStream("E://工单信息表Map.xls");
             wb.write(exportXls);

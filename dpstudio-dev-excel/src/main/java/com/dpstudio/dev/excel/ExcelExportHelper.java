@@ -30,16 +30,22 @@ import java.util.zip.ZipOutputStream;
  */
 public class ExcelExportHelper implements Closeable {
 
-    private Class<?> funClass;
+    private final Class<?> funClass;
 
     private List<Map<String, Object>> resultData;
 
-    //模板文件路径
-    private String templatePath;
-    //excel临时文件目录
-    private String excelFilePath;
-    //zip临时文件目录
-    private String zipFilePath;
+    /**
+     * 模板文件路径
+     */
+    private final String templatePath;
+    /**
+     * excel临时文件目录
+     */
+    private final String excelFilePath;
+    /**
+     * zip临时文件目录
+     */
+    private final String zipFilePath;
 
     private ExcelExportHelper(Class<?> funcClass, String templatePath, String excelFilePath, String zipFilePath) {
         this.funClass = funcClass;
@@ -111,7 +117,8 @@ public class ExcelExportHelper implements Closeable {
         //设置静默模式，不报警告
         //函数强制，自定义功能
         Map<String, Object> funcs = new HashMap<>();
-        funcs.put("utils", funClass.newInstance());    //添加自定义功能
+        //添加自定义功能
+        funcs.put("utils", funClass.newInstance());
         JexlEngine customJexlEngine = new JexlBuilder().namespaces(funcs).create();
         evaluator.setJexlEngine(customJexlEngine);
         //必须要这个，否者表格函数统计会错乱
@@ -121,28 +128,36 @@ public class ExcelExportHelper implements Closeable {
 
     private File toZip(List<File> files, String fileName) throws Exception {
         File zipFile = new File(zipFilePath, fileName + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMdd-HHmmss") + ".zip");
-        ZipOutputStream _outputStream = null;
+        ZipOutputStream outputStream = null;
         try {
-            _outputStream = new ZipOutputStream(new FileOutputStream(zipFile));
+            outputStream = new ZipOutputStream(new FileOutputStream(zipFile));
             for (File file : files) {
-                ZipEntry _zipEntry = new ZipEntry(file.getName());
-                _outputStream.putNextEntry(_zipEntry);
+                ZipEntry zipEntry = new ZipEntry(file.getName());
+                outputStream.putNextEntry(zipEntry);
                 //
-                InputStream _inputStream = null;
+                InputStream inputStream = null;
                 try {
-                    _inputStream = new FileInputStream(file);
-                    IOUtils.copyLarge(_inputStream, _outputStream);
+                    inputStream = new FileInputStream(file);
+                    IOUtils.copyLarge(inputStream, outputStream);
                 } finally {
-                    IOUtils.closeQuietly(_inputStream);
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
                 }
             }
         } finally {
-            IOUtils.closeQuietly(_outputStream);
+            if (outputStream != null) {
+                outputStream.close();
+            }
         }
         return zipFile;
     }
 
-    //获取jxls模版文件
+    /**
+     * 获取jxls模版文件
+     * @param path
+     * @return
+     */
     private static File getTemplate(String path) {
         File template = new File(path);
         if (template.exists()) {

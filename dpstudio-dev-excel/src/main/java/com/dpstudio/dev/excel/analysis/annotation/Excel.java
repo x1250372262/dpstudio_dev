@@ -1,4 +1,5 @@
 package com.dpstudio.dev.excel.analysis.annotation;
+
 import java.lang.annotation.*;
 
 @Target(ElementType.TYPE)
@@ -10,7 +11,14 @@ public @interface Excel {
      * exlce取值方式
      */
     enum TYPE {
-        TITLE, IDX
+        /**
+         * 标题
+         */
+        TITLE,
+        /**
+         * 索引
+         */
+        IDX
     }
 
     /**

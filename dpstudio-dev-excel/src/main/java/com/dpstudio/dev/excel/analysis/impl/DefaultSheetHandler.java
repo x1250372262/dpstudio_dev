@@ -93,7 +93,7 @@ public class DefaultSheetHandler implements ISheetHandler {
             return CellHandler.handleBlank(validateBean, field, cell, title);
         }
         CellResult cellResult = new CellResult();
-        switch (cell.getCellTypeEnum()) {
+        switch (cell.getCellType()) {
             case STRING:
                 cellResult = CellHandler.handleString(importHandlerBean, validateBean, cell, title);
                 break;
@@ -127,22 +127,21 @@ public class DefaultSheetHandler implements ISheetHandler {
 
         for (int rowId = sheet.getFirstRowNum(); rowId <= sheet.getLastRowNum(); rowId++) {
             if (rowId != sheet.getFirstRowNum()) {
-                Row _row = sheet.getRow(rowId);
+                Row row = sheet.getRow(rowId);
                 boolean isError = false;
-                if (isRowNotEmpty(_row)) {
+                if (isRowNotEmpty(row)) {
                     Object objectVo = cls.newInstance();
-                    for (int _cellIdx = _row.getFirstCellNum(); _cellIdx <= _row.getLastCellNum(); _cellIdx++) {
-                        Field field = fieldMap.get(_cellIdx);
-                        Object title = getTitle(sheet.getRow(sheet.getFirstRowNum()).getCell(_cellIdx));
+                    for (int cellIdx = row.getFirstCellNum(); cellIdx <= row.getLastCellNum(); cellIdx++) {
+                        Field field = fieldMap.get(cellIdx);
+                        Object title = getTitle(sheet.getRow(sheet.getFirstRowNum()).getCell(cellIdx));
                         if (type.equals(Excel.TYPE.TITLE)) {
                             field = fieldMap.get(title);
                         }
                         if (field != null) {
-                            CellResult cellResult = parseCell(field, _row.getCell(_cellIdx), String.valueOf(title));
+                            CellResult cellResult = parseCell(field, row.getCell(cellIdx), String.valueOf(title));
                             if (cellResult.getErrorInfo() != null) {
                                 errorInfoList.add(cellResult.getErrorInfo());
                                 isError = true;
-                                continue;
                             } else {
                                 //对私有字段的访问取消权限检查。暴力访问。
                                 field.setAccessible(true);

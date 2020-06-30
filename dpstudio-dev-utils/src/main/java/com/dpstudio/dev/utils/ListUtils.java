@@ -94,6 +94,12 @@ public class ListUtils {
      * @param <V> 分组行
      */
     public interface GroupBy<K, V> {
+
+        /**
+         * 分组方法
+         * @param row
+         * @return
+         */
         K groupBy(V row);
     }
 

@@ -23,7 +23,7 @@ public class ExcleUtils {
     public static Object getTitle(Cell cell) throws Exception {
         Object value = null;
         if (cell != null) {
-            switch (cell.getCellTypeEnum()) {
+            switch (cell.getCellType()) {
                 case STRING:
                     value = cell.getStringCellValue();
                     break;
@@ -58,7 +58,7 @@ public class ExcleUtils {
         if (row != null) {
             for (int c = row.getFirstCellNum(); c < row.getLastCellNum(); c++) {
                 Cell cell = row.getCell(c);
-                if (cell != null && cell.getCellTypeEnum() != CellType.BLANK) {
+                if (cell != null && cell.getCellType() != CellType.BLANK) {
                     return false;
                 }
             }
