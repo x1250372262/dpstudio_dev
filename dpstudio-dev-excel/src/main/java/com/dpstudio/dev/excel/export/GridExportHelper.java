@@ -3,10 +3,10 @@ package com.dpstudio.dev.excel.export;
 
 import com.dpstudio.dev.excel.exception.ExcelException;
 import com.dpstudio.dev.utils.FileUtils;
-import net.ymate.platform.core.util.DateTimeUtils;
-import net.ymate.platform.core.util.RuntimeUtils;
+import net.ymate.platform.commons.util.DateTimeUtils;
+import net.ymate.platform.commons.util.RuntimeUtils;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jxls.area.Area;
 import org.jxls.builder.AreaBuilder;
 import org.jxls.builder.xls.XlsCommentAreaBuilder;

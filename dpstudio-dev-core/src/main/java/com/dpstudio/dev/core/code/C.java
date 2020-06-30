@@ -16,8 +16,8 @@ public enum C {
     NO_DATA(50001, "数据不存在"),
     NAME_EXISTS(50002, "名称已存在");
 
-    private int code;
-    private String msg;
+    private final int code;
+    private final String msg;
 
     C(int code, String msg) {
         this.code = code;

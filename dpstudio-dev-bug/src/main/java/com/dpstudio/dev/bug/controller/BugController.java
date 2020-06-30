@@ -4,19 +4,18 @@ import com.dpstudio.dev.bug.interCeptor.SessionCheckInterceptor;
 import com.dpstudio.dev.bug.model.Bug;
 import com.dpstudio.dev.bug.model.BugLog;
 import com.dpstudio.dev.bug.model.BugUser;
-import com.dpstudio.dev.core.CommonResult;
-import net.ymate.framework.webmvc.support.UserSessionBean;
+import com.dpstudio.dev.core.L;
+import com.dpstudio.dev.core.V;
+import net.ymate.platform.commons.lang.BlurObject;
+import net.ymate.platform.commons.util.DateTimeUtils;
+import net.ymate.platform.commons.util.UUIDUtils;
 import net.ymate.platform.core.beans.annotation.Before;
-import net.ymate.platform.core.lang.BlurObject;
-import net.ymate.platform.core.util.DateTimeUtils;
-import net.ymate.platform.core.util.UUIDUtils;
-import net.ymate.platform.persistence.Fields;
-import net.ymate.platform.persistence.IResultSet;
-import net.ymate.platform.persistence.Page;
-import net.ymate.platform.persistence.jdbc.ISession;
-import net.ymate.platform.persistence.jdbc.ISessionExecutor;
+import net.ymate.platform.core.persistence.Fields;
+import net.ymate.platform.core.persistence.IResultSet;
+import net.ymate.platform.core.persistence.Page;
+import net.ymate.platform.core.persistence.annotation.Transaction;
+import net.ymate.platform.persistence.jdbc.IDatabaseSessionExecutor;
 import net.ymate.platform.persistence.jdbc.JDBC;
-import net.ymate.platform.persistence.jdbc.annotation.Transaction;
 import net.ymate.platform.persistence.jdbc.base.impl.MapResultSetHandler;
 import net.ymate.platform.persistence.jdbc.query.*;
 import net.ymate.platform.validation.validate.VRequired;
@@ -52,44 +51,44 @@ public class BugController {
                        @RequestParam(defaultValue = "10") final int pageSize) throws Exception {
 
         final Cond cond = Cond.create().eqOne();
-        cond.exprNotEmpty(createUser, Cond.create().and().eq("b", Bug.FIELDS.CREATE_USER).param(createUser));
-        cond.exprNotEmpty(handlerUser, Cond.create().and().eq("b", Bug.FIELDS.HANDLER_USER).param(handlerUser));
-        cond.exprNotEmpty(title, Cond.create().and().like("b", Bug.FIELDS.TITLE).param("%" + title + "%"));
-        cond.exprNotEmpty(status, Cond.create().and().eq("b", Bug.FIELDS.STATUS).param(status));
-        cond.exprNotEmpty(type, Cond.create().and().eq("b", Bug.FIELDS.TYPE).param(type));
-        cond.exprNotEmpty(level, Cond.create().and().eq("b", Bug.FIELDS.LEVEL).param(level));
-        IResultSet<Map<String, Object>> resultSet = JDBC.get().openSession(new ISessionExecutor<IResultSet<Map<String, Object>>>() {
-            @Override
-            public IResultSet<Map<String, Object>> execute(ISession session) throws Exception {
-                String prefix = session.getConnectionHolder().getDataSourceCfgMeta().getTablePrefix();
-                Join createJoin = Join.left(prefix, BugUser.TABLE_NAME).alias("bu")
-                        .on(Cond.create().opt("bu", BugUser.FIELDS.ID, Cond.OPT.EQ, "b", Bug.FIELDS.CREATE_USER));
-                Join handlerJoin = Join.left(prefix, BugUser.TABLE_NAME).alias("bu1")
-                        .on(Cond.create().opt("bu1", BugUser.FIELDS.ID, Cond.OPT.EQ, "b", Bug.FIELDS.HANDLER_USER));
-                Join modifyJoin = Join.left(prefix, BugUser.TABLE_NAME).alias("bu2")
-                        .on(Cond.create().opt("bu2", BugUser.FIELDS.ID, Cond.OPT.EQ, "b", Bug.FIELDS.LAST_MODIFY_USER));
-                Select select = Select.create(prefix, Bug.TABLE_NAME, "b")
-                        .join(createJoin).join(handlerJoin).join(modifyJoin)
-                        .field("b", Bug.FIELDS.ID)
-                        .field("b", Bug.FIELDS.TITLE)
-                        .field("b", Bug.FIELDS.TYPE)
-                        .field("b", Bug.FIELDS.CONTENT)
-                        .field("b", Bug.FIELDS.HANDLER_TIME)
-                        .field("b", Bug.FIELDS.CREATE_TIME)
-                        .field("b", Bug.FIELDS.STATUS)
-                        .field("b", Bug.FIELDS.LEVEL)
-                        .field("b", Bug.FIELDS.HANDLER_USER)
-                        .field("b", Bug.FIELDS.CREATE_USER)
-                        .field("b", Bug.FIELDS.LAST_MODIFY_TIME)
-                        .field("b", Bug.FIELDS.LAST_MODIFY_USER)
-                        .field("bu", BugUser.FIELDS.NAME, "cName")
-                        .field("bu1", BugUser.FIELDS.NAME, "hName")
-                        .field("bu2", BugUser.FIELDS.NAME, "mName")
-                        .where(Where.create(cond).orderDesc("b", Bug.FIELDS.LAST_MODIFY_TIME));
-                return session.find(SQL.create(select), new MapResultSetHandler(), Page.create(page).pageSize(pageSize));
-            }
+        cond.exprNotEmpty(createUser, (c -> {
+            c.and().eq(Fields.field("b", Bug.FIELDS.CREATE_USER)).param(createUser)
+                    .and().eq("b", Bug.FIELDS.HANDLER_USER).param(handlerUser)
+                    .and().like(Fields.field("b", Bug.FIELDS.TITLE)).param("%" + title + "%")
+                    .and().eq("b", Bug.FIELDS.STATUS).param(status)
+                    .and().eq("b", Bug.FIELDS.TYPE).param(type)
+                    .and().eq("b", Bug.FIELDS.LEVEL).param(level);
+        }));
+
+        IResultSet<Map<String, Object>> resultSet = JDBC.get().openSession(session -> {
+            String prefix = session.getConnectionHolder().getDataSourceConfig().getTablePrefix();
+            Join createJoin = Join.left(prefix, BugUser.TABLE_NAME).alias("bu")
+                    .on(Cond.create().eq(Fields.field("bu", BugUser.FIELDS.ID), Fields.field("b", Bug.FIELDS.CREATE_USER)));
+            Join handlerJoin = Join.left(prefix, BugUser.TABLE_NAME).alias("bu1")
+                    .on(Cond.create().eq(Fields.field("bu1", BugUser.FIELDS.ID), Fields.field("b", Bug.FIELDS.HANDLER_USER)));
+            Join modifyJoin = Join.left(prefix, BugUser.TABLE_NAME).alias("bu2")
+                    .on(Cond.create().eq(Fields.field("bu2", BugUser.FIELDS.ID), Fields.field("b", Bug.FIELDS.LAST_MODIFY_USER)));
+            Select select = Select.create(prefix, Bug.TABLE_NAME, "b")
+                    .join(createJoin).join(handlerJoin).join(modifyJoin)
+                    .field("b", Bug.FIELDS.ID)
+                    .field("b", Bug.FIELDS.TITLE)
+                    .field("b", Bug.FIELDS.TYPE)
+                    .field("b", Bug.FIELDS.CONTENT)
+                    .field("b", Bug.FIELDS.HANDLER_TIME)
+                    .field("b", Bug.FIELDS.CREATE_TIME)
+                    .field("b", Bug.FIELDS.STATUS)
+                    .field("b", Bug.FIELDS.LEVEL)
+                    .field("b", Bug.FIELDS.HANDLER_USER)
+                    .field("b", Bug.FIELDS.CREATE_USER)
+                    .field("b", Bug.FIELDS.LAST_MODIFY_TIME)
+                    .field("b", Bug.FIELDS.LAST_MODIFY_USER)
+                    .field("bu", BugUser.FIELDS.NAME, "cName")
+                    .field("bu1", BugUser.FIELDS.NAME, "hName")
+                    .field("bu2", BugUser.FIELDS.NAME, "mName")
+                    .where(Where.create(cond).orderByDesc("b", Bug.FIELDS.LAST_MODIFY_TIME));
+            return session.find(SQL.create(select), new MapResultSetHandler(), Page.create(page).pageSize(pageSize));
         });
-        return CommonResult.listView(resultSet, page);
+        return new L<Map<String, Object>>().listView(resultSet, page);
     }
 
 
@@ -112,8 +111,8 @@ public class BugController {
                 .level(level)
                 .createTime(DateTimeUtils.currentTimeMillis())
                 .status(0)
-                .createUser(UserSessionBean.current().getUid())
-                .lastModifyUser(UserSessionBean.current().getUid())
+//                .createUser(UserSessionBean.current().getUid())
+//                .lastModifyUser(UserSessionBean.current().getUid())
                 .lastModifyTime(DateTimeUtils.currentTimeMillis())
                 .build().save();
 
@@ -122,9 +121,9 @@ public class BugController {
                 .bugId(bug.getId())
                 .action("添加")
                 .handlerTime(DateTimeUtils.currentTimeMillis())
-                .handlerUser(BlurObject.bind((UserSessionBean.current().getAttribute("name"))).toStringValue())
+//                .handlerUser(BlurObject.bind((UserSessionBean.current().getAttribute("name"))).toStringValue())
                 .build().save();
-        return CommonResult.successView();
+        return V.ok();
     }
 
 
@@ -143,7 +142,7 @@ public class BugController {
 
         Bug bug = Bug.builder().id(id).build().load();
         if (bug != null) {
-            if (bug.getStatus().intValue() == 1) {
+            if (bug.getStatus() == 1) {
                 bug.setStatus(0);
             }
             bug.setTitle(title);
@@ -151,14 +150,14 @@ public class BugController {
             bug.setType(type);
             bug.setLevel(level);
             bug.setLastModifyTime(DateTimeUtils.currentTimeMillis());
-            bug.setLastModifyUser(UserSessionBean.current().getUid());
+//            bug.setLastModifyUser(UserSessionBean.current().getUid());
             bug.update(Fields.create(Bug.FIELDS.LEVEL, Bug.FIELDS.STATUS, Bug.FIELDS.TITLE, Bug.FIELDS.CONTENT, Bug.FIELDS.TYPE, Bug.FIELDS.LAST_MODIFY_TIME, Bug.FIELDS.LAST_MODIFY_USER));
             BugLog.builder()
                     .id(UUIDUtils.UUID())
                     .bugId(bug.getId())
                     .action("修改")
                     .handlerTime(DateTimeUtils.currentTimeMillis())
-                    .handlerUser(BlurObject.bind((UserSessionBean.current().getAttribute("name"))).toStringValue())
+//                    .handlerUser(BlurObject.bind((UserSessionBean.current().getAttribute("name"))).toStringValue())
                     .build().save();
         } else {
             Bug.builder()
@@ -169,8 +168,8 @@ public class BugController {
                     .level(level)
                     .createTime(DateTimeUtils.currentTimeMillis())
                     .status(0)
-                    .createUser(UserSessionBean.current().getUid())
-                    .lastModifyUser(UserSessionBean.current().getUid())
+//                    .createUser(UserSessionBean.current().getUid())
+//                    .lastModifyUser(UserSessionBean.current().getUid())
                     .lastModifyTime(DateTimeUtils.currentTimeMillis())
                     .build().save();
 
@@ -179,11 +178,11 @@ public class BugController {
                     .bugId(bug.getId())
                     .action("添加")
                     .handlerTime(DateTimeUtils.currentTimeMillis())
-                    .handlerUser(BlurObject.bind((UserSessionBean.current().getAttribute("name"))).toStringValue())
+//                    .handlerUser(BlurObject.bind((UserSessionBean.current().getAttribute("name"))).toStringValue())
                     .build().save();
         }
 
-        return CommonResult.successView();
+        return V.ok();
     }
 
 
@@ -193,7 +192,7 @@ public class BugController {
 
         Bug bug = Bug.builder().id(id).build().load();
 
-        return WebResult.succeed().data(bug).toJSON();
+        return WebResult.succeed().data(bug).toJsonView();
     }
 
 
@@ -207,21 +206,21 @@ public class BugController {
         Bug bug = Bug.builder().id(id).build().load();
         if (bug != null) {
             bug.setStatus(status);
-            bug.setHandlerUser(UserSessionBean.current().getUid());
+//            bug.setHandlerUser(UserSessionBean.current().getUid());
             bug.setHandlerTime(DateTimeUtils.currentTimeMillis());
             bug.setLastModifyTime(DateTimeUtils.currentTimeMillis());
-            bug.setLastModifyUser(UserSessionBean.current().getUid());
-            bug.update(Fields.create(Bug.FIELDS.STATUS, Bug.FIELDS.LAST_MODIFY_TIME, Bug.FIELDS.LAST_MODIFY_USER,Bug.FIELDS.HANDLER_TIME,Bug.FIELDS.HANDLER_USER));
+//            bug.setLastModifyUser(UserSessionBean.current().getUid());
+            bug.update(Fields.create(Bug.FIELDS.STATUS, Bug.FIELDS.LAST_MODIFY_TIME, Bug.FIELDS.LAST_MODIFY_USER, Bug.FIELDS.HANDLER_TIME, Bug.FIELDS.HANDLER_USER));
 
             BugLog.builder()
                     .id(UUIDUtils.UUID())
                     .bugId(id)
                     .action("确认")
                     .handlerTime(DateTimeUtils.currentTimeMillis())
-                    .handlerUser(BlurObject.bind((UserSessionBean.current().getAttribute("name"))).toStringValue())
+//                    .handlerUser(BlurObject.bind((UserSessionBean.current().getAttribute("name"))).toStringValue())
                     .build().save();
         }
 
-        return CommonResult.successView();
+        return V.ok();
     }
 }

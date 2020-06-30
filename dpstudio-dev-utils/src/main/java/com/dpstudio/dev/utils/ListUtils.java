@@ -12,9 +12,6 @@ public class ListUtils {
 
     /**
      * 判断集合是否为空
-     *
-     * @param list
-     * @return
      */
     public static boolean isEmpty(List<?> list) {
         return list == null || list.isEmpty();
@@ -22,9 +19,6 @@ public class ListUtils {
 
     /**
      * 判断集合是否不为空
-     *
-     * @param list
-     * @return
      */
     public static boolean isNotEmpty(List<?> list) {
         return !isEmpty(list);
@@ -32,10 +26,8 @@ public class ListUtils {
 
     /**
      * 判断集合是否包含另一个集合
-     *
      * @param bigResult   大集合
      * @param smallResult 小集合
-     * @return
      */
     public static boolean checkSame(List<?> bigResult, List<?> smallResult) {
         return bigResult.containsAll(smallResult);
@@ -43,22 +35,15 @@ public class ListUtils {
 
     /**
      * 去掉包含的集合 没有重复 返回大集合
-     *
      * @param bigResult   大集合
      * @param smallResult 小集合
-     * @return
      */
     public static List<?> doRemove(List<?> bigResult, List<?> smallResult) {
         if (checkSame(bigResult, smallResult)) {
             LinkedList<?> bigResultLink = new LinkedList<>(bigResult);
             HashSet<?> smallResultLink = new HashSet<>(smallResult);
-            Iterator<?> iter = bigResultLink.iterator();
 
-            while (iter.hasNext()) {
-                if (smallResultLink.contains(iter.next())) {
-                    iter.remove();
-                }
-            }
+            bigResultLink.removeIf(smallResultLink::contains);
             return bigResultLink;
         }
         return bigResult;
@@ -116,9 +101,8 @@ public class ListUtils {
     /**
      * 根据数量分组
      *
-     * @param list
-     * @param quantity
-     * @return
+     * @param list 集合
+     * @param quantity 数量
      */
     @SuppressWarnings("unchecked")
     public static List<Map<String, List<Object>>> groupByQuantityMap(List<?> list, int quantity) {
@@ -148,9 +132,8 @@ public class ListUtils {
     /**
      * 根据数量分组
      *
-     * @param list
-     * @param quantity
-     * @return
+     * @param list 集合
+     * @param quantity 数量
      */
     @SuppressWarnings("unchecked")
     public static List<List<Object>> groupByQuantity(List<?> list, int quantity) {
@@ -163,11 +146,9 @@ public class ListUtils {
         }
 
         int count = 0;
-        int key = 0;
         while (count < list.size()) {
             List<Object> wrapList = (List<Object>) list.subList(count, Math.min((count + quantity), list.size()));
             mapList.add(wrapList);
-            key++;
             count += quantity;
         }
 

@@ -1,9 +1,9 @@
 package com.dpstudio.dev.bug;
 
 
-import net.ymate.framework.unpack.IUnpacker;
-import net.ymate.framework.unpack.annotation.Unpacker;
+import net.ymate.module.unpack.IUnpack;
+import net.ymate.module.unpack.annotation.Unpack;
 
-@Unpacker("dpstudio.bug")
-public class ViewsUnpacker implements IUnpacker {
+@Unpack("dpstudio.bug")
+public class ViewsUnpacker implements IUnpack {
 }

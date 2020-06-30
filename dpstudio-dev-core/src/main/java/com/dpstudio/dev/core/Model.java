@@ -1,7 +1,7 @@
 package com.dpstudio.dev.core;
 
 import net.ymate.platform.webmvc.context.WebContext;
-import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang3.ObjectUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,23 +21,32 @@ public class Model {
 
     }
 
-    private static Type __type;
+    private static Type staticType;
 
     public enum Type {
+        /**
+         * session
+         */
         SESSION,
+        /**
+         * request
+         */
         REQUEST,
+        /**
+         * response
+         */
         RESPONSE
     }
 
-    private Map<String, Object> attrs = new HashMap<String, Object>();
+    private final Map<String, Object> attrs = new HashMap<String, Object>();
 
     public static Model get() {
-        __type = Type.REQUEST;
+        staticType = Type.REQUEST;
         return new Model();
     }
 
     public static Model get(Type type) {
-        __type = type;
+        staticType = type;
         return new Model();
     }
 
@@ -61,7 +70,7 @@ public class Model {
     }
 
     public void ok() {
-        switch (__type) {
+        switch (staticType) {
             case REQUEST:
                 request();
                 break;

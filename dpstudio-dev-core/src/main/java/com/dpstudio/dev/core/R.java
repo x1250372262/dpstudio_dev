@@ -1,11 +1,8 @@
 package com.dpstudio.dev.core;
 
 import com.dpstudio.dev.core.code.C;
-import net.ymate.platform.persistence.IResultSet;
-import net.ymate.platform.webmvc.util.WebResult;
-import net.ymate.platform.webmvc.view.IView;
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -59,9 +56,6 @@ public class R implements Serializable {
 
     /**
      * 根据参数返回成功还是失败
-     *
-     * @param object
-     * @return
      */
     public static R result(Object object) {
         if (object != null) {
@@ -71,32 +65,7 @@ public class R implements Serializable {
     }
 
     /**
-     * 查询列表
-     *
-     * @param resultSet
-     * @param page
-     * @return
-     */
-    public static IView listView(IResultSet resultSet, int page) {
-        return WebResult.succeed().data(resultSet.getResultData())
-                .attr("total", resultSet.getRecordCount())
-                .attr("page", page).toJSON();
-    }
-
-    /**
-     * 查询列表
-     *
-     * @param resultSet
-     * @return
-     */
-    public static IView listView(IResultSet resultSet) {
-        return WebResult.succeed().data(resultSet.getResultData()).toJSON();
-    }
-
-    /**
      * 成功result
-     *
-     * @return
      */
     public static R ok() {
         return R.create(C.SUCCESS.getCode())
@@ -105,8 +74,6 @@ public class R implements Serializable {
 
     /**
      * 返回成功 并且带map参数
-     *
-     * @return
      */
     public static R mapResult(Map<String, Object> attrs) {
         return R.ok().attrs(attrs);
@@ -114,54 +81,10 @@ public class R implements Serializable {
 
     /**
      * 失败result
-     *
-     * @return
      */
     public static R fail() {
         return R.create(C.ERROR.getCode())
                 .msg(C.ERROR.getMsg());
-    }
-
-    /**
-     * 成功view
-     *
-     * @return
-     */
-    public static IView okJson() {
-        return R.ok().webResult().toJSON();
-    }
-
-    /**
-     * 失败view
-     *
-     * @return
-     */
-    public static IView failJson() {
-        return R.fail().webResult().toJSON();
-    }
-
-    /**
-     * 转换成webresult
-     *
-     * @return
-     */
-    public WebResult webResult() {
-        if (attrs != null) {
-            return WebResult.create(code).msg(msg).attrs(attrs);
-        }
-        return WebResult.create(code).msg(msg);
-    }
-
-    /**
-     * 转换成webresult视图
-     *
-     * @return
-     */
-    public IView json() {
-        if (attrs != null) {
-            return WebResult.create(code).msg(msg).attrs(attrs).toJSON();
-        }
-        return WebResult.create(code).msg(msg).toJSON();
     }
 
     public int code() {

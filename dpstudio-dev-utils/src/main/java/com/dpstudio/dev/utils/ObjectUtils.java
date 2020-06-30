@@ -1,6 +1,7 @@
 package com.dpstudio.dev.utils;
 
-import net.ymate.platform.core.lang.BlurObject;
+
+import net.ymate.platform.commons.lang.BlurObject;
 
 import java.lang.reflect.Array;
 import java.util.Collection;

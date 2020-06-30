@@ -11,13 +11,7 @@
         <module>dpstudio-dev-core</module>
         <module>dpstudio-dev-utils</module>
         <module>dpstudio-dev-excel</module>
-        <module>dpstudio-dev-doc</module>
-        <module>dpstudio-dev-wx-miniprogram</module>
-        <module>dpstudio-dev-captcha</module>
-        <module>dpstudio-dev-jdbc</module>
         <module>dpstudio-dev-bug</module>
-        <module>dpstudio-dev-security</module>
-        <module>dpstudio-dev-generator</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -27,8 +21,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <ymate.platform.version>2.0.8</ymate.platform.version>
-        <ymate.framework.version>2.0.8</ymate.framework.version>
+        <ymate.platform.version>2.1.0</ymate.platform.version>
     </properties>
 
     <build>
@@ -62,7 +55,7 @@
             <plugin>
                 <groupId>net.ymate.maven.plugins</groupId>
                 <artifactId>ymate-maven-plugin</artifactId>
-                <version>1.0-SNAPSHOT</version>
+                <version>1.1-SNAPSHOT</version>
             </plugin>
             <plugin>
                 <artifactId>maven-archetype-plugin</artifactId>
@@ -80,6 +73,11 @@
             </dependency>
             <dependency>
                 <groupId>net.ymate.platform</groupId>
+                <artifactId>ymate-platform-commons</artifactId>
+                <version>${ymate.platform.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>net.ymate.platform</groupId>
                 <artifactId>ymate-platform-configuration</artifactId>
                 <version>${ymate.platform.version}</version>
             </dependency>
@@ -90,38 +88,13 @@
             </dependency>
             <dependency>
                 <groupId>net.ymate.platform</groupId>
-                <artifactId>ymate-platform-log-jcl</artifactId>
-                <version>${ymate.platform.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.ymate.platform</groupId>
-                <artifactId>ymate-platform-log-slf4j</artifactId>
-                <version>${ymate.platform.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.ymate.platform</groupId>
                 <artifactId>ymate-platform-webmvc</artifactId>
-                <version>${ymate.platform.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.ymate.platform</groupId>
-                <artifactId>ymate-platform-persistence</artifactId>
                 <version>${ymate.platform.version}</version>
             </dependency>
             <dependency>
                 <groupId>net.ymate.platform</groupId>
                 <artifactId>ymate-platform-persistence-jdbc</artifactId>
                 <version>${ymate.platform.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.ymate.framework</groupId>
-                <artifactId>ymate-framework-commons</artifactId>
-                <version>${ymate.framework.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>net.ymate.framework</groupId>
-                <artifactId>ymate-framework-core</artifactId>
-                <version>${ymate.framework.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>

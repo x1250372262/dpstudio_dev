@@ -1,10 +1,9 @@
 package com.dpstudio.dev.bug.controller;
 
 import com.dpstudio.dev.bug.model.BugUser;
-import com.dpstudio.dev.core.CommonResult;
-import com.dpstudio.dev.core.code.CommonCode;
-import net.ymate.framework.webmvc.support.UserSessionBean;
-import net.ymate.platform.persistence.IResultSet;
+import com.dpstudio.dev.core.R;
+import com.dpstudio.dev.core.V;
+import net.ymate.platform.core.persistence.IResultSet;
 import net.ymate.platform.validation.validate.VRequired;
 import net.ymate.platform.webmvc.annotation.Controller;
 import net.ymate.platform.webmvc.annotation.RequestMapping;
@@ -29,15 +28,15 @@ public class BugUserController {
 
         BugUser bugUser = BugUser.builder().name(userName).build().findFirst();
         if (bugUser == null) {
-            return WebResult.create(CommonCode.COMMON_OPTION_ERROR.getCode()).msg("请手动在数据库添加用户").toJSON();
+            return V.view(R.fail().msg("请手动在数据库添加用户"));
         }
-        UserSessionBean.create().setUid(bugUser.getId()).addAttribute("name", userName).save();
-        return CommonResult.successView();
+//        UserSessionBean.create().setUid(bugUser.getId()).addAttribute("name", userName).save();
+        return V.ok();
     }
 
     @RequestMapping("/select")
     public IView select() throws Exception {
         IResultSet<BugUser> resultSet = BugUser.builder().build().find();
-        return WebResult.succeed().data(resultSet.getResultData()).toJSON();
+        return WebResult.succeed().data(resultSet.getResultData()).toJsonView();
     }
 }

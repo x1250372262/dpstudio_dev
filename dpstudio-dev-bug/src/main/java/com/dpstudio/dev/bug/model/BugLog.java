@@ -1,9 +1,10 @@
 package com.dpstudio.dev.bug.model;
 
 import net.ymate.platform.core.beans.annotation.PropertyState;
-import net.ymate.platform.persistence.IShardingable;
-import net.ymate.platform.persistence.annotation.*;
-import net.ymate.platform.persistence.jdbc.IConnectionHolder;
+import net.ymate.platform.core.persistence.IShardingable;
+import net.ymate.platform.core.persistence.annotation.*;
+import net.ymate.platform.core.persistence.IConnectionHolder;
+import net.ymate.platform.persistence.jdbc.IDatabaseConnectionHolder;
 import net.ymate.platform.persistence.jdbc.support.BaseEntity;
 
 /**
@@ -175,11 +176,11 @@ public class BugLog extends BaseEntity<BugLog, String> {
 		}
 
 
-		public IConnectionHolder connectionHolder() {
+		public IDatabaseConnectionHolder connectionHolder() {
 			return _model.getConnectionHolder();
 		}
 
-		public BugLogBuilder connectionHolder(IConnectionHolder connectionHolder) {
+		public BugLogBuilder connectionHolder(IDatabaseConnectionHolder connectionHolder) {
 			_model.setConnectionHolder(connectionHolder);
 			return this;
 		}

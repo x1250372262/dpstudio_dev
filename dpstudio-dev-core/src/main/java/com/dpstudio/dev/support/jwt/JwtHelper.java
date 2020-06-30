@@ -4,8 +4,8 @@ package com.dpstudio.dev.support.jwt;
 import com.alibaba.fastjson.JSONObject;
 import com.dpstudio.dev.core.R;
 import io.jsonwebtoken.*;
-import net.ymate.platform.core.util.DateTimeUtils;
-import org.apache.commons.lang.StringUtils;
+import net.ymate.platform.commons.util.DateTimeUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
@@ -21,17 +21,16 @@ import java.util.Map;
  */
 public class JwtHelper {
 
-    private static JwtConfig __jwtConfig;
+    private static JwtConfig jwtConfigTarget;
 
-    private static JwtHelper __jwtHelper = new JwtHelper();
-
+    private static final JwtHelper JWT_HELPER_TARGET = new JwtHelper();
 
     private JwtHelper() {
     }
 
     public static JwtHelper get(JwtConfig jwtConfig) {
-        __jwtConfig = jwtConfig;
-        return __jwtHelper;
+        jwtConfigTarget = jwtConfig;
+        return JWT_HELPER_TARGET;
     }
 
 
@@ -74,8 +73,8 @@ public class JwtHelper {
                 .setSubject(subject)
                 .signWith(signatureAlgorithm, secretKey);
 
-        if (__jwtConfig.verifyTime() > 0) {
-            long time = nowMillis + __jwtConfig.verifyTime();
+        if (jwtConfigTarget.verifyTime() > 0) {
+            long time = nowMillis + jwtConfigTarget.verifyTime();
             builder.setExpiration(new Date(time));
         }
 
@@ -84,7 +83,7 @@ public class JwtHelper {
 
 
     private SecretKey generalKey() {
-        byte[] encodedKey = DatatypeConverter.parseBase64Binary(__jwtConfig.secret());
+        byte[] encodedKey = DatatypeConverter.parseBase64Binary(jwtConfigTarget.secret());
         return new SecretKeySpec(encodedKey, 0, encodedKey.length, "AES");
     }
 

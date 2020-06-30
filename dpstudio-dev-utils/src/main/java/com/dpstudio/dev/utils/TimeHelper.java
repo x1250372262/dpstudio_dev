@@ -1,6 +1,8 @@
 package com.dpstudio.dev.utils;
 
-import net.ymate.platform.core.util.DateTimeUtils;
+
+
+import net.ymate.platform.commons.util.DateTimeUtils;
 
 import java.util.Calendar;
 
@@ -13,13 +15,14 @@ import java.util.Calendar;
  */
 public class TimeHelper {
 
-    public static TimeHelper create(){
+    public static TimeHelper create() {
         return new TimeHelper();
     }
 
-    private TimeHelper(){
+    private TimeHelper() {
 
     }
+
     public long DateTimeHelper(long date, int type) {
         Calendar __calendar = Calendar.getInstance();
         if (String.valueOf(date).length() <= 10) {
@@ -27,10 +30,10 @@ public class TimeHelper {
         }
         __calendar.setTimeInMillis(date);
 
-        if(type==1){
+        if (type == 1) {
             __calendar.add(Calendar.YEAR, 0);
             __calendar.set(Calendar.DAY_OF_YEAR, 1);
-        }else if(type==0){
+        } else if (type == 0) {
             __calendar.add(Calendar.MONTH, 0);
             __calendar.set(Calendar.DAY_OF_MONTH, 1);
         }
@@ -40,42 +43,34 @@ public class TimeHelper {
 
     /**
      * 本月第一天
-     * @return
-     * @throws Exception
      */
-    public Long getThisMonthFrist() throws Exception{
+    public Long getThisMonthFrist() throws Exception {
         return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), 0), "yyyy-MM"), "yyyy-MM").getTime();
     }
 
     /**
      * 下个月第一天
-     * @return
-     * @throws Exception
      */
-    public Long getNextMonthFrist() throws Exception{
+    public Long getNextMonthFrist() throws Exception {
         Long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), 0), "yyyy-MM"), "yyyy-MM").getTime();
         Calendar _calendar = Calendar.getInstance();
         _calendar.setTimeInMillis(beginTime);
         _calendar.add(Calendar.MONTH, 1);
-       return _calendar.getTimeInMillis();
+        return _calendar.getTimeInMillis();
     }
 
 
     /**
      * 本年第一天
-     * @return
-     * @throws Exception
      */
-    public Long getThisYearFrist() throws Exception{
+    public Long getThisYearFrist() throws Exception {
         return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), 1), "yyyy"), "yyyy").getTime();
     }
 
     /**
      * 下年第一天
-     * @return
-     * @throws Exception
      */
-    public Long getNextYearFrist() throws Exception{
+    public Long getNextYearFrist() throws Exception {
         Long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeHelper(System.currentTimeMillis(), 1), "yyyy"), "yyyy").getTime();
         Calendar _calendar = Calendar.getInstance();
         _calendar.setTimeInMillis(beginTime);
@@ -91,7 +86,7 @@ public class TimeHelper {
     public long getMondayOfThisWeek() throws Exception {
         Calendar c = Calendar.getInstance();
         int day_of_week = c.get(Calendar.DAY_OF_WEEK) - 1;
-        if (day_of_week == 0){
+        if (day_of_week == 0) {
             day_of_week = 7;
         }
         c.add(Calendar.DATE, -day_of_week + 1);
@@ -107,11 +102,11 @@ public class TimeHelper {
      */
     public long getSundayOfThisWeek() throws Exception {
         Calendar c = Calendar.getInstance();
-        int day_of_week = c.get(Calendar.DAY_OF_WEEK) - 1;
-        if (day_of_week == 0){
-            day_of_week = 7;
+        int dayOfWeek = c.get(Calendar.DAY_OF_WEEK) - 1;
+        if (dayOfWeek == 0) {
+            dayOfWeek = 7;
         }
-        c.add(Calendar.DATE, -day_of_week + 7);
+        c.add(Calendar.DATE, -dayOfWeek + 7);
         String date = DateTimeUtils.formatTime(c.getTime().getTime(), "yyyy-MM-dd" + " 23:59:59");
         return DateTimeUtils.parseDateTime(date, "yyyy-MM-dd HH:mm:ss").getTime();
     }
@@ -120,8 +115,6 @@ public class TimeHelper {
      * 计算当前时间加减N天零点
      *
      * @param day
-     * @return
-     * @throws Exception
      */
     public long getDay(int day) throws Exception {
         Long beginTime = DateTimeUtils.currentTimeMillis();//开始时间
@@ -134,8 +127,6 @@ public class TimeHelper {
      * 计算当前时间加减N天23点
      *
      * @param day
-     * @return
-     * @throws Exception
      */
     public long getDays(int day) throws Exception {
         Long beginTime = DateTimeUtils.currentTimeMillis();//开始时间

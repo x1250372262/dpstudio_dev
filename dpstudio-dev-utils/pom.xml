@@ -25,15 +25,7 @@
     <dependencies>
         <dependency>
             <groupId>net.ymate.platform</groupId>
-            <artifactId>ymate-platform-log</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.ymate.platform</groupId>
-            <artifactId>ymate-platform-log-jcl</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.ymate.platform</groupId>
-            <artifactId>ymate-platform-log-slf4j</artifactId>
+            <artifactId>ymate-platform-commons</artifactId>
         </dependency>
     </dependencies>
 </project>

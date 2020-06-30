@@ -1,6 +1,6 @@
 package com.dpstudio.dev.utils;
 
-import net.ymate.platform.core.util.ClassUtils;
+import net.ymate.platform.commons.util.ClassUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,9 +14,7 @@ import java.util.function.Supplier;
  */
 public class BeanUtils {
 
-    @FunctionalInterface
     public interface BeanUtilCallBack<S, T> {
-
         /**
          * 定义默认回调方法
          *
