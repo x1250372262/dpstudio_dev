@@ -42,7 +42,7 @@ public abstract class AbstractWebFramework implements Framework {
                 ympApiAction.setRespbody(this.getRespbody(ympApiAction));
                 ympApiAction.setParams(this.getParams(ympApiAction));
                 ympApiAction.setRespParam(this.getResp(ympApiAction));
-                ympApiAction.setReturnObj(this.getSeeObj(ympApiAction));
+                ympApiAction.setReturnObj(this.getRespObjObjs(ympApiAction));
                 ympApiAction.setReturnDesc(this.getReturnDesc(ympApiAction));
                 ympApiAction.setParamObjs(this.getParamObjs(ympApiAction));
 
@@ -137,6 +137,19 @@ public abstract class AbstractWebFramework implements Framework {
         List<ObjectInfo> paramObjs = new ArrayList<>(tags.size());
         for (DocTag tag : tags) {
             ParamObjTagImpl paramObjTag = (ParamObjTagImpl) tag;
+            paramObjs.add(paramObjTag.getValues());
+        }
+        return paramObjs;
+    }
+
+    /**
+     * 获取@respObj注解上的对象
+     */
+    private List<ObjectInfo> getRespObjObjs(AbstractApiAction aa) {
+        List<DocTag> tags = TagUtils.findTags(aa.getDocTags(), "@respObj");
+        List<ObjectInfo> paramObjs = new ArrayList<>(tags.size());
+        for (DocTag tag : tags) {
+            RespObjTagImpl paramObjTag = (RespObjTagImpl) tag;
             paramObjs.add(paramObjTag.getValues());
         }
         return paramObjs;

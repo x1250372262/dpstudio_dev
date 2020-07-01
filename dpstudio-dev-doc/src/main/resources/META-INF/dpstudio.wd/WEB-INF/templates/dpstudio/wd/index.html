@@ -292,6 +292,7 @@
             },
 
             reverseParam() {
+                console.log(1)
                 if (this.currentApiAction) {
                     var names = {};
                     var data = [];
@@ -305,8 +306,8 @@
                     }
 
                     if (this.currentApiAction.paramObjs) {
-                        for (var i = 0; i < this.currentApiAction.paramObjs.length; i++) {
-                            var paramObj = this.currentApiAction.paramObjs[i];
+                        for (var k = 0; k < this.currentApiAction.paramObjs.length; k++) {
+                            var paramObj = this.currentApiAction.paramObjs[k];
                             if (!paramObj.fieldInfos) {
                                 continue;
                             }
@@ -333,6 +334,7 @@
             },
 
             reverseResponse() {
+                console.log(2)
                 var names = {};
 
                 var data = [];
@@ -350,24 +352,30 @@
                     }
                 }
 
-                if (this.currentApiAction && this.currentApiAction.returnObj) {
-
-                    for (var i = 0; i < this.currentApiAction.returnObj.fieldInfos.length; i++) {
-                        var par = this.currentApiAction.returnObj.fieldInfos[i];
-
-                        if (names[par.name] != null) {
-                            //已经有@resp注解进行了覆盖,就不再采纳@return中的
+                if (this.currentApiAction.returnObj) {
+                    for (var k = 0;  k< this.currentApiAction.returnObj.length; k++) {
+                        var returnObj = this.currentApiAction.returnObj[k];
+                        if (!returnObj.fieldInfos) {
                             continue;
                         }
 
-                        data.push({
-                            paramName: par.name,
-                            paramDesc: par.comment,
-                            paramType: par.simpleTypeName,
-                            require: par.require
-                        });
+                        for (var j = 0; j < returnObj.fieldInfos.length; j++) {
+                            var fieldInfo = returnObj.fieldInfos[j];
+                            if (names[fieldInfo.name]) {
+                                continue;
+                            }
+                            data.push({
+                                paramName: fieldInfo.name,
+                                paramDesc: fieldInfo.comment,
+                                require: fieldInfo.require,
+                                paramType: fieldInfo.simpleTypeName
+                            });
+                        }
                     }
                 }
+
+
+
                 return data;
             },
 

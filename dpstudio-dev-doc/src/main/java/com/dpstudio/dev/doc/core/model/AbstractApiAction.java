@@ -35,7 +35,7 @@ public class AbstractApiAction extends ApiAction {
     /**
      * 返回对象
      */
-    private ObjectInfo returnObj;
+    private List<ObjectInfo> returnObj = new ArrayList<>(0);
 
     /**
      * 出参
@@ -90,11 +90,11 @@ public class AbstractApiAction extends ApiAction {
         this.paramObjs = paramObjs;
     }
 
-    public ObjectInfo getReturnObj() {
+    public List<ObjectInfo> getReturnObj() {
         return returnObj;
     }
 
-    public void setReturnObj(ObjectInfo returnObj) {
+    public void setReturnObj(List<ObjectInfo> returnObj) {
         this.returnObj = returnObj;
     }
 

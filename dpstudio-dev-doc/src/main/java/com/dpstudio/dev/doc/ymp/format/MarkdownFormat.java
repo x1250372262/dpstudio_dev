@@ -38,24 +38,24 @@ public class MarkdownFormat implements Format {
             if (saa.isJson() && StringUtils.isNotBlank(saa.getRespbody())) {
                 saa.setRespbody(JsonUtils.formatJson(saa.getRespbody()));
             }
-
-            ObjectInfo returnObj = saa.getReturnObj();
-            if (returnObj != null && returnObj.getFieldInfos() != null) {
+            if (saa.getParamObjs().size() > 0) {
                 //将@resp标签跟@return标签中重复的属性进行去重,以@resp的为准
                 Set<String> paramNames = new HashSet<>();
                 for (ParamInfo param : saa.getRespParam()) {
                     paramNames.add(param.getParamName());
                 }
 
-                for (FieldInfo fieldInfo : returnObj.getFieldInfos()) {
-                    if (paramNames.contains(fieldInfo.getName())) {
-                        continue;
+                for (ObjectInfo returnObj : saa.getReturnObj()) {
+                    for (FieldInfo fieldInfo : returnObj.getFieldInfos()) {
+                        if (paramNames.contains(fieldInfo.getName())) {
+                            continue;
+                        }
+                        ParamInfo param = toParamInfo(fieldInfo);
+                        saa.getRespParam().add(param);
                     }
-                    ParamInfo param = toParamInfo(fieldInfo);
-                    saa.getRespParam().add(param);
                 }
-            }
 
+            }
             if (saa.getParamObjs().size() > 0) {
                 //将@param跟@paramObj标签中重复的属性进行去重,以@param中的为准
                 Set<String> paramNames = new HashSet<>();
