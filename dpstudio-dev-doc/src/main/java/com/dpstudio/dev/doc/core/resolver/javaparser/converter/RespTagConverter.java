@@ -18,6 +18,7 @@ public class RespTagConverter extends ParamTagConverter {
         ParamTagImpl paramTag = (ParamTagImpl) super.converter(comment);
         RespTagImpl respTag = new RespTagImpl(paramTag.getTagName(), paramTag.getParamName(), paramTag.getParamDesc(),
                 paramTag.getParamType(), paramTag.isRequire());
+        respTag.setDemoValue(paramTag.getDemoValue());
         return respTag;
     }
 }

@@ -1,13 +1,10 @@
 package com.dpstudio.dev.doc.core.format;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dpstudio.dev.doc.core.framework.Framework;
-import com.dpstudio.dev.doc.core.model.ApiAction;
-import com.dpstudio.dev.doc.core.model.ApiModule;
-import com.dpstudio.dev.doc.core.model.ObjectInfo;
+import com.dpstudio.dev.doc.core.model.*;
 import com.dpstudio.dev.doc.core.tag.*;
 import com.dpstudio.dev.doc.core.utils.TagUtils;
-import com.dpstudio.dev.doc.core.model.ParamInfo;
-import com.dpstudio.dev.doc.core.model.AbstractApiAction;
 import net.ymate.platform.core.util.ClassUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,6 +71,7 @@ public abstract class AbstractWebFramework implements Framework {
             return (String) respbodyTag.getValues();
         }
         return null;
+
     }
 
 
@@ -108,6 +106,7 @@ public abstract class AbstractWebFramework implements Framework {
             paramInfo.setRequire(respTag.isRequire());
             paramInfo.setParamDesc(respTag.getParamDesc());
             paramInfo.setParamType(respTag.getParamType());
+            paramInfo.setDemoValue(respTag.getDemoValue());
             list.add(paramInfo);
         }
         return list;

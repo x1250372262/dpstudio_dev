@@ -31,6 +31,11 @@ public class RespTagImpl extends DocTag<String> {
      */
     private String paramType;
 
+    /**
+     * 示例值
+     */
+    private String demoValue;
+
     public RespTagImpl(String tagName, String paramName, String paramDesc, String paramType, boolean require) {
         super(tagName);
         this.paramName = paramName;
@@ -79,5 +84,13 @@ public class RespTagImpl extends DocTag<String> {
 
     public void setParamType(String paramType) {
         this.paramType = paramType;
+    }
+
+    public String getDemoValue() {
+        return demoValue;
+    }
+
+    public void setDemoValue(String demoValue) {
+        this.demoValue = demoValue;
     }
 }

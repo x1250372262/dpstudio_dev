@@ -28,6 +28,11 @@ public class ParamInfo {
      */
     private String paramType;
 
+    /**
+     * 示例值
+     */
+    private String demoValue;
+
     public String getParamName() {
         return paramName;
     }
@@ -58,5 +63,13 @@ public class ParamInfo {
 
     public void setParamType(String paramType) {
         this.paramType = paramType;
+    }
+
+    public String getDemoValue() {
+        return demoValue;
+    }
+
+    public void setDemoValue(String demoValue) {
+        this.demoValue = demoValue;
     }
 }

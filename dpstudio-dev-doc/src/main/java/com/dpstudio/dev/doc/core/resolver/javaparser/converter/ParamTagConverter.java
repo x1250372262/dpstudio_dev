@@ -22,6 +22,7 @@ public class ParamTagConverter extends DefaultJavaParserTagConverterImpl {
         String paramDesc = "";
         String paramType = "String";
         boolean require = false;
+        String demoValue = "";
         //解析 "user :username 用户名|必填" 这种注释内容
         //或者 "username 用户名|必填" 这种注释内容
         //或者 "username 用户名|String|必填" 这种注释内容
@@ -50,21 +51,15 @@ public class ParamTagConverter extends DefaultJavaParserTagConverterImpl {
         String[] descs = paramDesc.split("\\|");
         if (descs.length > 0) {
             paramDesc = descs[0];
-            if (descs.length > 2) {
-                paramType = descs[1];
-                String requireString = descs[descs.length - 1].trim();
-                require = Constant.YES_ZH.equals(requireString) || Constant.YES_EN.equalsIgnoreCase(requireString);
-            } else if (descs.length == 2) {
-                String requireString = descs[1].trim();
-                require = Constant.YES_ZH.equals(requireString) || Constant.YES_EN.equalsIgnoreCase(requireString);
-
-                //如果最后一个不是是否必填的描述,则认为是类型描述
-                if (!require && !(Constant.NOT_EN.equalsIgnoreCase(requireString) || Constant.NOT_ZH.equals(requireString))) {
-                    paramType = requireString;
-                }
+            paramType = descs[1];
+            String requireString = descs[2];
+            require = Constant.YES_ZH.equals(requireString) || Constant.YES_EN.equalsIgnoreCase(requireString);
+            if(descs.length>3){
+                demoValue = descs[3];
             }
+
         }
 
-        return new ParamTagImpl(docTag.getTagName(), paramName, paramDesc, paramType, require);
+        return new ParamTagImpl(docTag.getTagName(), paramName, paramDesc, paramType, require,demoValue);
     }
 }

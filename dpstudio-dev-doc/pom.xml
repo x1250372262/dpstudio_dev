@@ -162,5 +162,10 @@
             <artifactId>dpstudio-dev-utils</artifactId>
             <version>1.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.dpstudio.dev</groupId>
+            <artifactId>dpstudio-dev-core</artifactId>
+            <version>1.0.1</version>
+        </dependency>
     </dependencies>
 </project>

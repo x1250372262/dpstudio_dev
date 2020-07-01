@@ -1,7 +1,7 @@
 package com.dpstudio.dev.doc.web;
 
+import com.dpstudio.dev.annotation.Doc;
 import com.dpstudio.dev.doc.core.DpstudioDoc;
-import com.dpstudio.dev.doc.core.annotation.Doc;
 import com.dpstudio.dev.doc.core.model.ApiDoc;
 import com.dpstudio.dev.doc.core.model.ApiInfo;
 import com.dpstudio.dev.doc.core.model.ApiModule;

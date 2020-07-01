@@ -28,6 +28,11 @@ public class ParamTagImpl extends DocTag<String> {
      */
     private String paramType;
 
+    /**
+     * 示例值
+     */
+    private String demoValue;
+
     public ParamTagImpl(String tagName, String paramName, String paramDesc, String paramType, boolean require) {
         super(tagName);
         this.paramName = paramName;
@@ -35,6 +40,16 @@ public class ParamTagImpl extends DocTag<String> {
         this.paramType = paramType;
         this.require = require;
     }
+
+    public ParamTagImpl(String tagName, String paramName, String paramDesc, String paramType, boolean require,String demoValue) {
+        super(tagName);
+        this.paramName = paramName;
+        this.paramDesc = paramDesc;
+        this.paramType = paramType;
+        this.require = require;
+        this.demoValue = demoValue;
+    }
+
 
     @Override
     public String getValues() {
@@ -71,5 +86,13 @@ public class ParamTagImpl extends DocTag<String> {
 
     public void setParamType(String paramType) {
         this.paramType = paramType;
+    }
+
+    public String getDemoValue() {
+        return demoValue;
+    }
+
+    public void setDemoValue(String demoValue) {
+        this.demoValue = demoValue;
     }
 }

@@ -18,6 +18,8 @@ public class FieldInfo {
 
     private String comment;
 
+    private String demoValue;
+
     /**
      * 是否必填,默认false
      */
@@ -71,5 +73,13 @@ public class FieldInfo {
 
     public void setFieldInfos(List<FieldInfo> fieldInfos) {
         this.fieldInfos = fieldInfos;
+    }
+
+    public String getDemoValue() {
+        return demoValue;
+    }
+
+    public void setDemoValue(String demoValue) {
+        this.demoValue = demoValue;
     }
 }

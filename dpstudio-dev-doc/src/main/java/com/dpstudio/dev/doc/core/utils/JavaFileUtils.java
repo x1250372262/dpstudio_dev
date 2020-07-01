@@ -102,20 +102,23 @@ public class JavaFileUtils {
                 fields.add(field);
             } else {
                 boolean require = false;
+                String demoValue = "";
                 if (comment.contains("|")) {
-                    int endIndex = comment.lastIndexOf("|" + Constant.YES_ZH);
-                    if (endIndex < 0) {
-                        endIndex = comment.lastIndexOf("|" + Constant.YES_EN);
-                    }
-                    require = endIndex > 0;
-
-                    if (require) {
-                        comment = comment.substring(0, endIndex);
+                    String[] commentArr = comment.split("\\|");
+                    comment = commentArr[0];
+                    if(commentArr.length==2){
+                        String requireString = commentArr[1];
+                        require = Constant.YES_ZH.equals(requireString) || Constant.YES_EN.equalsIgnoreCase(requireString);
+                    }else if(commentArr.length==3){
+                        String requireString = commentArr[1];
+                        require = Constant.YES_ZH.equals(requireString) || Constant.YES_EN.equalsIgnoreCase(requireString);
+                        demoValue = commentArr[2];
                     }
                 }
 
                 field.setComment(comment);
                 field.setRequire(require);
+                field.setDemoValue(demoValue);
                 fields.add(field);
             }
         }
