@@ -87,6 +87,7 @@ public abstract class AbstractWebFramework implements Framework {
             paramInfo.setParamName(paramTag.getParamName());
             paramInfo.setParamDesc(paramTag.getParamDesc());
             paramInfo.setParamType(paramTag.getParamType());
+            paramInfo.setDemoValue(paramTag.getDemoValue());
             paramInfo.setRequire(paramTag.isRequire());
             paramInfos.add(paramInfo);
         }
@@ -107,6 +108,8 @@ public abstract class AbstractWebFramework implements Framework {
             paramInfo.setParamDesc(respTag.getParamDesc());
             paramInfo.setParamType(respTag.getParamType());
             paramInfo.setDemoValue(respTag.getDemoValue());
+            paramInfo.setDataKey(respTag.getParamName());
+            paramInfo.setDataType(paramInfo.getParamType());
             list.add(paramInfo);
         }
         return list;

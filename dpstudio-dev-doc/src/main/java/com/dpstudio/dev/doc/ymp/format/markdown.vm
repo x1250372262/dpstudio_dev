@@ -19,19 +19,19 @@
 
 **参数:**
 
-参数名|类型|是否必填|描述
------|------|------
+参数名|类型|是否必填|描述|示例值
+-----|------|------|------
 #foreach($p in $apiAction.params)
-$p.paramName|$p.paramType|#if($p.require) 是 #else 否 #end|$p.paramDesc
+$p.paramName|$p.paramType|#if($p.require) 是 #else 否 #end|$p.paramDesc|$p.demoValue
 #end
 
 **返回:**
 $apiAction.returnDesc
 
-参数名|类型|是否必填|描述
------|------|------
+参数名|类型|是否必填|描述|示例值|返回key|返回数据类型
+-----|------|------|------|------|------
 #foreach($p in $apiAction.respParam)
-$p.paramName|$p.paramType|#if($p.require) 是 #else 否 #end|$p.paramDesc
+$p.paramName|$p.paramType|#if($p.require) 是 #else 否 #end|$p.paramDesc|$p.demoValue|$p.dataKey|$p.dataType
 #end
 
 #if($apiAction.respbody)

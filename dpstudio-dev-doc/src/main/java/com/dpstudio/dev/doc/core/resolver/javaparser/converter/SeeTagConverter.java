@@ -33,8 +33,21 @@ public class SeeTagConverter extends DefaultJavaParserTagConverterImpl {
     @Override
     public DocTag converter(String comment) {
         DocTag docTag = super.converter(comment);
-
-        String path = JavaSourceFileManager.getInstance().getPath((String) docTag.getValues());
+        String values = (String) docTag.getValues();
+        String valueStr = (String) docTag.getValues();
+        String dataKey = "";
+        String dataType = "";
+        if(values.contains("|")){
+            String[] valuesArr = values.split("\\|");
+            valueStr =  valuesArr[0];
+            if(valuesArr.length>2){
+                dataKey = valuesArr[1];
+                dataType = valuesArr[2];
+            }else if(valuesArr.length>1){
+                dataKey = valuesArr[1];
+            }
+        }
+        String path = JavaSourceFileManager.getInstance().getPath(valueStr);
         if (StringUtils.isBlank(path)) {
             return null;
         }
@@ -66,6 +79,8 @@ public class SeeTagConverter extends DefaultJavaParserTagConverterImpl {
         objectInfo.setType(returnClassz);
         objectInfo.setFieldInfos(fields);
         objectInfo.setComment(text);
+        objectInfo.setDataKey(dataKey);
+        objectInfo.setDataType(dataType);
         return new SeeTagImpl(docTag.getTagName(), objectInfo);
     }
 

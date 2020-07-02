@@ -11,7 +11,7 @@ import com.dpstudio.dev.doc.core.model.ObjectInfo;
  */
 public class SeeTagImpl extends DocTag<ObjectInfo> {
 
-    private ObjectInfo objectInfo;
+    private final ObjectInfo objectInfo;
 
     public SeeTagImpl(String tagName, ObjectInfo objectInfo) {
         super(tagName);

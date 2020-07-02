@@ -1,6 +1,8 @@
 package com.dpstudio.dev.doc.core.model;
 
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -111,7 +113,7 @@ public class AbstractApiAction extends ApiAction {
     }
 
     public void setReturnDesc(String returnDesc) {
-        this.returnDesc = returnDesc;
+        this.returnDesc = StringUtils.defaultIfBlank(returnDesc,"");
     }
 
     public String getRespbody() {
@@ -119,7 +121,7 @@ public class AbstractApiAction extends ApiAction {
     }
 
     public void setRespbody(String respbody) {
-        this.respbody = respbody;
+        this.respbody = StringUtils.defaultIfBlank(respbody,"");
     }
 
     public boolean isJson() {

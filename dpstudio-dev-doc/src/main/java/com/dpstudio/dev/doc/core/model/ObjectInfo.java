@@ -22,6 +22,16 @@ public class ObjectInfo {
     private String comment;
 
     /**
+     * 返回key
+     */
+    private String dataKey;
+
+    /**
+     * 返回数据类型
+     */
+    private String dataType;
+
+    /**
      * 对象的属性
      */
     private List<FieldInfo> fieldInfos = new LinkedList<>();
@@ -48,5 +58,21 @@ public class ObjectInfo {
 
     public void setFieldInfos(List<FieldInfo> fieldInfos) {
         this.fieldInfos = fieldInfos;
+    }
+
+    public String getDataKey() {
+        return dataKey;
+    }
+
+    public void setDataKey(String dataKey) {
+        this.dataKey = dataKey;
+    }
+
+    public String getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(String dataType) {
+        this.dataType = dataType;
     }
 }

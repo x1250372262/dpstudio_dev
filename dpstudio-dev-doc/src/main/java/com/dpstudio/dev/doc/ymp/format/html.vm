@@ -57,6 +57,7 @@
                         <template scope="scope">{{scope.row.require ? '是' : '否'}}</template>
                     </el-table-column>
                     <el-table-column prop="paramDesc" label="描述"></el-table-column>
+                    <el-table-column prop="demoValue" label="示例值"></el-table-column>
                 </el-table>
             </el-collapse-item>
 
@@ -71,6 +72,9 @@
                         <template scope="scope">{{scope.row.require ? '是' : '否'}}</template>
                     </el-table-column>
                     <el-table-column prop="paramDesc" label="描述"></el-table-column>
+                    <el-table-column prop="demoValue" label="示例值"></el-table-column>
+                    <el-table-column prop="dataKey" label="返回key"></el-table-column>
+                    <el-table-column prop="dataType" label="返回数据类型"></el-table-column>
                 </el-table>
             </el-collapse-item>
 
@@ -348,27 +352,35 @@
                             paramName: par.paramName,
                             paramDesc: par.paramDesc,
                             paramType: par.paramType,
-                            require: par.require
+                            require: par.require,
+                            dataKey:par.paramName,
+                            dataType:par.paramType
                         });
                     }
                 }
 
-                if (this.currentApiAction && this.currentApiAction.returnObj) {
-
-                    for (var i = 0; i < this.currentApiAction.returnObj.fieldInfos.length; i++) {
-                        var par = this.currentApiAction.returnObj.fieldInfos[i];
-
-                        if (names[par.name] != null) {
-                            //已经有@resp注解进行了覆盖,就不再采纳@return中的
+                if (this.currentApiAction.returnObj) {
+                    for (var k = 0;  k< this.currentApiAction.returnObj.length; k++) {
+                        var returnObj = this.currentApiAction.returnObj[k];
+                        if (!returnObj.fieldInfos) {
                             continue;
                         }
 
-                        data.push({
-                            paramName: par.name,
-                            paramDesc: par.comment,
-                            paramType: par.simpleTypeName,
-                            require: par.require
-                        });
+                        for (var j = 0; j < returnObj.fieldInfos.length; j++) {
+                            var fieldInfo = returnObj.fieldInfos[j];
+                            if (names[fieldInfo.name]) {
+                                continue;
+                            }
+                            data.push({
+                                paramName: fieldInfo.name,
+                                paramDesc: fieldInfo.comment,
+                                require: fieldInfo.require,
+                                paramType: fieldInfo.simpleTypeName,
+                                demoValue:fieldInfo.demoValue,
+                                dataKey:returnObj.dataKey,
+                                dataType:returnObj.dataType
+                            });
+                        }
                     }
                 }
                 return data;

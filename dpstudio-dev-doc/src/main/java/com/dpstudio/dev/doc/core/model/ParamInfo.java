@@ -1,5 +1,7 @@
 package com.dpstudio.dev.doc.core.model;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * @author 徐建鹏
  * @Date 2018/08/09.
@@ -32,6 +34,16 @@ public class ParamInfo {
      * 示例值
      */
     private String demoValue;
+
+    /**
+     * 返回key
+     */
+    private String dataKey;
+
+    /**
+     * 返回数据类型
+     */
+    private String dataType;
 
     public String getParamName() {
         return paramName;
@@ -70,6 +82,22 @@ public class ParamInfo {
     }
 
     public void setDemoValue(String demoValue) {
-        this.demoValue = demoValue;
+        this.demoValue =  StringUtils.defaultIfBlank(demoValue,"");
+    }
+
+    public String getDataKey() {
+        return dataKey;
+    }
+
+    public void setDataKey(String dataKey) {
+        this.dataKey = StringUtils.defaultIfBlank(dataKey,"");
+    }
+
+    public String getDataType() {
+        return dataType;
+    }
+
+    public void setDataType(String dataType) {
+        this.dataType = StringUtils.defaultIfBlank(dataType,"");
     }
 }

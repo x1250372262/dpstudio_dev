@@ -73,6 +73,8 @@
                     </el-table-column>
                     <el-table-column prop="paramDesc" label="描述"></el-table-column>
                     <el-table-column prop="demoValue" label="示例值"></el-table-column>
+                    <el-table-column prop="dataKey" label="返回key"></el-table-column>
+                    <el-table-column prop="dataType" label="返回数据类型"></el-table-column>
                 </el-table>
             </el-collapse-item>
 
@@ -351,7 +353,9 @@
                             paramDesc: par.paramDesc,
                             paramType: par.paramType,
                             require: par.require,
-                            demoValue:par.demoValue
+                            demoValue:par.demoValue,
+                            dataKey:par.paramName,
+                            dataType:par.paramType
                         });
                     }
                 }
@@ -373,7 +377,9 @@
                                 paramDesc: fieldInfo.comment,
                                 require: fieldInfo.require,
                                 paramType: fieldInfo.simpleTypeName,
-                                demoValue:fieldInfo.demoValue
+                                demoValue:fieldInfo.demoValue,
+                                dataKey:returnObj.dataKey,
+                                dataType:returnObj.dataType
                             });
                         }
                     }

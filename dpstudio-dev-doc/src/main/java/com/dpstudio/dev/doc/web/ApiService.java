@@ -38,20 +38,17 @@ public class ApiService {
 
         ApiDoc apiDoc = create();
         List<ApiModule> apiModules = apiDoc.getApiModules();
-        Map<String, List<ApiModule>> apiModuleMap = ListUtils.groupBy(apiModules, new ListUtils.GroupBy<String, ApiModule>() {
-            @Override
-            public String groupBy(ApiModule row) {
-                String packageName = row.getType().getPackage().getName();
-                Package p = Package.getPackage(packageName);
-                if (p == null) {
-                    return packageName;
-                }
-                Doc doc = p.getAnnotation(Doc.class);
-                if (doc == null || StringUtils.isBlank(doc.name())) {
-                    return packageName;
-                }
-                return doc.name();
+        Map<String, List<ApiModule>> apiModuleMap = ListUtils.groupBy(apiModules, row -> {
+            String packageName = row.getType().getPackage().getName();
+            Package p = Package.getPackage(packageName);
+            if (p == null) {
+                return packageName;
             }
+            Doc doc = p.getAnnotation(Doc.class);
+            if (doc == null || StringUtils.isBlank(doc.name())) {
+                return packageName;
+            }
+            return doc.name();
         });
         List<ApiInfo> apiInfoList = new ArrayList<>();
         if (ObjectUtils.isNotEmpty(apiModuleMap)) {

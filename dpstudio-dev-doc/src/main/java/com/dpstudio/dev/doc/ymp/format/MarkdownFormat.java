@@ -39,37 +39,23 @@ public class MarkdownFormat implements Format {
                 saa.setRespbody(JsonUtils.formatJson(saa.getRespbody()));
             }
             if (saa.getParamObjs().size() > 0) {
-                //将@resp标签跟@return标签中重复的属性进行去重,以@resp的为准
-                Set<String> paramNames = new HashSet<>();
-                for (ParamInfo param : saa.getRespParam()) {
-                    paramNames.add(param.getParamName());
-                }
 
-                for (ObjectInfo returnObj : saa.getReturnObj()) {
-                    for (FieldInfo fieldInfo : returnObj.getFieldInfos()) {
-                        if (paramNames.contains(fieldInfo.getName())) {
-                            continue;
-                        }
+                for (ObjectInfo paramObj : saa.getParamObjs()) {
+                    for (FieldInfo fieldInfo : paramObj.getFieldInfos()) {
                         ParamInfo param = toParamInfo(fieldInfo);
                         saa.getRespParam().add(param);
                     }
                 }
 
             }
-            if (saa.getParamObjs().size() > 0) {
-                //将@param跟@paramObj标签中重复的属性进行去重,以@param中的为准
-                Set<String> paramNames = new HashSet<>();
-                for (ParamInfo param : saa.getParams()) {
-                    paramNames.add(param.getParamName());
-                }
-
-                for (ObjectInfo paramObj : saa.getParamObjs()) {
-                    for (FieldInfo fieldInfo : paramObj.getFieldInfos()) {
-                        if (paramNames.contains(fieldInfo.getName())) {
-                            continue;
-                        }
+            if (saa.getReturnObj().size() > 0) {
+                //将@resp标签跟@return标签中重复的属性进行去重,以@resp的为准
+                for (ObjectInfo returnObj : saa.getReturnObj()) {
+                    for (FieldInfo fieldInfo : returnObj.getFieldInfos()) {
                         ParamInfo param = toParamInfo(fieldInfo);
-                        saa.getParams().add(param);
+                        param.setDataKey(returnObj.getDataKey());
+                        param.setDataType(returnObj.getDataType());
+                        saa.getRespParam().add(param);
                     }
                 }
             }
@@ -89,6 +75,7 @@ public class MarkdownFormat implements Format {
         param.setParamDesc(fieldInfo.getComment());
         param.setParamName(fieldInfo.getName());
         param.setRequire(fieldInfo.isRequire());
+        param.setDemoValue(fieldInfo.getDemoValue());
         return param;
     }
 }
