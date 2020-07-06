@@ -8,7 +8,7 @@ import java.lang.annotation.*;
  * @author 徐建鹏
  * @Date 2020/5/20.
  * @Time: 16:57.
- * @Description: excel导出数据处理
+ * @Description: 阿里excel导出数据处理
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

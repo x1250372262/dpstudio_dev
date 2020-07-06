@@ -5,7 +5,6 @@ import com.dpstudio.dev.excel.analysis.bean.CellResult;
 import com.dpstudio.dev.excel.analysis.bean.ErrorInfo;
 import com.dpstudio.dev.excel.analysis.bean.HandlerBean;
 import com.dpstudio.dev.excel.analysis.bean.ValidateBean;
-import com.dpstudio.dev.utils.ObjectUtils;
 import net.ymate.platform.commons.lang.BlurObject;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.hssf.usermodel.HSSFDateUtil;
@@ -14,6 +13,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
+import java.util.Objects;
 
 import static com.dpstudio.dev.excel.utils.ExcleUtils.readNumericCell;
 
@@ -37,7 +37,7 @@ public class CellHandler {
     public static CellResult handleString(HandlerBean handlerBean, ValidateBean validateBean, Cell cell, String title) throws Exception {
 
         CellResult cellResult = new CellResult();
-        Object value = null;
+        Object value;
         if (handlerBean.getDataHandle() != null) {
             value = handlerBean.getMethod().invoke(handlerBean.getDataHandle(), cell.getStringCellValue());
         } else {
@@ -55,7 +55,7 @@ public class CellHandler {
                     }
                 }
             } else {
-                if (validateBean.getRequired() && ObjectUtils.isEmpty(value)) {
+                if (validateBean.getRequired() && Objects.isNull(value)) {
                     errorInfo.setContent("第" + cell.getRowIndex() + "行,第" + cell.getColumnIndex() + "列,标题为:" + title + "不能为空");
                 }
             }
@@ -113,7 +113,7 @@ public class CellHandler {
                     } else {
                         value = BlurObject.bind(readNumericCell(cell)).toLongValue();
                     }
-                }else if (Double.class.getName().equals(field.getType().getName())) {
+                } else if (Double.class.getName().equals(field.getType().getName())) {
                     if (dataHandler != null) {
                         value = dataMethod.invoke(dataHandler, cell.getNumericCellValue());
                     } else {
@@ -142,7 +142,7 @@ public class CellHandler {
                     }
                 }
             } else {
-                if (validateBean.getRequired() && ObjectUtils.isEmpty(value)) {
+                if (validateBean.getRequired() && Objects.isNull(value)) {
                     errorInfo.setContent("第" + cell.getRowIndex() + "行,第" + cell.getColumnIndex() + "列,标题为:" + title + "不能为空");
                 }
             }
@@ -200,7 +200,7 @@ public class CellHandler {
                     }
                 }
             } else {
-                if (validateBean.getRequired() && ObjectUtils.isEmpty(value)) {
+                if (validateBean.getRequired() && Objects.isNull(value)) {
                     errorInfo.setContent("第" + rowIndex + "行,第" + columnIndex + "列,标题为:" + title + "不能为空");
                 }
             }

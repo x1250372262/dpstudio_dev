@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
  * @Time: 16:57.
  * @Description: excel转换类
  */
-public class DpstudioConverter implements Converter<String> {
+public class DpStudioConverter implements Converter<String> {
     @Override
     public Class supportJavaTypeKey() {
         return String.class;
@@ -40,7 +40,7 @@ public class DpstudioConverter implements Converter<String> {
         String returnValue = null;
         HandlerBean handlerBean = HandlerBean.create(dConverter);
         if (handlerBean.getDataHandle() != null) {
-            returnValue =  BlurObject.bind(handlerBean.getMethod().invoke(handlerBean.getDataHandle(), cellData.getStringValue())).toStringValue();
+            returnValue = BlurObject.bind(handlerBean.getMethod().invoke(handlerBean.getDataHandle(), cellData.getStringValue())).toStringValue();
         } else {
             returnValue = cellData.getStringValue();
         }

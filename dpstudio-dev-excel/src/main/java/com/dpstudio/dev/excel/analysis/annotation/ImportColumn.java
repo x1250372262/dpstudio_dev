@@ -38,5 +38,5 @@ public @interface ImportColumn {
      *
      * @return
      */
-    Class<?> parameterType() default Object.class;
+    Class<?> parameterType();
 }

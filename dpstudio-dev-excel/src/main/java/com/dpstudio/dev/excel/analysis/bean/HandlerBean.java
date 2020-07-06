@@ -20,8 +20,8 @@ public class HandlerBean {
     private Class<?> parameterType;
 
     private HandlerBean(ImportColumn importColumn) throws Exception {
-        Class handleClass = importColumn.handleClass();
-        if (handleClass != null && !handleClass.isInterface() && StringUtils.isNotBlank(importColumn.method())) {
+        Class<?> handleClass = importColumn.handleClass();
+        if (!handleClass.isInterface() && StringUtils.isNotBlank(importColumn.method())) {
             dataHandle = handleClass.newInstance();
             //得到方法对象,有参的方法需要指定参数类型
             Class<?> parameterTypes = importColumn.parameterType();

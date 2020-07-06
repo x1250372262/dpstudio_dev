@@ -34,5 +34,5 @@ public @interface Validate {
      *
      * @return
      */
-    Class<?> parameterType() default Object.class;
+    Class<?> parameterType();
 }

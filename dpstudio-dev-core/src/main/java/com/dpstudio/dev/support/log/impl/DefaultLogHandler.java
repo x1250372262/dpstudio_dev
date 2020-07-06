@@ -1,5 +1,6 @@
 package com.dpstudio.dev.support.log.impl;
 
+import com.dpstudio.dev.core.UserSession;
 import com.dpstudio.dev.support.log.ILogHandler;
 import com.dpstudio.dev.support.log.annotation.LogGroup;
 import com.dpstudio.dev.support.log.model.Log;
@@ -11,6 +12,7 @@ import net.ymate.platform.persistence.jdbc.JDBC;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: 徐建鹏.
@@ -37,8 +39,7 @@ public class DefaultLogHandler implements ILogHandler {
             return;
         }
         List<Log> logList = new ArrayList<>();
-        String createUser =  "default";
-//        String createUser = UserSessionBean.current() != null ? UserSessionBean.current().getUid() : "default";
+        String createUser = Objects.isNull(UserSession.current()) ? "default" : UserSession.current().getUid();
         com.dpstudio.dev.support.log.annotation.Log[] logs = logGroup.logs();
         for (com.dpstudio.dev.support.log.annotation.Log log : logs) {
             Log logBean = Log.builder()

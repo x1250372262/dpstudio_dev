@@ -26,7 +26,7 @@ import static com.dpstudio.dev.excel.utils.ExcleUtils.isRowNotEmpty;
  * @Time: 17:01.
  * @Description: 默认excel导入处理实现
  */
-public class DefaultSheetHandler implements ISheetHandler {
+public class DefaultSheetHandler<T> implements ISheetHandler<T> {
 
     /**
      * exlce取值方式
@@ -36,11 +36,11 @@ public class DefaultSheetHandler implements ISheetHandler {
     /**
      * vo对象class
      */
-    private Class cls;
+    private Class<T> cls;
 
-    public DefaultSheetHandler create(Class cls) throws ExcelException {
+    public DefaultSheetHandler<T> create(Class<T> cls) throws ExcelException {
         this.cls = cls;
-        Excel excel = (Excel) cls.getAnnotation(Excel.class);
+        Excel excel = cls.getAnnotation(Excel.class);
         if (excel == null) {
             throw new ExcelException("vo对象未包含Excle注解");
         }
@@ -48,7 +48,13 @@ public class DefaultSheetHandler implements ISheetHandler {
         return this;
     }
 
-    private Map<Object, Field> getFilesMap() throws Exception {
+    /**
+     * 获取字段信息
+     *
+     * @return
+     * @throws Exception
+     */
+    private Map<Object, Field> getFilesMap() {
         Field[] fields = cls.getDeclaredFields();
         Map<Object, Field> fieldMap = new HashMap<>();
         for (Field field : fields) {
@@ -111,18 +117,16 @@ public class DefaultSheetHandler implements ISheetHandler {
 
 
     @Override
-    public ResultBean handle(Sheet sheet) throws Exception {
+    public ResultBean<T> handle(Sheet sheet) throws Exception {
 
-        ResultBean resultBean = new ResultBean();
+        ResultBean<T> resultBean = new ResultBean<>();
 
         //Vo数据
-        List<Object> result = new ArrayList<>();
+        List<T> result = new ArrayList<>();
         //错误信息
         List<ErrorInfo> errorInfoList = new ArrayList<>();
 
-        /**
-         * 字段信息
-         */
+        //字段信息
         Map<Object, Field> fieldMap = getFilesMap();
 
         for (int rowId = sheet.getFirstRowNum(); rowId <= sheet.getLastRowNum(); rowId++) {
@@ -130,7 +134,7 @@ public class DefaultSheetHandler implements ISheetHandler {
                 Row row = sheet.getRow(rowId);
                 boolean isError = false;
                 if (isRowNotEmpty(row)) {
-                    Object objectVo = cls.newInstance();
+                    T objectVo = cls.newInstance();
                     for (int cellIdx = row.getFirstCellNum(); cellIdx <= row.getLastCellNum(); cellIdx++) {
                         Field field = fieldMap.get(cellIdx);
                         Object title = getTitle(sheet.getRow(sheet.getFirstRowNum()).getCell(cellIdx));

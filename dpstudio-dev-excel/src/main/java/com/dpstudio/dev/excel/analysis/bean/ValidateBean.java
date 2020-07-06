@@ -22,9 +22,9 @@ public class ValidateBean {
     private Boolean required;
 
     private ValidateBean(Validate validate) throws Exception {
-        Class validateClass = validate.validateClass();
+        Class<?> validateClass = validate.validateClass();
         this.required = validate.required();
-        if (validateClass != null && !validateClass.isInterface() && StringUtils.isNotBlank(validate.method())) {
+        if (!validateClass.isInterface() && StringUtils.isNotBlank(validate.method())) {
             this.validate = validateClass.newInstance();
 
             //得到方法对象,有参的方法需要指定参数类型

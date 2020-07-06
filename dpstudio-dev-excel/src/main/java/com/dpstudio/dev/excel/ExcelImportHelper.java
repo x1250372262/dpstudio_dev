@@ -29,7 +29,7 @@ public class ExcelImportHelper implements Closeable {
         return new ExcelImportHelper(inputStream);
     }
 
-    private ExcelImportHelper(InputStream inputStream) throws IOException, InvalidFormatException {
+    private ExcelImportHelper(InputStream inputStream) throws IOException {
         workbook = WorkbookFactory.create(inputStream);
         sheetNames = new String[workbook.getNumberOfSheets()];
         for (int idx = 0; idx < sheetNames.length; idx++) {

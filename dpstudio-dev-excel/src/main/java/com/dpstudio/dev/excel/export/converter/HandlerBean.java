@@ -20,8 +20,8 @@ public class HandlerBean {
     private Class<?> parameterType;
 
     private HandlerBean(DConverter dConverter) throws Exception {
-        Class handleClass = dConverter.handleClass();
-        if (handleClass != null && !handleClass.isInterface() && StringUtils.isNotBlank(dConverter.method())) {
+        Class<? extends IDpstudioDataHandler> handleClass = dConverter.handleClass();
+        if (!handleClass.isInterface() && StringUtils.isNotBlank(dConverter.method())) {
             dataHandle = handleClass.newInstance();
             method = dataHandle.getClass().getMethod(dConverter.method(), String.class);
         }

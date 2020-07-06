@@ -2,7 +2,6 @@ package com.dpstudio.dev.excel;
 
 
 import com.dpstudio.dev.excel.exception.ExcelException;
-import com.dpstudio.dev.utils.FileUtils;
 import net.ymate.platform.commons.util.DateTimeUtils;
 import net.ymate.platform.commons.util.RuntimeUtils;
 import org.apache.commons.io.IOUtils;
@@ -73,8 +72,8 @@ public class ExcelExportHelper implements Closeable {
     }
 
     public File export(String fileName) throws Exception {
-        FileUtils.fixAndMkDir(excelFilePath);
-        FileUtils.fixAndMkDir(zipFilePath);
+        fixAndMkDir(excelFilePath);
+        fixAndMkDir(zipFilePath);
         //输入信息
         File inFile = getTemplate(templatePath);
         if (inFile == null) {
@@ -169,5 +168,16 @@ public class ExcelExportHelper implements Closeable {
     @Override
     public void close() throws IOException {
 
+    }
+
+    public static String fixAndMkDir(String dir) {
+        File file = new File(dir);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        if (!dir.endsWith(File.separator)) {
+            dir += File.separator;
+        }
+        return dir;
     }
 }
