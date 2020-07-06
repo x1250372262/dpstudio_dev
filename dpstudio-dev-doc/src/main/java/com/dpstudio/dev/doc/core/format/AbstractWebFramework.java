@@ -1,16 +1,23 @@
 package com.dpstudio.dev.doc.core.format;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.dpstudio.dev.doc.core.framework.Framework;
 import com.dpstudio.dev.doc.core.model.*;
 import com.dpstudio.dev.doc.core.tag.*;
 import com.dpstudio.dev.doc.core.utils.TagUtils;
+import net.ymate.platform.core.lang.BlurObject;
 import net.ymate.platform.core.util.ClassUtils;
+import net.ymate.platform.core.util.UUIDUtils;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author 徐建鹏
@@ -34,7 +41,7 @@ public abstract class AbstractWebFramework implements Framework {
                     logger.error("copy ApiAction to HttpApiAction properties error", e);
                     return new ArrayList<>(0);
                 }
-
+                ympApiAction.setId(UUIDUtils.UUID());
                 ympApiAction.setTitle(this.getTitile(ympApiAction));
                 ympApiAction.setRespbody(this.getRespbody(ympApiAction));
                 ympApiAction.setParams(this.getParams(ympApiAction));
@@ -70,8 +77,86 @@ public abstract class AbstractWebFramework implements Framework {
         if (respbodyTag != null) {
             return (String) respbodyTag.getValues();
         }
-        return null;
+        //没有写@respbody 自动生成
+        List<ParamInfo> respList = getResp(aa);
+        List<ObjectInfo> respObjList = getRespObjObjs((AbstractApiAction) aa);
+        if (respList.isEmpty() && respObjList.isEmpty()) {
+            return null;
+        }
+        JSONObject jsonObject = new JSONObject();
+        for (ParamInfo paramInfo : respList) {
+            fillData(jsonObject, paramInfo.getParamType(), paramInfo.getDemoValue(), paramInfo.getDataKey());
+        }
+        for (ObjectInfo objectInfo : respObjList) {
+            if (StringUtils.isBlank(objectInfo.getDataKey())) {
+                continue;
+            }
+            if ("object".equals(objectInfo.getDataType())) {
+                JSONObject object = createObject(objectInfo.getFieldInfos());
+                jsonObject.put(objectInfo.getDataKey(), object);
+            } else if ("array".equals(objectInfo.getDataType())) {
+                JSONArray array = createArray(objectInfo.getFieldInfos());
+                jsonObject.put(objectInfo.getDataKey(), array);
+            }
+        }
+        return JSON.toJSONString(jsonObject);
+    }
 
+    private JSONObject fillData(JSONObject jsonObject, String type, String demoValue, String dataKey) {
+        if (Objects.equals(int.class.getName(), type) || Objects.equals(Integer.class.getSimpleName(), type)) {
+            if (StringUtils.isNotBlank(demoValue)) {
+                jsonObject.put(dataKey, BlurObject.bind(demoValue).toIntValue());
+            } else {
+                jsonObject.put(dataKey, (int) ((Math.random() * 9 + 1) * 100000));
+            }
+        } else if (Objects.equals(long.class.getName(), type) || Objects.equals(Long.class.getSimpleName(), type)) {
+            if (StringUtils.isNotBlank(demoValue)) {
+                jsonObject.put(dataKey, BlurObject.bind(demoValue).toLongValue());
+            } else {
+                jsonObject.put(dataKey, (long) ((Math.random() * 9 + 1) * 100000));
+            }
+        } else if (Objects.equals(boolean.class.getName(), type) || Objects.equals(Boolean.class.getSimpleName(), type)) {
+            if (StringUtils.isNotBlank(demoValue)) {
+                jsonObject.put(dataKey, BlurObject.bind(demoValue).toIntValue());
+            } else {
+                jsonObject.put(dataKey, false);
+            }
+        } else if (Objects.equals(double.class.getName(), type) || Objects.equals(Double.class.getSimpleName(), type)) {
+            if (StringUtils.isNotBlank(demoValue)) {
+                jsonObject.put(dataKey, BlurObject.bind(demoValue).toDoubleValue());
+            } else {
+                jsonObject.put(dataKey, (Math.random() * 9 + 1) * 100000);
+            }
+        } else if (Objects.equals(float.class.getName(), type) || Objects.equals(Float.class.getSimpleName(), type)) {
+            if (StringUtils.isNotBlank(demoValue)) {
+                jsonObject.put(dataKey, BlurObject.bind(demoValue).toFloatValue());
+            } else {
+                jsonObject.put(dataKey, (float) ((Math.random() * 9 + 1) * 100000));
+            }
+        } else {
+            jsonObject.put(dataKey, StringUtils.defaultIfBlank(demoValue, RandomStringUtils.randomAlphanumeric(10)));
+        }
+        return jsonObject;
+    }
+
+    private JSONObject createObject(List<FieldInfo> fieldInfos) {
+        JSONObject jsonObject = new JSONObject();
+        for (FieldInfo fieldInfo : fieldInfos) {
+            fillData(jsonObject, fieldInfo.getSimpleTypeName(), fieldInfo.getDemoValue(), fieldInfo.getName());
+        }
+        return jsonObject;
+    }
+
+    private JSONArray createArray(List<FieldInfo> fieldInfos) {
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < 2; i++) {
+            JSONObject jsonObject = new JSONObject();
+            for (FieldInfo fieldInfo : fieldInfos) {
+                fillData(jsonObject, fieldInfo.getSimpleTypeName(), fieldInfo.getDemoValue(), fieldInfo.getName());
+            }
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray;
     }
 
 

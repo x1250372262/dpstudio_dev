@@ -17,7 +17,7 @@ public class AbstractApiAction extends ApiAction {
     /**
      * 访问的uri地址
      */
-    private List<String> uris;
+    private String uri;
 
     /**
      * 允许的访问方法:POST,GET,DELETE,PUT等, 如果没有,则无限制
@@ -60,12 +60,12 @@ public class AbstractApiAction extends ApiAction {
     private boolean json;
 
 
-    public List<String> getUris() {
-        return uris;
+    public String getUri() {
+        return uri;
     }
 
-    public void setUris(List<String> uris) {
-        this.uris = uris;
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 
     public List<String> getMethods() {

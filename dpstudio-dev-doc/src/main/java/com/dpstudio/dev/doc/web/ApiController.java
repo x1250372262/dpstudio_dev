@@ -62,7 +62,10 @@ public class ApiController {
      * @return 系统所有文档接口的数据(json格式)
      */
     @RequestMapping(value = "apis", method = Type.HttpMethod.GET)
-    public IView apis() {
+    public IView apis() throws Exception{
+        if(apiResult == null){
+            apiResult = new ApiService().createDoc();
+        }
         Object dataStr = JSON.parse(JSON.toJSONString(apiResult, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.PrettyFormat));
         return WebResult.succeed().data(dataStr).attr("apiHost", apiParams.host()).toJSON();
     }
@@ -73,7 +76,7 @@ public class ApiController {
      * @return 文档页面
      */
     @RequestMapping(value = "rebuild", method = Type.HttpMethod.GET)
-    public IView rebuild() throws Exception {
+    public IView rebuild() {
         return View.redirectView("/dpstudio/wd/create");
     }
 
@@ -85,7 +88,10 @@ public class ApiController {
      */
     @RequestMapping(value = "download/page", method = Type.HttpMethod.GET)
     public IView downloadHtml() throws Exception {
-        File tempFile = new File(RuntimeUtils.replaceEnvVariable("${root}/upload_files"), "api.html");
+        if(apiResult == null){
+            apiResult = new ApiService().createDoc();
+        }
+        File tempFile = new File(RuntimeUtils.replaceEnvVariable("${root}/doc/html"), "api.html");
         FileOutputStream out = new FileOutputStream(tempFile);
         HtmlForamt htmlForamt = new HtmlForamt();
         if (apiResult.getApiModuleList() != null && out != null && htmlForamt != null) {
@@ -98,7 +104,7 @@ public class ApiController {
                 IOUtils.closeQuietly(out);
             }
         }
-        tempFile = new File(RuntimeUtils.replaceEnvVariable("${root}/upload_files"), "api.html");
+        tempFile = new File(RuntimeUtils.replaceEnvVariable("${root}/doc/html"), "api.html");
         return View.binaryView(tempFile).useAttachment(apiParams.title() + "_" + apiParams.version() + "_" + DateTimeUtils.formatTime(System.currentTimeMillis(), "_yyyyMMdd_HHmm_ss") + ".html");
     }
 
@@ -110,7 +116,10 @@ public class ApiController {
      */
     @RequestMapping(value = "download/mark", method = Type.HttpMethod.GET)
     public IView downloadMark() throws Exception {
-        File tempFile = new File(RuntimeUtils.replaceEnvVariable("${root}/upload_files"), "api.md");
+        if(apiResult == null){
+            apiResult = new ApiService().createDoc();
+        }
+        File tempFile = new File(RuntimeUtils.replaceEnvVariable("${root}/doc/md"), "api.md");
         FileOutputStream out = new FileOutputStream(tempFile);
         MarkdownFormat markdownFormat = new MarkdownFormat();
         if (apiResult.getApiModuleList() != null && out != null && markdownFormat != null) {
@@ -123,7 +132,7 @@ public class ApiController {
                 IOUtils.closeQuietly(out);
             }
         }
-        tempFile = new File(RuntimeUtils.replaceEnvVariable("${root}/upload_files"), "api.md");
+        tempFile = new File(RuntimeUtils.replaceEnvVariable("${root}//doc/md"), "api.md");
         return View.binaryView(tempFile).useAttachment(apiParams.title() + "_" + apiParams.version() + "_" + DateTimeUtils.formatTime(System.currentTimeMillis(), "_yyyyMMdd_HHmm_ss") + ".md");
     }
 

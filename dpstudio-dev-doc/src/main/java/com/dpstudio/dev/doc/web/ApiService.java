@@ -9,6 +9,7 @@ import com.dpstudio.dev.doc.core.model.ApiResult;
 import com.dpstudio.dev.doc.ymp.framework.YmpWebFramework;
 import com.dpstudio.dev.utils.ListUtils;
 import com.dpstudio.dev.utils.ObjectUtils;
+import net.ymate.platform.webmvc.annotation.RequestMapping;
 import org.apache.commons.lang.NullArgumentException;
 import org.apache.commons.lang.StringUtils;
 
@@ -23,18 +24,14 @@ import java.util.*;
  */
 public class ApiService {
 
-    private static final ApiParams apiParams;
-    private static Boolean init = false;
+    private static final ApiParams API_PARAMS;
     private static ApiResult apiResult;
 
     static {
-        apiParams = ApiParams.create();
+        API_PARAMS = ApiParams.create();
     }
 
     public ApiResult createDoc() throws Exception {
-//        if (init) {
-//            return apiResult;
-//        }
 
         ApiDoc apiDoc = create();
         List<ApiModule> apiModules = apiDoc.getApiModules();
@@ -61,22 +58,22 @@ public class ApiService {
 
         }
         apiResult = new ApiResult(apiInfoList)
-                .attr("title", apiParams.title())
-                .attr("version", apiParams.version());
+                .attr("title", API_PARAMS.title())
+                .attr("host", API_PARAMS.host())
+                .attr("version", API_PARAMS.version());
         apiResult.setApiModuleList(apiModules);
-        init = true;
         return apiResult;
     }
 
     private ApiDoc create() throws Exception {
-        if (!apiParams.isInited()) {
+        if (!API_PARAMS.isInited()) {
             throw new Exception("项目参数配置失败");
         }
-        if (!apiParams.isEnable()) {
+        if (!API_PARAMS.isEnable()) {
             throw new Exception("doc模块已经禁用");
         }
 
-        String sourcePath = apiParams.sourcePath();
+        String sourcePath = API_PARAMS.sourcePath();
         if (StringUtils.isBlank(sourcePath)) {
             throw new NullArgumentException("sourcePath不能为空");
         }
@@ -87,7 +84,7 @@ public class ApiService {
             srcDirs.add(dir);
         }
         DpstudioDoc dpstudioDoc = new DpstudioDoc(srcDirs, new YmpWebFramework());
-        ApiDoc apiDoc = dpstudioDoc.resolve(apiParams);
+        ApiDoc apiDoc = dpstudioDoc.resolve(API_PARAMS);
 //        HashMap<String, Object> properties = new HashMap<String, Object>();
 //        properties.put("version", apiParams.version());
 //        properties.put("title", apiParams.title());

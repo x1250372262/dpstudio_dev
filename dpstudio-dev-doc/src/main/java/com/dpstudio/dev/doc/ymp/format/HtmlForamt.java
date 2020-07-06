@@ -29,6 +29,7 @@ public class HtmlForamt implements Format {
 
                 Map<String, Object> model = new HashMap<String, Object>();
                 model.put("title", StringUtils.defaultString((String) apiResult.getProperties().get("title"), "接口文档"));
+                model.put("apiHost", StringUtils.defaultString((String) apiResult.getProperties().get("host"), ""));
                 model.put("apiInfoList", apiResult.getApiInfoList());
                 return s.replace("_apis_json", JSON.toJSONString(model, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.PrettyFormat));
             } catch (IOException e) {

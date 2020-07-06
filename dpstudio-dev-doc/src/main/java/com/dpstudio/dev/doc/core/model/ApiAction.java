@@ -15,6 +15,11 @@ import java.util.List;
 public class ApiAction {
 
     /**
+     * id唯一标识
+     */
+    private String id;
+
+    /**
      * 展示用的标题
      */
     private String title;
@@ -78,5 +83,13 @@ public class ApiAction {
 
     public void setDocTags(List<DocTag> docTags) {
         this.docTags = docTags;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

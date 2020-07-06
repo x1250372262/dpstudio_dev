@@ -25,7 +25,6 @@ public class FieldInfo {
      */
     private boolean require;
 
-    private List<FieldInfo> fieldInfos;
 
     public String getName() {
         return name;
@@ -65,14 +64,6 @@ public class FieldInfo {
 
     public void setRequire(boolean require) {
         this.require = require;
-    }
-
-    public List<FieldInfo> getFieldInfos() {
-        return fieldInfos;
-    }
-
-    public void setFieldInfos(List<FieldInfo> fieldInfos) {
-        this.fieldInfos = fieldInfos;
     }
 
     public String getDemoValue() {

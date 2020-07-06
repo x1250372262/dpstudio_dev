@@ -8,6 +8,7 @@ import net.ymate.platform.core.util.ClassUtils;
 import net.ymate.platform.webmvc.annotation.Controller;
 import net.ymate.platform.webmvc.annotation.RequestMapping;
 import net.ymate.platform.webmvc.base.Type;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -84,6 +85,15 @@ public class YmpWebFramework extends AbstractWebFramework {
      * 设置请求地址和请求方法
      */
     private boolean setUrisAndMethods(ApiModule apiModule, ApiAction apiAction, AbstractApiAction saa) {
+        Package pack = apiModule.getType().getPackage();
+        String packPath = "";
+        if(pack != null){
+            RequestMapping packMapping = pack.getAnnotation(RequestMapping.class);
+            packPath = null;
+            if (packMapping != null) {
+                packPath = packMapping.value();
+            }
+        }
         RequestMapping classRequestMappingAnno = apiModule.getType().getAnnotation(RequestMapping.class);
         String parentPath = null;
         if (classRequestMappingAnno != null) {
@@ -91,7 +101,7 @@ public class YmpWebFramework extends AbstractWebFramework {
         }
         RequestMapping methodRequestMappingAnno = apiAction.getMethod().getAnnotation(RequestMapping.class);
         if (methodRequestMappingAnno != null) {
-            saa.setUris(this.getUris(parentPath, methodRequestMappingAnno.value()));
+            saa.setUri(this.getUri(packPath,parentPath, methodRequestMappingAnno.value()));
             saa.setMethods(this.getMethods(methodRequestMappingAnno.method()));
             return true;
         }
@@ -103,9 +113,17 @@ public class YmpWebFramework extends AbstractWebFramework {
      *
      * @return
      */
-    protected List<String> getUris(String parentPath, String values) {
-        List<String> uris = new ArrayList<>();
+    protected String getUri(String packPath,String parentPath, String values) {
         String uri;
+        if(StringUtils.isNotBlank(packPath)){
+            if(packPath.startsWith("/")){
+                packPath = packPath.substring(1);
+            }
+            if(packPath.endsWith("/")){
+                packPath = packPath.substring(0,packPath.length()-1);
+            }
+            parentPath = packPath.concat("/").concat(parentPath);
+        }
         if (parentPath.endsWith("/") && values.startsWith("/")) {
             uri = parentPath.substring(0, parentPath.length() - 1) + values;
         } else if (parentPath.length() > 0 && !parentPath.endsWith("/") && !values.startsWith("/")) {
@@ -113,8 +131,7 @@ public class YmpWebFramework extends AbstractWebFramework {
         } else {
             uri = parentPath + values;
         }
-        uris.add(uri);
-        return uris;
+        return uri;
     }
 
     /**

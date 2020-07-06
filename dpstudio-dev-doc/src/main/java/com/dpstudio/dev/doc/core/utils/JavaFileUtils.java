@@ -46,7 +46,7 @@ public class JavaFileUtils {
 
         //反方向循环,子类属性注释覆盖父类属性
         for (Class clz : classes) {
-            String path = JavaSourceFileManager.getInstance().getPath(clz.getSimpleName());
+            String path = JavaSourceFileManager.getInstance().getPath(clz.getName());
             if (StringUtils.isBlank(path)) {
                 continue;
             }
