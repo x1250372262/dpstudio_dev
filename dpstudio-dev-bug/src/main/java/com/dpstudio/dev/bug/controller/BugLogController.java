@@ -2,12 +2,11 @@ package com.dpstudio.dev.bug.controller;
 
 import com.dpstudio.dev.bug.interceptor.SessionCheckInterceptor;
 import com.dpstudio.dev.bug.model.BugLog;
+import com.dpstudio.dev.bug.service.IBugLogService;
 import com.dpstudio.dev.core.L;
 import net.ymate.platform.core.beans.annotation.Before;
+import net.ymate.platform.core.beans.annotation.Inject;
 import net.ymate.platform.core.persistence.IResultSet;
-import net.ymate.platform.core.persistence.Page;
-import net.ymate.platform.persistence.jdbc.query.Cond;
-import net.ymate.platform.persistence.jdbc.query.Where;
 import net.ymate.platform.validation.validate.VRequired;
 import net.ymate.platform.webmvc.annotation.Controller;
 import net.ymate.platform.webmvc.annotation.RequestMapping;
@@ -25,18 +24,17 @@ import net.ymate.platform.webmvc.view.IView;
 @Before(SessionCheckInterceptor.class)
 public class BugLogController {
 
+    @Inject
+    private IBugLogService iBugLogService;
+
     @RequestMapping(value = "/list/")
-    public IView login(@VRequired
+    public IView list(@VRequired
                        @RequestParam String bugId,
                        @RequestParam String handlerUser,
                        @RequestParam(defaultValue = "1") final int page,
                        @RequestParam(defaultValue = "10") final int pageSize) throws Exception {
 
-        final Cond cond = Cond.create().eq(BugLog.FIELDS.BUG_ID).param(bugId);
-        cond.exprNotEmpty(handlerUser, (c) -> {
-            c.and().like(BugLog.FIELDS.HANDLER_USER).param("%" + handlerUser + "%");
-        });
-        IResultSet<BugLog> resultSet = BugLog.builder().build().find(Where.create(cond).orderByDesc(BugLog.FIELDS.HANDLER_TIME), Page.create(page).pageSize(pageSize));
+        IResultSet<BugLog> resultSet = iBugLogService.list(bugId, handlerUser, page, pageSize);
         return new L<BugLog>().listView(resultSet, page);
     }
 }

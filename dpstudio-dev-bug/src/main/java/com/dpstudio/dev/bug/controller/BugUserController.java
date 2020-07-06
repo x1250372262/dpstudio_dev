@@ -1,8 +1,10 @@
 package com.dpstudio.dev.bug.controller;
 
 import com.dpstudio.dev.bug.model.BugUser;
+import com.dpstudio.dev.bug.service.IBugUserService;
 import com.dpstudio.dev.core.R;
 import com.dpstudio.dev.core.V;
+import net.ymate.platform.core.beans.annotation.Inject;
 import net.ymate.platform.core.persistence.IResultSet;
 import net.ymate.platform.validation.validate.VRequired;
 import net.ymate.platform.webmvc.annotation.Controller;
@@ -22,21 +24,33 @@ import net.ymate.platform.webmvc.view.IView;
 @RequestMapping("/dpstudio/bug/user/")
 public class BugUserController {
 
+    @Inject
+    private IBugUserService iBugUserService;
+
+    /**
+     * 登录
+     *
+     * @param userName
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(value = "/login/", method = Type.HttpMethod.POST)
     public IView login(@VRequired(msg = "请输入名称")
                        @RequestParam String userName) throws Exception {
 
-        BugUser bugUser = BugUser.builder().name(userName).build().findFirst();
-        if (bugUser == null) {
-            return V.view(R.fail().msg("请手动在数据库添加用户"));
-        }
-//        UserSessionBean.create().setUid(bugUser.getId()).addAttribute("name", userName).save();
-        return V.ok();
+        R r = iBugUserService.login(userName);
+        return V.view(r);
     }
 
+    /**
+     * 用户下拉选
+     *
+     * @return
+     * @throws Exception
+     */
     @RequestMapping("/select")
     public IView select() throws Exception {
-        IResultSet<BugUser> resultSet = BugUser.builder().build().find();
+        IResultSet<BugUser> resultSet = iBugUserService.select();
         return WebResult.succeed().data(resultSet.getResultData()).toJsonView();
     }
 }
