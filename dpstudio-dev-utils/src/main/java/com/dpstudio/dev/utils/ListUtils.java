@@ -26,6 +26,7 @@ public class ListUtils {
 
     /**
      * 判断集合是否包含另一个集合
+     *
      * @param bigResult   大集合
      * @param smallResult 小集合
      */
@@ -35,6 +36,7 @@ public class ListUtils {
 
     /**
      * 去掉包含的集合 没有重复 返回大集合
+     *
      * @param bigResult   大集合
      * @param smallResult 小集合
      */
@@ -97,6 +99,7 @@ public class ListUtils {
 
         /**
          * 分组方法
+         *
          * @param row
          * @return
          */
@@ -108,27 +111,27 @@ public class ListUtils {
      * 根据数量分组
      *
      * @param list 集合
-     * @param quantity 数量
+     * @param num  数量
      */
     @SuppressWarnings("unchecked")
-    public static List<Map<String, List<Object>>> groupByQuantityMap(List<?> list, int quantity) {
+    public static List<Map<String, List<Object>>> groupByNumMap(List<?> list, int num) {
         List<Map<String, List<Object>>> mapList = new ArrayList<>();
         if (list == null || list.size() == 0) {
             return mapList;
         }
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Wrong quantity.");
+        if (num <= 0) {
+            throw new RuntimeException("数量小于0");
         }
 
         int count = 0;
         int key = 0;
         while (count < list.size()) {
             Map<String, List<Object>> map = new HashMap<>();
-            List<Object> wrapList = (List<Object>) list.subList(count, Math.min((count + quantity), list.size()));
+            List<Object> wrapList = (List<Object>) list.subList(count, Math.min((count + num), list.size()));
             map.put(key + "", wrapList);
             mapList.add(map);
             key++;
-            count += quantity;
+            count += num;
         }
 
         return mapList;
@@ -139,25 +142,23 @@ public class ListUtils {
      * 根据数量分组
      *
      * @param list 集合
-     * @param quantity 数量
+     * @param num  数量
      */
     @SuppressWarnings("unchecked")
-    public static List<List<Object>> groupByQuantity(List<?> list, int quantity) {
+    public static List<List<Object>> groupByNum(List<?> list, int num) {
         List<List<Object>> mapList = new ArrayList<>();
         if (list == null || list.size() == 0) {
             return mapList;
         }
-        if (quantity <= 0) {
-            throw new IllegalArgumentException("Wrong quantity.");
+        if (num <= 0) {
+            throw new RuntimeException("数量小于0");
         }
-
         int count = 0;
         while (count < list.size()) {
-            List<Object> wrapList = (List<Object>) list.subList(count, Math.min((count + quantity), list.size()));
+            List<Object> wrapList = (List<Object>) list.subList(count, Math.min((count + num), list.size()));
             mapList.add(wrapList);
-            count += quantity;
+            count += num;
         }
-
         return mapList;
     }
 }

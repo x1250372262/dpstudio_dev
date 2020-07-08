@@ -1,17 +1,15 @@
 package com.dpstudio.dev.utils;
 
-
-
 import net.ymate.platform.commons.util.DateTimeUtils;
 
 import java.util.Calendar;
 
- /**
-  * @author mengxiang
-  * @Date 2020.07.05
-  * @Time:
-  * @Description: 时间工具类
-  */
+/**
+ * @author mengxiang
+ * @Date 2020.07.05
+ * @Time:
+ * @Description: 时间工具类
+ */
 public class TimeHelper {
 
     public static TimeHelper create() {
@@ -19,11 +17,12 @@ public class TimeHelper {
     }
 
     final int timeUnit = 10;
+
     private TimeHelper() {
 
     }
 
-    public long dateTimeHelper(long date, int type) {
+    public long timeHelper(long date, int type) {
         Calendar calendar = Calendar.getInstance();
         if (String.valueOf(date).length() <= timeUnit) {
             date *= 1000;
@@ -44,15 +43,15 @@ public class TimeHelper {
     /**
      * 本月第一天
      */
-    public Long getThisMonthFrist() throws Exception {
-        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(dateTimeHelper(System.currentTimeMillis(), 0), "yyyy-MM"), "yyyy-MM").getTime();
+    public long getThisMonthFirst() throws Exception {
+        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(timeHelper(System.currentTimeMillis(), 0), "yyyy-MM"), "yyyy-MM").getTime();
     }
 
     /**
      * 下个月第一天
      */
-    public Long getNextMonthFrist() throws Exception {
-        Long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(dateTimeHelper(System.currentTimeMillis(), 0), "yyyy-MM"), "yyyy-MM").getTime();
+    public long getNextMonthFirst() throws Exception {
+        long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(timeHelper(System.currentTimeMillis(), 0), "yyyy-MM"), "yyyy-MM").getTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(beginTime);
         calendar.add(Calendar.MONTH, 1);
@@ -63,15 +62,15 @@ public class TimeHelper {
     /**
      * 本年第一天
      */
-    public Long getThisYearFrist() throws Exception {
-        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(dateTimeHelper(System.currentTimeMillis(), 1), "yyyy"), "yyyy").getTime();
+    public long getThisYearFirst() throws Exception {
+        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(timeHelper(System.currentTimeMillis(), 1), "yyyy"), "yyyy").getTime();
     }
 
     /**
      * 下年第一天
      */
-    public Long getNextYearFrist() throws Exception {
-        Long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(dateTimeHelper(System.currentTimeMillis(), 1), "yyyy"), "yyyy").getTime();
+    public long getNextYearFirst() throws Exception {
+        long beginTime = DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(timeHelper(System.currentTimeMillis(), 1), "yyyy"), "yyyy").getTime();
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(beginTime);
         calendar.add(Calendar.YEAR, 1);
@@ -116,7 +115,7 @@ public class TimeHelper {
      *
      * @param day
      */
-    public long getDay(int day) throws Exception {
+    public long addOrSubToStart(int day) throws Exception {
         long beginTime = DateTimeUtils.currentTimeMillis();
         String bTime = DateTimeUtils.formatTime(beginTime, "yyyy-MM-dd") + " 00:00:00";
         return DateTimeUtils.parseDateTime(bTime, "yyyy-MM-dd HH:mm:ss").getTime() + DateTimeUtils.DAY * day;
@@ -127,7 +126,7 @@ public class TimeHelper {
      *
      * @param day
      */
-    public long getDays(int day) throws Exception {
+    public long addOrSubToEnd(int day) throws Exception {
         long beginTime = DateTimeUtils.currentTimeMillis();
         String bTime = DateTimeUtils.formatTime(beginTime, "yyyy-MM-dd") + " 23:59:59";
         return DateTimeUtils.parseDateTime(bTime, "yyyy-MM-dd HH:mm:ss").getTime() + DateTimeUtils.DAY * day;
