@@ -10,19 +10,34 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>dpstudio-dev-security</artifactId>
+    <artifactId>dpstudio-dev-doc</artifactId>
     <version>2.0.0</version>
     <packaging>jar</packaging>
 
-    <name>dpstudio-dev-security</name>
+    <name>dpstudio-dev-doc</name>
     <url>http://www.ymate.net/</url>
-    <description>安全模块</description>
+    <description>文档模块</description>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.vm</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <excludes>
+                    <exclude>**/ymp-*.properties</exclude>
+                </excludes>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -55,11 +70,18 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
+            <groupId>com.github.javaparser</groupId>
+            <artifactId>javaparser-core</artifactId>
+            <version>3.14.16</version>
         </dependency>
+
+        <!--velocity-->
+        <dependency>
+            <groupId>org.apache.velocity</groupId>
+            <artifactId>velocity</artifactId>
+            <version>1.7</version>
+        </dependency>
+
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-core</artifactId>
@@ -73,30 +95,23 @@
             <artifactId>ymate-platform-log</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.reflections</groupId>
-            <artifactId>reflections</artifactId>
-            <version>0.9.12</version>
-        </dependency>
-        <dependency>
-            <groupId>com.thoughtworks.xstream</groupId>
-            <artifactId>xstream</artifactId>
-            <version>1.4.11.1</version>
-        </dependency>
-        <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-webmvc</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.dpstudio.dev</groupId>
-            <artifactId>dpstudio-dev-utils</artifactId>
-            <version>2.0.0</version>
-            <scope>provided</scope>
+            <groupId>net.ymate.module</groupId>
+            <artifactId>ymate-module-unpack</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>javax.servlet.jsp</groupId>
-            <artifactId>jsp-api</artifactId>
-            <version>2.2</version>
-            <scope>provided</scope>
+            <groupId>com.dpstudio.dev</groupId>
+            <artifactId>dpstudio-dev-core</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>1.9.3</version>
         </dependency>
     </dependencies>
 </project>
