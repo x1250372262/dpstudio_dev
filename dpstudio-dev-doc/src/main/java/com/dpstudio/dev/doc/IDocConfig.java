@@ -27,6 +27,7 @@ import net.ymate.platform.core.support.IInitialization;
 public interface IDocConfig extends IInitialization<IDoc> {
 
     String ENABLED = "enabled";
+    String MOCK_ENABLED = "mock_enabled";
     String TITLE = "title";
     String SOURCE_PATH = "source_path";
     String FILE_NAME = "file_name";
@@ -39,6 +40,13 @@ public interface IDocConfig extends IInitialization<IDoc> {
      * @return 返回false表示禁用
      */
     boolean isEnabled();
+
+    /**
+     * mock是否可用, 默认值: true
+     *
+     * @return 返回false表示禁用
+     */
+    boolean isMockEnabled();
 
     /**
      * 文档标题

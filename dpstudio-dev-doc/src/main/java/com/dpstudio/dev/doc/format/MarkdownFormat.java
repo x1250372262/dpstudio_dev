@@ -32,7 +32,8 @@ public class MarkdownFormat implements Format {
 
         apiModule.getApiActions().forEach(apiAction -> {
             if (StringUtils.isNotBlank(apiAction.getRespbody())) {
-                apiAction.setRespbody(JsonWrapper.fromJson(apiAction.getRespbody()).getAsJsonObject().toString(false,true));
+                apiAction.setRespbody(formatJson(apiAction.getRespbody()));
+//                apiAction.setRespbody(JsonWrapper.fromJson(apiAction.getRespbody()).getAsJsonObject().toString(false,true));
             }
             if (!apiAction.getParamObjs().isEmpty()) {
                 apiAction.getParamObjs().forEach(objectInfo -> {

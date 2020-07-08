@@ -23,7 +23,7 @@ public class V {
     /**
      * 失败view
      */
-    public static IView failJson() {
+    public static IView fail() {
         return view(R.fail());
     }
 

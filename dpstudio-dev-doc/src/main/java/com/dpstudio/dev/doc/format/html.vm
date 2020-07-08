@@ -466,7 +466,7 @@
             dataType:"json",
             success: function (result) {
                 console.log(result);
-                $('#testBack').html(JSON.stringify(result));
+                $('#testBack').html(JSON.stringify(JSON.parse(JSON.stringify(result)), null, 2));
             },error:function(result){
                 $('#testBack').text(result.responseText);
             }

@@ -33,6 +33,11 @@ public @interface DocConf {
     boolean enabled() default true;
 
     /**
+     * @return mock是否可用, 默认值: true
+     */
+    boolean mockEnabled() default true;
+
+    /**
      * @return 文档标题
      */
     String title() default "梦祥文档";

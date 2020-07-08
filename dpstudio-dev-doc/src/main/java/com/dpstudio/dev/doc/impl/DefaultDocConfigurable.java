@@ -47,6 +47,11 @@ public final class DefaultDocConfigurable extends DefaultModuleConfigurable {
             return this;
         }
 
+        public Builder mockEnabled(boolean mockEnabled) {
+            configurable.addConfig(IDocConfig.MOCK_ENABLED, String.valueOf(mockEnabled));
+            return this;
+        }
+
         public Builder title(String title) {
             configurable.addConfig(IDocConfig.TITLE, title);
             return this;

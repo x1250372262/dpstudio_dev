@@ -31,6 +31,8 @@ public final class DefaultDocConfig implements IDocConfig {
 
     private boolean enabled = true;
 
+    private boolean mockEnabled = true;
+
     /**
      * 文档标题
      */
@@ -82,6 +84,7 @@ public final class DefaultDocConfig implements IDocConfig {
         //
         DocConf confAnn = mainClass == null ? null : mainClass.getAnnotation(DocConf.class);
         enabled = configReader.getBoolean(ENABLED, confAnn == null || confAnn.enabled());
+        mockEnabled = configReader.getBoolean(MOCK_ENABLED, confAnn == null || confAnn.mockEnabled());
         sourcePath = configReader.getString(SOURCE_PATH, confAnn != null ? confAnn.sourcePath() : "");
         fileName = configReader.getString(FILE_NAME, confAnn != null ? confAnn.fileName() : "");
         version = configReader.getString(VERSION, confAnn != null ? confAnn.version() : "1.0.0");
@@ -107,6 +110,11 @@ public final class DefaultDocConfig implements IDocConfig {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public boolean isMockEnabled() {
+        return mockEnabled;
     }
 
     @Override
