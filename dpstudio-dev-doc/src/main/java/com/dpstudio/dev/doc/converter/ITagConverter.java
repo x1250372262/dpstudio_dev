@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * @author 徐建鹏
+ * @author mengxiang
  * @Date 2020.01.02.
  * @Time: 14:30.
  * @Description: 转换器接口
@@ -40,9 +40,9 @@ public interface ITagConverter {
 
     /**
      * 对象转换
-     *
      * @param comment
      * @return
+     * @throws Exception
      */
     default AbstractDocTag<?> objectConverter(String comment) throws Exception {
         DocTag docTag = new DefaultTagConverterImpl().converter(comment);

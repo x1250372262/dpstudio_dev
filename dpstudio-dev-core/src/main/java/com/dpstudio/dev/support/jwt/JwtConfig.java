@@ -1,7 +1,7 @@
 package com.dpstudio.dev.support.jwt;
 
  /**
-  * @author xujianpeng
+  * @author mengxiang
   * @Date 2020.06.30
   * @Time: 17:30
   * @Description: jwt配置

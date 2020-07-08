@@ -9,7 +9,7 @@ import net.ymate.platform.persistence.jdbc.query.Cond;
 import net.ymate.platform.persistence.jdbc.query.Where;
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/7/6.
  * @Time: 下午3:10.
  * @Description:

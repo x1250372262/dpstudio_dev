@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @author 徐建鹏
+ * @author mengxiang
  * @Date 2020.01.02.
  * @Time: 14:30.
  * @Description: 忽略生成接口文档,标注了该注解的接口,将不会生成接口文档

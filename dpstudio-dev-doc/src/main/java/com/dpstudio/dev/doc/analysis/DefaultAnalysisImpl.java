@@ -1,6 +1,6 @@
 package com.dpstudio.dev.doc.analysis;
 
-import com.alibaba.fastjson.JSON;
+import com.dpstudio.dev.doc.Constants;
 import com.dpstudio.dev.doc.bean.*;
 import com.dpstudio.dev.doc.tag.*;
 import com.dpstudio.dev.doc.utils.TagUtils;
@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
- * @author 徐建鹏
+ * @author mengxiang
  * @Date 2018/08/09.
  * @Time: 14:00.
  * @Description: 基于ymp框架, 默认数据解析
@@ -96,7 +96,7 @@ public class DefaultAnalysisImpl implements IDocAnalysis {
                 jsonObject.put(objectInfo.getDataKey(), array);
             }
         }
-        return jsonObject.toString(true,true);
+        return jsonObject.toString(true, true);
     }
 
     /**
@@ -246,7 +246,7 @@ public class DefaultAnalysisImpl implements IDocAnalysis {
     private void setUriAndMethods(ApiModule apiModule, ApiAction apiAction) {
         Package pack = apiModule.getType().getPackage();
         String packPath = "";
-        if(pack != null){
+        if (pack != null) {
             RequestMapping packMapping = pack.getAnnotation(RequestMapping.class);
             packPath = null;
             if (packMapping != null) {
@@ -260,7 +260,7 @@ public class DefaultAnalysisImpl implements IDocAnalysis {
         }
         RequestMapping methodRequestMapping = apiAction.getMethod().getAnnotation(RequestMapping.class);
         if (methodRequestMapping != null) {
-            apiAction.setUri(this.getUri(packPath,parentPath, methodRequestMapping.value()));
+            apiAction.setUri(this.getUri(packPath, parentPath, methodRequestMapping.value()));
             apiAction.setMethods(this.getMethods(methodRequestMapping.method()));
         }
     }
@@ -270,21 +270,21 @@ public class DefaultAnalysisImpl implements IDocAnalysis {
      *
      * @return
      */
-    protected String getUri(String packPath,String parentPath, String values) {
+    protected String getUri(String packPath, String parentPath, String values) {
         String uri;
-        if(StringUtils.isNotBlank(packPath)){
-            if(packPath.startsWith("/")){
+        if (StringUtils.isNotBlank(packPath)) {
+            if (packPath.startsWith(Constants.SLASH)) {
                 packPath = packPath.substring(1);
             }
-            if(packPath.endsWith("/")){
-                packPath = packPath.substring(0,packPath.length()-1);
+            if (packPath.endsWith(Constants.SLASH)) {
+                packPath = packPath.substring(0, packPath.length() - 1);
             }
-            parentPath = packPath.concat("/").concat(parentPath);
+            parentPath = packPath.concat(Constants.SLASH).concat(parentPath);
         }
-        if (parentPath.endsWith("/") && values.startsWith("/")) {
+        if (parentPath.endsWith(Constants.SLASH) && values.startsWith(Constants.SLASH)) {
             uri = parentPath.substring(0, parentPath.length() - 1) + values;
-        } else if (parentPath.length() > 0 && !parentPath.endsWith("/") && !values.startsWith("/")) {
-            uri = parentPath + '/' + values;
+        } else if (parentPath.length() > 0 && !parentPath.endsWith(Constants.SLASH) && !values.startsWith(Constants.SLASH)) {
+            uri = parentPath + Constants.SLASH + values;
         } else {
             uri = parentPath + values;
         }

@@ -6,7 +6,7 @@ import net.ymate.platform.core.beans.annotation.Bean;
 import net.ymate.platform.core.persistence.IResultSet;
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/7/6.
  * @Time: 下午4:05.
  * @Description:

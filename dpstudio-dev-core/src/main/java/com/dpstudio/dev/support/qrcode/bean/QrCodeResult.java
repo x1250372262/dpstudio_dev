@@ -3,7 +3,7 @@ package com.dpstudio.dev.support.qrcode.bean;
 import java.io.File;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2020/4/26.
  * @Time: 9:23 上午.
  * @Description:

@@ -4,7 +4,7 @@ import net.ymate.platform.validation.validate.VRequired;
 import net.ymate.platform.webmvc.annotation.RequestParam;
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/7/6.
  * @Time: 下午3:12.
  * @Description:
@@ -54,5 +54,15 @@ public class BugOpVO {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public String toString() {
+        return "BugOpVO{" +
+                "title='" + title + '\'' +
+                ", type=" + type +
+                ", level=" + level +
+                ", content='" + content + '\'' +
+                '}';
     }
 }

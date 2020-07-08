@@ -3,6 +3,12 @@ import com.dpstudio.dev.excel.analysis.IValidate;
 
 import java.lang.annotation.*;
 
+/**
+ * @author mengxiang
+ * @Date 2020.01.02.
+ * @Time: 14:30.
+ * @Description: excel导入验证
+ */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

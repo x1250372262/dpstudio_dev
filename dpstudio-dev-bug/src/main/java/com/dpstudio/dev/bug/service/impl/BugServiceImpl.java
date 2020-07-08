@@ -21,7 +21,7 @@ import net.ymate.platform.core.persistence.annotation.Transaction;
 import java.util.Objects;
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/7/6.
  * @Time: 下午3:14.
  * @Description:

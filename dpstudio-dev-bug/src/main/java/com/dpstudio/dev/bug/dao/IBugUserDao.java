@@ -4,7 +4,7 @@ import com.dpstudio.dev.bug.model.BugUser;
 import net.ymate.platform.core.persistence.IResultSet;
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/7/6.
  * @Time: 下午4:04.
  * @Description:

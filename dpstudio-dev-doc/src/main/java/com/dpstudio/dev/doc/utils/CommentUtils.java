@@ -20,7 +20,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * @author 徐建鹏
+ * @author mengxiang
  * @Date 2020.01.02.
  * @Time: 14:30.
  * @Description: 注释文本工具
@@ -73,23 +73,6 @@ public class CommentUtils {
         comment = comment.replaceAll("\\*", "").trim();
         String[] commentArr = comment.split("\n");
         List<String> comments = new ArrayList<>(commentArr.length);
-//        StringBuilder commentStrBuilder = new StringBuilder();
-//        for (String str : commentArr) {
-//            if (StringUtils.isBlank(str)) {
-//                continue;
-//            }
-//            String tagType = CommentUtils.getTagType(str);
-//            if (StringUtils.isNotBlank(tagType)) {
-//                break;
-//            }
-//            commentStrBuilder.append(str);
-//            commentStrBuilder.append("\n");
-//        }
-//
-//        if (commentStrBuilder.length() > 0) {
-//            commentStrBuilder.deleteCharAt(commentStrBuilder.length() - 1);
-//            comments.add(commentStrBuilder.toString());
-//        }
         for (String str : commentArr) {
             if (StringUtils.isNotBlank(str)) {
                 comments.add(str);

@@ -24,10 +24,10 @@ import java.lang.reflect.Method;
 import java.util.*;
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/7/8.
  * @Time: 上午8:38.
- * @Description:
+ * @Description: 标签转换帮助类
  */
 public class TagConverterHelper {
 

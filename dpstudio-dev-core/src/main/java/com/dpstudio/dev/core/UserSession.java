@@ -10,6 +10,12 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author mengxiang
+ * @Date 2020.07.08.
+ * @Time: 14:30.
+ * @Description: UserSession
+ */
 public class UserSession implements Serializable {
 
     private final String id;

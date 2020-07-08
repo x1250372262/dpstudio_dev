@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author 徐建鹏
+ * @author mengxiang
  * @Date 2018/08/09.
  * @Time: 14:00.
  * @Description:
@@ -27,7 +27,7 @@ public class HtmlForamt implements Format {
             try {
                 String s = IOUtils.toString(in, IDoc.CHARSET);
 
-                Map<String, Object> model = new HashMap<String, Object>();
+                Map<String, Object> model = new HashMap<>(4);
                 model.put("title", StringUtils.defaultString((String) apiResult.getProperties().get("title"), "梦祥文档"));
                 model.put("version", StringUtils.defaultString((String) apiResult.getProperties().get("version"), "1.0.0"));
                 model.put("apiHost", StringUtils.defaultString((String) apiResult.getProperties().get("host"), ""));
@@ -36,7 +36,11 @@ public class HtmlForamt implements Format {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             } finally {
-                IOUtils.closeQuietly(in);
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
         return "";

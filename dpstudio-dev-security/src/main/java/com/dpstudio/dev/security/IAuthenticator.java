@@ -3,7 +3,7 @@ package com.dpstudio.dev.security;
 import java.util.List;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2019-05-06.
  * @Time: 09:00.
  * @Description: 认证接口
@@ -11,12 +11,16 @@ import java.util.List;
 public interface IAuthenticator {
 
     /**
+     * 返回当前用户是不是总管理员
+     * 
      * @return 返回当前用户是不是总管理员
      * @throws Exception
      */
     boolean isFounder() throws Exception;
 
     /**
+     * 返回用户拥有的权限码
+     * 
      * @return 返回用户拥有的权限码
      * @throws Exception
      */

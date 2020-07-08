@@ -1,7 +1,7 @@
 package com.dpstudio.dev.bug.vo;
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/7/6.
  * @Time: 下午3:40.
  * @Description:
@@ -115,5 +115,23 @@ public class BugQueryVO {
 
     public void setCreateUser(String createUser) {
         this.createUser = createUser;
+    }
+
+    @Override
+    public String toString() {
+        return "BugQueryVO{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", type='" + type + '\'' +
+                ", content='" + content + '\'' +
+                ", handlerUser='" + handlerUser + '\'' +
+                ", handlerTime='" + handlerTime + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", lastModifyUser='" + lastModifyUser + '\'' +
+                ", lastModifyTime='" + lastModifyTime + '\'' +
+                ", status='" + status + '\'' +
+                ", level='" + level + '\'' +
+                ", createUser='" + createUser + '\'' +
+                '}';
     }
 }

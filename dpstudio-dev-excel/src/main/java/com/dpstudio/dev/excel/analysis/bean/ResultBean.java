@@ -3,7 +3,7 @@ package com.dpstudio.dev.excel.analysis.bean;
 import java.util.List;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2019-07-18.
  * @Time: 13:39.
  * @Description: 导入结果

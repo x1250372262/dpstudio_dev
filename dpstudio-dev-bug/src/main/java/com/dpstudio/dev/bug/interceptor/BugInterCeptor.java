@@ -6,7 +6,7 @@ import net.ymate.platform.webmvc.IInterceptorRule;
 import net.ymate.platform.webmvc.annotation.InterceptorRule;
 
 /**
- * Author: 徐建鹏.
+ * Author: mengxiang.
  * Date: 17/5/2.
  * Time: 09:16.
  * 后台拦截session¬

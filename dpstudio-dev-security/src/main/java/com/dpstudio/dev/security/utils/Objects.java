@@ -5,7 +5,7 @@ import net.ymate.platform.commons.lang.BlurObject;
 import net.ymate.platform.core.configuration.IConfigFileParser;
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/6/17.
  * @Time: 6:08 下午.
  * @Description:

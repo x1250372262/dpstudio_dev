@@ -6,7 +6,7 @@ import net.ymate.platform.core.persistence.IResultSet;
 import net.ymate.platform.webmvc.annotation.RequestParam;
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/7/6.
  * @Time: 下午3:10.
  * @Description:

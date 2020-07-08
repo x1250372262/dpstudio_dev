@@ -9,6 +9,12 @@ import org.apache.commons.lang3.StringUtils;
 import javax.servlet.jsp.tagext.BodyTagSupport;
 import java.util.List;
 
+/**
+ * @author mengxiang
+ * @Date 2020.01.02.
+ * @Time: 14:30.
+ * @Description: 权限jsp标签
+ */
 public class PermissionTag extends BodyTagSupport {
 
     private String permission;

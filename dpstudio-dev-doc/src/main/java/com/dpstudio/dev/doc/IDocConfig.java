@@ -41,26 +41,36 @@ public interface IDocConfig extends IInitialization<IDoc> {
     boolean isEnabled();
 
     /**
+     * 文档标题
+     *
      * @return 文档标题
      */
     String title();
 
     /**
+     * 代码源码路径用逗号(, )分割
+     *
      * @return 代码源码路径用逗号(, )分割
      */
     String sourcePath();
 
     /**
+     * java文件包含名称 用逗号(,)分割
+     *
      * @return java文件包含名称 用逗号(,)分割
      */
     String fileName();
 
     /**
+     * 文档版本
+     *
      * @return 文档版本
      */
     String version();
 
     /**
+     * 接口路径
+     *
      * @return 接口路径
      */
     String host();

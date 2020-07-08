@@ -17,7 +17,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2019-01-17.
  * @Time: 08:24.
  * @Description:
@@ -27,9 +27,14 @@ public class PermissionMeta {
 
     private static final Log LOG = LogFactory.getLog(PermissionMeta.class);
 
-    //权限组
+    /**
+     * 权限组
+     */
     private static final Map<String, List<GroupBean>> GROUP_CACHES;
-    //权限
+
+    /**
+     * 权限
+     */
     private static final Map<String, List<PermissionBean>> PERMISSIONS_CACHES;
 
     static {

@@ -4,7 +4,7 @@ import com.dpstudio.dev.doc.Constants;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author 徐建鹏
+ * @author mengxiang
  * @Date 2020.01.02.
  * @Time: 14:30.
  * @Description: Resp注释的内容封装

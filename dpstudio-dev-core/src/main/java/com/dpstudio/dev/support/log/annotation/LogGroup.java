@@ -2,6 +2,12 @@ package com.dpstudio.dev.support.log.annotation;
 
 import java.lang.annotation.*;
 
+/**
+ * @author mengxiang
+ * @Date 2020.07.08.
+ * @Time: 14:30.
+ * @Description:
+ */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented

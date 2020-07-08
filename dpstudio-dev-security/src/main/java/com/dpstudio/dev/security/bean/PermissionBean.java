@@ -1,7 +1,7 @@
 package com.dpstudio.dev.security.bean;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2019-01-16.
  * @Time: 11:48.
  * @Description:

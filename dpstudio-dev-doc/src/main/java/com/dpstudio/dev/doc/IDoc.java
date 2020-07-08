@@ -50,7 +50,8 @@ public interface IDoc extends IInitialization<IApplication>, IDestroyable {
     /**
      * 获取文档
      *
-     * @return
+     * @return 文档信息
+     * @throws Exception
      */
     ApiResult getDoc() throws Exception;
 }

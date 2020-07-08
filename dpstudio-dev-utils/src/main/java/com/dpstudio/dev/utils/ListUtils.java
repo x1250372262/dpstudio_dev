@@ -3,7 +3,7 @@ package com.dpstudio.dev.utils;
 import java.util.*;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2018/8/21.
  * @Time: 下午3:36.
  * @Description: 集合工具类

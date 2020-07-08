@@ -6,13 +6,12 @@ import net.ymate.platform.commons.util.DateTimeUtils;
 
 import java.util.Calendar;
 
-/**
- * Author: 徐建鹏.
- * User: Administrator.
- * Date: 2016/08/24.
- * Time: 11:05.
- * Reamrk 时间工具类
- */
+ /**
+  * @author mengxiang
+  * @Date 2020.07.05
+  * @Time:
+  * @Description: 时间工具类
+  */
 public class TimeHelper {
 
     public static TimeHelper create() {

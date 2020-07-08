@@ -6,7 +6,7 @@ import net.ymate.platform.webmvc.view.IView;
 
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2019-04-23.
  * @Time: 17:49.¬
  * @Description: 通用返回结果

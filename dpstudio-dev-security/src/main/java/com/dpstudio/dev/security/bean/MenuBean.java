@@ -2,7 +2,7 @@ package com.dpstudio.dev.security.bean;
 
 
 /**
- * @Author: xujianpeng.
+ * @Author: mengxiang.
  * @Date: 2020/6/17.
  * @Time: 5:46 下午.
  * @Description:

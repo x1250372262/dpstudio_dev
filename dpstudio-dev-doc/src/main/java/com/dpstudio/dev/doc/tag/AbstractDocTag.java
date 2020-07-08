@@ -1,7 +1,7 @@
 package com.dpstudio.dev.doc.tag;
 
 /**
- * @author 徐建鹏
+ * @author mengxiang
  * @Date 2020.01.02.
  * @Time: 14:30.
  * @Description: 注释标签
@@ -17,9 +17,15 @@ public abstract class AbstractDocTag<T> {
         this.tagName = tagName;
     }
 
-    public AbstractDocTag(){
+    public AbstractDocTag() {
 
     }
+
+    /**
+     * 获取注解信息
+     *
+     * @return 获取注解信息
+     */
     public abstract T getValues();
 
     public String getTagName() {

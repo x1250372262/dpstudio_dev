@@ -68,28 +68,28 @@ public interface ISecurity extends IInitialization<IApplication>, IDestroyable {
     /**
      * 获取组列表
      *
-     * @return
+     * @return 获取组列表
      */
     List<GroupBean> groupList();
 
     /**
      * 获取权限列表
-     *
-     * @return
+     * @param groupId
+     * @return 获取权限列表
      */
     List<PermissionBean> permissionList(String groupId);
 
     /**
      * 菜单列表
      *
-     * @return
+     * @return 菜单列表
      */
     List<MenuBean> menuList();
 
     /**
      * 带权限的菜单
      *
-     * @return
+     * @return 带权限的菜单
      */
     List<MenuBean> permissionMenu();
 
@@ -97,7 +97,7 @@ public interface ISecurity extends IInitialization<IApplication>, IDestroyable {
      * 带权限的菜单
      * @param isFounder 是否总管理
      * @param userPermissions 拥有的权限
-     * @return
+     * @return 带权限的菜单
      */
     List<MenuBean> permissionMenu(boolean isFounder,List<String> userPermissions);
 }

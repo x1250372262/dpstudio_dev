@@ -3,7 +3,7 @@ package com.dpstudio.dev.doc.bean;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author 徐建鹏
+ * @author mengxiang
  * @Date 2018/08/09.
  * @Time: 14:00.
  * @Description:
