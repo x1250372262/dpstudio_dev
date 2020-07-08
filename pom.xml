@@ -98,36 +98,6 @@
                 <artifactId>ymate-platform-persistence-jdbc</artifactId>
                 <version>${ymate.platform.version}</version>
             </dependency>
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi-ooxml</artifactId>
-                <version>4.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.apache.poi</groupId>
-                <artifactId>poi</artifactId>
-                <version>4.0.0</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jxls</groupId>
-                <artifactId>jxls</artifactId>
-                <version>2.6.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jxls</groupId>
-                <artifactId>jxls-poi</artifactId>
-                <version>1.2.1-SNAPSHOT</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jxls</groupId>
-                <artifactId>jxls-jexcel</artifactId>
-                <version>1.0.7</version>
-            </dependency>
-            <dependency>
-                <groupId>org.jxls</groupId>
-                <artifactId>jxls-reader</artifactId>
-                <version>2.0.5</version>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
