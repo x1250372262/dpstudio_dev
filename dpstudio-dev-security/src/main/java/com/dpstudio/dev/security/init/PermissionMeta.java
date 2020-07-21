@@ -2,6 +2,7 @@ package com.dpstudio.dev.security.init;
 
 import com.dpstudio.dev.security.ISecurity;
 import com.dpstudio.dev.security.ISecurityConfig;
+import com.dpstudio.dev.security.annotation.Group;
 import com.dpstudio.dev.security.annotation.Permission;
 import com.dpstudio.dev.security.annotation.Security;
 import com.dpstudio.dev.security.bean.GroupBean;
@@ -99,13 +100,23 @@ public class PermissionMeta {
             //得到该类下面的所有方法
             Method[] methods = classes.getDeclaredMethods();
             for (Method method : methods) {
-                //得到该类下面的Permission注解
-                Permission permission = method.getAnnotation(Permission.class);
-                if (!Objects.isNull(permission)) {
+                //得到该类下面的Group注解
+                Group group = method.getAnnotation(Group.class);
+                if (null == group) {
+                    continue;
+                }
+                Permission[] permissions = group.permissions();
+                if (permissions.length <= 0) {
+                    continue;
+                }
+                for (Permission permission : permissions) {
                     //添加权限列表
-                    permissionBeans.add(new PermissionBean(permission.name(), permission.code(), permission.groupId()));
+                    Optional<PermissionBean> permissionBean = permissionBeans.stream().filter(p -> p.getCode().equals(permission.code())).findFirst();
+                    if (!permissionBean.isPresent()) {
+                        permissionBeans.add(new PermissionBean(permission.name(), permission.code(), permission.groupId(), permission.groupName()));
+                    }
                     //添加组列表
-                    Optional<GroupBean> groupBean = groupBeans.stream().filter(gb -> gb.getName().equals(permission.groupName())).findFirst();
+                    Optional<GroupBean> groupBean = groupBeans.stream().filter(gb -> gb.getName().equals(permission.groupId())).findFirst();
                     if (!groupBean.isPresent()) {
                         groupBeans.add(new GroupBean(permission.groupName(), permission.groupId()));
                     }

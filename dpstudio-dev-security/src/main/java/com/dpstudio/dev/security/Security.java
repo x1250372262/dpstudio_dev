@@ -147,6 +147,11 @@ public final class Security implements IModule, ISecurity {
     }
 
     @Override
+    public List<PermissionBean> permissionList() {
+        return permissionList(null);
+    }
+
+    @Override
     public List<MenuBean> menuList() {
         return MenuMeta.Store.get();
     }

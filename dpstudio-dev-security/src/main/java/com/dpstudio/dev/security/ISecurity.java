@@ -80,6 +80,13 @@ public interface ISecurity extends IInitialization<IApplication>, IDestroyable {
     List<PermissionBean> permissionList(String groupId);
 
     /**
+     * 获取权限列表
+     *
+     * @return
+     */
+    List<PermissionBean> permissionList();
+
+    /**
      * 菜单列表
      *
      * @return 菜单列表

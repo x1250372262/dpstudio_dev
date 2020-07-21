@@ -52,15 +52,17 @@ public class SecurityProxy implements IProxy {
             return proxyChain.doProxyChain();
         }
         if (proxyChain.getTargetClass().isAnnotationPresent(Security.class)) {
-            Permission permission = proxyChain.getTargetMethod().getAnnotation(Permission.class);
-            if (permission != null) {
-                if (StringUtils.isNotBlank(permission.code())) {
-                    if (!checkPermission(permission.code())) {
-                        String errMsg = "您还没有此操作的权限";
-                        if (proxyChain.getProxyFactory().getOwner().isDevEnv() && LOG.isDebugEnabled()) {
-                            LOG.debug(errMsg);
+            Permission[] permissions = proxyChain.getTargetMethod().getAnnotationsByType(Permission.class);
+            if (permissions != null && permissions.length>0) {
+                for(Permission permission : permissions){
+                    if (StringUtils.isNotBlank(permission.code())) {
+                        if (!checkPermission(permission.code())) {
+                            String errMsg = "您还没有此操作的权限";
+                            if (proxyChain.getProxyFactory().getOwner().isDevEnv() && LOG.isDebugEnabled()) {
+                                LOG.debug(errMsg);
+                            }
+                            throw new PermissionException();
                         }
-                        throw new PermissionException();
                     }
                 }
                 return proxyChain.doProxyChain();
