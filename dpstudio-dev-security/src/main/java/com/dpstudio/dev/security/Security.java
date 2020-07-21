@@ -100,31 +100,28 @@ public class Security implements IModule, ISecurity {
         return __moduleCfg;
     }
 
-    /**
-     * 获取组列表
-     *
-     * @return
-     */
     @Override
-    public List<GroupBean> getGroupList() {
+    public List<GroupBean> groupList() {
         return PermissionMeta.getGroups();
     }
 
-    /**
-     * 获取权限列表
-     *
-     * @return
-     */
     @Override
-    public List<PermissionBean> getPermissonList(String groupId) {
+    public List<PermissionBean> permissionList(String groupId) {
         return PermissionMeta.getPermissions(groupId);
     }
+
+    @Override
+    public List<PermissionBean> permissionList() {
+        return PermissionMeta.getPermissions(null);
+    }
+
 
     @Override
     public List<MenuBean> menuList() {
         return MenuMeta.Store.get();
     }
 
+    @Override
     public List<MenuBean> permissionMenu() {
         List<MenuBean> menuBeanList = menuList();
         List<String> userPermissions = new ArrayList<>();
@@ -167,7 +164,8 @@ public class Security implements IModule, ISecurity {
     }
 
 
-    public List<MenuBean> permissionMenu(boolean isFounder,List<String> userPermissions) {
+    @Override
+    public List<MenuBean> permissionMenu(boolean isFounder, List<String> userPermissions) {
         List<MenuBean> menuBeanList = menuList();
         if(isFounder){
             return menuBeanList;

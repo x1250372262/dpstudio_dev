@@ -47,14 +47,21 @@ public interface ISecurity {
      *
      * @return
      */
-    List<GroupBean> getGroupList();
+    List<GroupBean> groupList();
 
     /**
      * 获取权限列表
      *
      * @return
      */
-    List<PermissionBean> getPermissonList(String groupId);
+    List<PermissionBean> permissionList(String groupId);
+
+    /**
+     * 获取权限列表
+     *
+     * @return
+     */
+    List<PermissionBean> permissionList();
 
     /**
      * 菜单列表

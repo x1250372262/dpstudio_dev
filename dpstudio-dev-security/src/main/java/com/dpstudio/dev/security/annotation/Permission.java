@@ -8,33 +8,28 @@ import java.lang.annotation.*;
 public @interface Permission {
 
     /**
-     * 权限组名称
-     *
-     * @return
-     */
-    String groupName() default "";
-
-    /**
      * ¬
      * 权限组Id
      *
      * @return
      */
-    String groupId() default "";
+    String groupId() default "default";
+
+    String groupName() default "默认";
 
     /**
      * 权限名称
      *
      * @return
      */
-    String name() default "";
+    String name();
 
     /**
      * 权限码
      *
      * @return
      */
-    String code() default "";
+    String code();
 
 
 }

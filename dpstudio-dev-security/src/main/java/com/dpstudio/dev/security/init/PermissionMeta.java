@@ -2,6 +2,7 @@ package com.dpstudio.dev.security.init;
 
 import com.dpstudio.dev.security.ISecurity;
 import com.dpstudio.dev.security.ISecurityModuleCfg;
+import com.dpstudio.dev.security.annotation.Group;
 import com.dpstudio.dev.security.annotation.Permission;
 import com.dpstudio.dev.security.annotation.Security;
 import com.dpstudio.dev.security.bean.GroupBean;
@@ -25,12 +26,12 @@ import java.util.stream.Collectors;
 public class PermissionMeta {
 
 
-    private static final Log _LOG = LogFactory.getLog(PermissionMeta.class);
+    private static final Log LOG = LogFactory.getLog(PermissionMeta.class);
 
     //权限组
-    private static Map<String, List<GroupBean>> GROUP_CACHES;
+    private static final Map<String, List<GroupBean>> GROUP_CACHES;
     //权限
-    private static Map<String, List<PermissionBean>> PERMISSIONS_CACHES;
+    private static final Map<String, List<PermissionBean>> PERMISSIONS_CACHES;
 
     static {
         GROUP_CACHES = new ConcurrentHashMap<>();
@@ -45,7 +46,7 @@ public class PermissionMeta {
      */
     public static void init(ISecurityModuleCfg moduleCfg) {
         create(moduleCfg);
-        _LOG.info("权限列表收集成功");
+        LOG.info("权限列表收集成功");
     }
 
     /**
@@ -54,7 +55,7 @@ public class PermissionMeta {
     public static void destroy() {
         GROUP_CACHES.clear();
         PERMISSIONS_CACHES.clear();
-        _LOG.info("权限列表销毁成功");
+        LOG.info("权限列表销毁成功");
     }
 
 
@@ -91,17 +92,27 @@ public class PermissionMeta {
             Set<Class<?>> classesList = reflections.getTypesAnnotatedWith(Security.class);
             List<PermissionBean> permissionBeans = new ArrayList<>();
             List<GroupBean> groupBeans = new ArrayList<>();
-            for (Class classes : classesList) {
+            for (Class<?> classes : classesList) {
                 //得到该类下面的所有方法
                 Method[] methods = classes.getDeclaredMethods();
                 for (Method method : methods) {
-                    //得到该类下面的Rpermission注解
-                    Permission permission = method.getAnnotation(Permission.class);
-                    if (null != permission) {
+                    //得到该类下面的Group注解
+                    Group group = method.getAnnotation(Group.class);
+                    if (null == group) {
+                        continue;
+                    }
+                    Permission[] permissions = group.permissions();
+                    if (permissions.length <= 0) {
+                        continue;
+                    }
+                    for (Permission permission : permissions) {
                         //添加权限列表
-                        permissionBeans.add(new PermissionBean(permission.name(), permission.code(), permission.groupId()));
+                        Optional<PermissionBean> permissionBean = permissionBeans.stream().filter(p -> p.getCode().equals(permission.code())).findFirst();
+                        if (!permissionBean.isPresent()) {
+                            permissionBeans.add(new PermissionBean(permission.name(), permission.code(), permission.groupId(), permission.groupName()));
+                        }
                         //添加组列表
-                        Optional<GroupBean> groupBean = groupBeans.stream().filter(gb -> gb.getName().equals(permission.groupName())).findFirst();
+                        Optional<GroupBean> groupBean = groupBeans.stream().filter(gb -> gb.getName().equals(permission.groupId())).findFirst();
                         if (!groupBean.isPresent()) {
                             groupBeans.add(new GroupBean(permission.groupName(), permission.groupId()));
                         }

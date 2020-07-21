@@ -14,6 +14,8 @@ public class PermissionBean {
 
     private String groupId;
 
+    private String groupName;
+
     public String getName() {
         return name;
     }
@@ -38,9 +40,19 @@ public class PermissionBean {
         this.groupId = groupId;
     }
 
-    public PermissionBean(String name, String code, String groupId) {
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public PermissionBean(String name, String code, String groupId, String groupName) {
         this.name = name;
         this.code = code;
         this.groupId = groupId;
+        this.groupName = groupName;
     }
+
 }

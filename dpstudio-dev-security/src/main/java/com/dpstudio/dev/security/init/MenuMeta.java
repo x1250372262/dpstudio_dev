@@ -70,7 +70,8 @@ public class MenuMeta {
         List<MenuBean> menuList = new ArrayList<>();
         File file = new File(RuntimeUtils.replaceEnvVariable(moduleCfg.menuFilePath()));
         if (!file.exists()) {
-            throw new MenuException("菜单配置文件不存在");
+            return menuList;
+//            throw new MenuException("菜单配置文件不存在");
         }
         IConfigFileParser handler = new XMLConfigFileParser(file).load(true);
         Map<String, IConfigFileParser.Category> categoryMap = handler.getCategories();
