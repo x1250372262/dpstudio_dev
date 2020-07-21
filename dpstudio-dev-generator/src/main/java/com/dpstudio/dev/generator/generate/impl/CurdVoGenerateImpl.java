@@ -28,8 +28,6 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static org.fusesource.jansi.Ansi.Color.YELLOW;
-
 /**
  * @Author: 徐建鹏.
  * @Date: 2019/11/5.
@@ -206,7 +204,7 @@ public class CurdVoGenerateImpl extends BaseGenerate implements ICurdGenerate {
                 outWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), StringUtils.defaultIfEmpty(freemarkerConfig.getOutputEncoding(), freemarkerConfig.getDefaultEncoding())));
                 String templateRootPath = "com/dpstudio/generator/template/curdvo/";
                 freemarkerConfig.getTemplate(templateRootPath + tmplFile).process(propMap, outWriter);
-                out(YELLOW, "curd输出路径" + outputFile);
+                out("curd输出路径" + outputFile);
                 if (configInfo.isDownLoad()) {
                     fileList.add(outputFile);
                 }

@@ -1,7 +1,6 @@
 package com.dpstudio.dev.generator.generate;
 
 import net.ymate.platform.core.util.RuntimeUtils;
-import org.fusesource.jansi.Ansi;
 
 import java.io.File;
 import java.net.URL;
@@ -9,7 +8,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.fusesource.jansi.Ansi.ansi;
 
 /**
  * @Author: 徐建鹏.
@@ -29,14 +27,23 @@ public class BaseGenerate {
      */
     public static String zipFilePath = RuntimeUtils.getRootPath() + File.separator + "generateZip" + File.separator;
 
+//    /**
+//     * 生成输出信息
+//     *
+//     * @param color
+//     * @param msg
+//     */
+//    public static void out(Ansi.Color color, String msg) {
+//        System.out.println(ansi().eraseScreen().fg(color).a(msg).reset());
+//    }
+
     /**
      * 生成输出信息
      *
-     * @param color
      * @param msg
      */
-    public static void out(Ansi.Color color, String msg) {
-        System.out.println(ansi().eraseScreen().fg(color).a(msg).reset());
+    public static void out(String msg) {
+        System.out.println(msg);
     }
 
     public static URL getProjectPath() {

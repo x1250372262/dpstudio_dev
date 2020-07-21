@@ -28,8 +28,6 @@ import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-import static org.fusesource.jansi.Ansi.Color.YELLOW;
-
 /**
  * @Author: 徐建鹏.
  * @Date: 2019/11/5.
@@ -86,7 +84,7 @@ public class ModelGenerateImpl extends BaseGenerate implements IModelGenerate {
         String zipFileName = UUIDUtils.UUID();
         File zipFile = new File(zipFilePath, zipFileName + ".zip");
         File path = zipFile.getParentFile();
-        if(!path.exists()){
+        if (!path.exists()) {
             path.mkdirs();
         }
         ZipOutputStream outputStream = null;
@@ -251,7 +249,7 @@ public class ModelGenerateImpl extends BaseGenerate implements IModelGenerate {
                 outWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), StringUtils.defaultIfEmpty(freemarkerConfig.getOutputEncoding(), freemarkerConfig.getDefaultEncoding())));
                 String templateRootPath = "com/dpstudio/generator/template/";
                 freemarkerConfig.getTemplate(templateRootPath + tmplFile).process(propMap, outWriter);
-                out(YELLOW, "输出路径" + outputFile);
+                out("输出路径" + outputFile);
                 if (configInfo.isDownLoad()) {
                     fileList.add(outputFile);
                 }

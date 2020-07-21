@@ -12,8 +12,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.fusesource.jansi.Ansi.Color.GREEN;
-
 /**
  * @Author: 徐建鹏.
  * @Date: 2019/11/5.
@@ -29,7 +27,7 @@ public class ColumnInfo {
                                                  ResultSetMetaData metaData) throws SQLException {
         Map<String, ColumnInfo> returnValue = new LinkedHashMap<>(metaData.getColumnCount());
 
-        BaseGenerate.out(GREEN, ">>> " + "列名称 / " +
+        BaseGenerate.out(">>> " + "列名称 / " +
                 "列类型 / " +
                 "是否是主键 / " +
                 "备注");
@@ -37,7 +35,7 @@ public class ColumnInfo {
             // 获取字段元数据对象
             ResultSet column = databaseMetaData.getColumns(configInfo.getDbName(), configInfo.getDbUserName(), tableName, metaData.getColumnName(idx));
             if (column.next()) {
-                BaseGenerate.out(GREEN, "--> " + metaData.getColumnName(idx).toLowerCase() + "\t" +
+                BaseGenerate.out("--> " + metaData.getColumnName(idx).toLowerCase() + "\t" +
                         metaData.getColumnClassName(idx) + "\t" +
                         primaryKeys.contains(metaData.getColumnName(idx).toLowerCase()) + "\t" +
                         column.getString("REMARKS"));

@@ -16,8 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import static org.fusesource.jansi.Ansi.Color.RED;
-
 /**
  * @Author: 徐建鹏.
  * @Date: 2019/11/5.
@@ -32,7 +30,7 @@ public class TableInfo {
         return database.openSession(session -> {
             String sql = "show full tables where Table_type='BASE TABLE'";
             final List<String> results = new ArrayList<>();
-            ResultSetHelper helper = ResultSetHelper.bind(session.find(SQL.create(sql),new ArrayResultSetHandler()));
+            ResultSetHelper helper = ResultSetHelper.bind(session.find(SQL.create(sql), new ArrayResultSetHandler()));
             if (helper != null) {
                 helper.forEach((wrapper, row) -> {
                     results.add(wrapper.getAsString(0));
@@ -52,14 +50,14 @@ public class TableInfo {
         try {
             resultSet = databaseMetaData.getPrimaryKeys(configInfo.getDbName(), configInfo.getDbUserName(), tableName);
             if (resultSet == null) {
-                BaseGenerate.out(RED, tableName + "表没有设置主键,本次生成忽略");
+                BaseGenerate.out(tableName + "表没有设置主键,本次生成忽略");
                 return null;
             } else {
                 while (resultSet.next()) {
                     primaryKeys.add(resultSet.getString(4).toLowerCase());
                 }
                 if (primaryKeys.isEmpty()) {
-                    BaseGenerate.out(RED, tableName + "表没有设置主键,本次生成忽略");
+                    BaseGenerate.out(tableName + "表没有设置主键,本次生成忽略");
                     return null;
                 }
             }

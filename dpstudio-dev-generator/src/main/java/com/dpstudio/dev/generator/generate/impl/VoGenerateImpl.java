@@ -22,13 +22,10 @@ import org.apache.commons.logging.LogFactory;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
-
-import static org.fusesource.jansi.Ansi.Color.YELLOW;
 
 /**
  * @Author: 徐建鹏.
@@ -175,7 +172,7 @@ public class VoGenerateImpl extends BaseGenerate implements IVoGenerate {
                 outWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outputFile), StringUtils.defaultIfEmpty(freemarkerConfig.getOutputEncoding(), freemarkerConfig.getDefaultEncoding())));
                 String templateRootPath = "com/dpstudio/generator/template/";
                 freemarkerConfig.getTemplate(templateRootPath + tmplFile).process(propMap, outWriter);
-                out(YELLOW, "输出路径" + outputFile);
+                out("输出路径" + outputFile);
                 if (configInfo.isDownLoad()) {
                     fileList.add(outputFile);
                 }
