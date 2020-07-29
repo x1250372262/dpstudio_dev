@@ -50,6 +50,13 @@ public interface ISecurity {
     List<GroupBean> groupList();
 
     /**
+     * 获取组列表
+     *
+     * @return
+     */
+    List<GroupBean> groupList(String level);
+
+    /**
      * 获取权限列表
      *
      * @return
@@ -62,6 +69,14 @@ public interface ISecurity {
      * @return
      */
     List<PermissionBean> permissionList();
+
+    /**
+     * 根据code获取
+     * @param permissionBeans
+     * @param code
+     * @return
+     */
+    PermissionBean findByCode(List<PermissionBean> permissionBeans,String code);
 
     /**
      * 菜单列表

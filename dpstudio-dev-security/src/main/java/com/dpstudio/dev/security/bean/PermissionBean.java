@@ -16,6 +16,8 @@ public class PermissionBean {
 
     private String groupName;
 
+    private String level;
+
     public String getName() {
         return name;
     }
@@ -48,11 +50,20 @@ public class PermissionBean {
         this.groupName = groupName;
     }
 
-    public PermissionBean(String name, String code, String groupId, String groupName) {
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
+    }
+
+    public PermissionBean(String name, String code, String groupId, String groupName,String level) {
         this.name = name;
         this.code = code;
         this.groupId = groupId;
         this.groupName = groupName;
+        this.level = level;
     }
 
 }

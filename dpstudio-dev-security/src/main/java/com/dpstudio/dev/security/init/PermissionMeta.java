@@ -65,9 +65,22 @@ public class PermissionMeta {
     public static List<PermissionBean> getPermissions(String groupId) {
         if (StringUtils.isNotBlank(groupId)) {
             return PERMISSIONS_CACHES.get(ISecurity.CacheKey.PERMISSIONS_CACHE_KEY.name())
-                    .stream().filter(groupBean -> groupId.equals(groupBean.getGroupId())).collect(Collectors.toList());
+                    .stream().filter(permissionBean -> groupId.equals(permissionBean.getGroupId())).collect(Collectors.toList());
         }
         return PERMISSIONS_CACHES.get(ISecurity.CacheKey.PERMISSIONS_CACHE_KEY.name());
+    }
+
+    /**
+     * 根据code获取权限
+     */
+    public static PermissionBean findByCode( List<PermissionBean> permissionBeans,String code) {
+        if(permissionBeans == null){
+            permissionBeans = getPermissions(null);
+        }
+        if (StringUtils.isBlank(code)) {
+            return null;
+        }
+        return permissionBeans.stream().filter(permissionBean -> code.equals(permissionBean.getCode())).findFirst().get();
     }
 
     /**
@@ -77,6 +90,19 @@ public class PermissionMeta {
      */
     public static List<GroupBean> getGroups() {
         return GROUP_CACHES.get(ISecurity.CacheKey.GROUP_CACHE_KEY.name());
+    }
+
+    /**
+     * 获取权限组列表
+     *
+     * @return
+     */
+    public static List<GroupBean> getGroups(String level) {
+        if(StringUtils.isNotBlank(level)){
+            return GROUP_CACHES.get(ISecurity.CacheKey.GROUP_CACHE_KEY.name())
+                    .stream().filter(groupBean -> level.equals(groupBean.getLevel())).collect(Collectors.toList());
+        }
+        return getGroups();
     }
 
     /**
@@ -109,12 +135,12 @@ public class PermissionMeta {
                         //添加权限列表
                         Optional<PermissionBean> permissionBean = permissionBeans.stream().filter(p -> p.getCode().equals(permission.code())).findFirst();
                         if (!permissionBean.isPresent()) {
-                            permissionBeans.add(new PermissionBean(permission.name(), permission.code(), permission.groupId(), permission.groupName()));
+                            permissionBeans.add(new PermissionBean(permission.name(), permission.code(), permission.groupId(), permission.groupName(),group.level()));
                         }
                         //添加组列表
-                        Optional<GroupBean> groupBean = groupBeans.stream().filter(gb -> gb.getName().equals(permission.groupId())).findFirst();
+                        Optional<GroupBean> groupBean = groupBeans.stream().filter(gb -> gb.getId().equals(permission.groupId())).findFirst();
                         if (!groupBean.isPresent()) {
-                            groupBeans.add(new GroupBean(permission.groupName(), permission.groupId()));
+                            groupBeans.add(new GroupBean(permission.groupName(), permission.groupId(),group.level()));
                         }
                     }
                 }

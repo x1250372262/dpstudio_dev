@@ -12,6 +12,8 @@ public class GroupBean {
 
     private String id;
 
+    private String level;
+
     public String getName() {
         return name;
     }
@@ -28,8 +30,17 @@ public class GroupBean {
         this.id = id;
     }
 
-    public GroupBean(String name, String id) {
+    public GroupBean(String name, String id,String level) {
         this.name = name;
         this.id = id;
+        this.level = level;
+    }
+
+    public String getLevel() {
+        return level;
+    }
+
+    public void setLevel(String level) {
+        this.level = level;
     }
 }

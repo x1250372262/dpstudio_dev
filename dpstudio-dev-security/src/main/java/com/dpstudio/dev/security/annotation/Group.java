@@ -13,4 +13,9 @@ public @interface Group {
      */
     Permission[] permissions() default {};
 
+    /**
+     * 权限等级 默认所有
+     * @return
+     */
+    String level() default "all";
 }

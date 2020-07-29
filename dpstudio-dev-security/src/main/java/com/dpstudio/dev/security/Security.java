@@ -106,6 +106,11 @@ public class Security implements IModule, ISecurity {
     }
 
     @Override
+    public List<GroupBean> groupList(String level) {
+        return PermissionMeta.getGroups(level);
+    }
+
+    @Override
     public List<PermissionBean> permissionList(String groupId) {
         return PermissionMeta.getPermissions(groupId);
     }
@@ -113,6 +118,11 @@ public class Security implements IModule, ISecurity {
     @Override
     public List<PermissionBean> permissionList() {
         return PermissionMeta.getPermissions(null);
+    }
+
+    @Override
+    public PermissionBean findByCode(List<PermissionBean> permissionBeans, String code) {
+        return PermissionMeta.findByCode(permissionBeans,code);
     }
 
 
