@@ -1,6 +1,7 @@
 package com.dpstudio.dev.captcha.web;
 
 import com.dpstudio.dev.captcha.service.ICaptchaService;
+import net.ymate.framework.webmvc.intercept.AjaxAllowCrossDomainInterceptor;
 import net.ymate.module.captcha.Captcha;
 import net.ymate.module.captcha.CaptchaTokenBean;
 import net.ymate.module.captcha.ICaptcha;
@@ -31,7 +32,7 @@ import java.io.ByteArrayOutputStream;
  */
 @Controller
 @RequestMapping("/dpstudio/captcha")
-@Before(CaptchaStatusInterceptor.class)
+@Before({CaptchaStatusInterceptor.class, AjaxAllowCrossDomainInterceptor.class})
 public class CaptchaController {
 
 
