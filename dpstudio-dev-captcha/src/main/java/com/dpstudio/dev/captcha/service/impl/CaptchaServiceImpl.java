@@ -1,6 +1,6 @@
 package com.dpstudio.dev.captcha.service.impl;
 
-import com.dpstudio.dev.core.CommonResult;
+import com.dpstudio.dev.core.R;
 import com.dpstudio.dev.core.code.CommonCode;
 import com.dpstudio.dev.captcha.Captcha;
 import com.dpstudio.dev.captcha.ICodeHandler;
@@ -45,11 +45,11 @@ public class CaptchaServiceImpl implements ICaptchaService {
                 if (iCodeHandler == null) {
                     return doCaptchaSend(type, scope, target);
                 } else {
-                    CommonResult commonResult = iCodeHandler.allowSendCode(target,attach);
-            if (commonResult == null || commonResult.code() == CommonCode.COMMON_OPTION_SUCCESS.getCode()) {
+                    R result = iCodeHandler.allowSendCode(target,attach);
+            if (result == null || result.code() == CommonCode.COMMON_OPTION_SUCCESS.getCode()) {
                 return doCaptchaSend(type, scope, target);
             }
-            return commonResult.toJsonView();
+            return result.json();
         }
     }
 }

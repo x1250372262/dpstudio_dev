@@ -1,6 +1,6 @@
 package com.dpstudio.dev.captcha;
 
-import com.dpstudio.dev.core.CommonResult;
+import com.dpstudio.dev.core.R;
 
 /**
  * @Author: 徐建鹏.
@@ -15,6 +15,6 @@ public interface ICodeHandler {
      * @return
      * @throws Exception
      */
-    CommonResult allowSendCode(String mobile,String attach) throws Exception;
+    R allowSendCode(String mobile, String attach) throws Exception;
 
 }
