@@ -24,6 +24,7 @@ public class HandlerBean {
         if (handleClass != null && !handleClass.isInterface() && StringUtils.isNotBlank(dConverter.method())) {
             dataHandle = handleClass.newInstance();
             method = dataHandle.getClass().getMethod(dConverter.method(), String.class);
+            method = dataHandle.getClass().getMethod(dConverter.method(), String.class);
         }
     }
 
