@@ -99,6 +99,8 @@
                             <li class="navbar-page-title"><a id="rea" href="">重新生成文档</a></li>
                             <li class="navbar-page-title"><a id="hea" href="">下载html离线文档</a></li>
                             <li class="navbar-page-title"><a id="ma" href="">下载markdown离线文档</a></li>
+                            <li class="navbar-page-title"><a href="#!" data-toggle="modal" data-target="#sdkDiv">
+                                下载SDK</a></li>
                             <li class="navbar-page-title openTest" style="display: none"><a href="javascript:void(0)"
                                                                                             show="0"
                                                                                             id="openTest">在线测试</a></li>
@@ -292,7 +294,36 @@
         <!--默认End 页面主要内容-->
     </div>
 </div>
+<!--下载sdk弹窗-->
+<div class="modal fade" id="sdkDiv" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">下载sdk</h4>
+            </div>
 
+            <form action="">
+                <div class="form-group col-md-12" style="margin-top: 10px;">
+                    <label>sdk类型</label>
+                    <select class="form-control" id="type" name="type">
+                        <option value="">请选择</option>
+                        <option value="wxmini">微信小程序</option>
+                    </select>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭
+                    </button>
+                    <button type="button" class="btn btn-primary uploadButton" id="sdkDownload">下载</button>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+</div>
 <script type="text/javascript" src="/dpstudio/doc/js/jquery.min.js"></script>
 <script type="text/javascript" src="/dpstudio/doc/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/dpstudio/doc/js/perfect-scrollbar.min.js"></script>
@@ -657,6 +688,7 @@
         var reUrl = "dpstudio/wd/rebuild";
         var htmlUrl = "/dpstudio/wd/download/page";
         var mdUrl = "/dpstudio/wd/download/mark";
+        var sdkUrl = "/dpstudio/wd/sdk/download";
         if($.trim(apiHost)){
             reUrl = apiHost+"/"+reUrl;
             htmlUrl = apiHost+"/"+htmlUrl;
@@ -664,6 +696,7 @@
             $("#rea").attr("href",reUrl);
             $("#hea").attr("href",htmlUrl);
             $("#ma").attr("href",mdUrl);
+            $("#sdkDownload").attr("url", sdkUrl);
         }
         $("#docTitle").html(e.data.properties.title+"("+e.data.properties.version+")");
         setSidebar(e);
@@ -740,6 +773,19 @@
         });
         return data;
     }
+
+    //下载sdk
+    $("#sdkDownload").click(function () {
+        var url = $(this).attr("url");
+        if ($.trim(url)) {
+            var type = $.trim($("#type").val());
+            if (!type) {
+                type = "all";
+            }
+            url = url + "?type=" + type;
+            window.location.href = url;
+        }
+    });
 </script>
 </body>
 </html>

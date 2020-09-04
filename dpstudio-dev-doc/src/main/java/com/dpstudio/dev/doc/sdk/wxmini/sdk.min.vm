@@ -1,0 +1,68 @@
+function http(url, method, param, success, fail) {
+    let timeStart = Date.now();
+    CreateHeader(url, function (header) {
+        if (method === "post") {
+            header = {
+            'content-type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+            }
+        }
+        wx.request({
+            url: url,
+            data: param,
+            dataType: 'json',
+            method: method,
+            header: header,
+            complete(res) {
+                if (res.statusCode === 200) {
+                    if (res.data.ret === 0) {
+                        wx.stopPullDownRefresh()
+                        success(res.data)
+                    } else if (res.data.ret === -1) {
+                         for (var key in res.data['data']) {
+                            wx.showToast({
+                                title: res.data['data'][key],
+                                icon: 'none',
+                                duration: 1000
+                            })
+                        }
+                    } else {
+                        fail(res)
+                        wx.stopPullDownRefresh()
+                    }
+                } else {
+                    fail(res)
+                    wx.stopPullDownRefresh()
+                }
+            }
+        })
+    });
+}
+
+function CreateHeader(url, complete) {
+    var header = {
+        'content-type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+    }
+    complete && typeof complete === 'function' ? complete(header) : null;
+}
+
+#foreach($sdkInfo in $sdkInfos)
+function $sdkInfo.name (){
+    #foreach($apiInfo in $sdkInfo.apiInfos)
+    function $sdkInfo.name$apiInfo.methodName (param,success,fail){
+        http("$host/$apiInfo.uri","$apiInfo.method",param,success,fail);
+    }
+    #end
+    return{
+        #foreach($apiInfo in $sdkInfo.apiInfos)
+            $sdkInfo.name$apiInfo.methodName:$sdkInfo.name$apiInfo.methodName,
+        #end
+    }
+}
+#end
+module.exports = {
+#foreach($sdkInfo in $sdkInfos)
+    $sdkInfo.name:$sdkInfo.name,
+#end
+}

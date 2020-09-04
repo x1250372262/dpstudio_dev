@@ -59,7 +59,9 @@ public class ApiController {
      */
     @RequestMapping(value = "index", method = Type.HttpMethod.GET)
     public IView index() throws Exception {
-        apiResult = DOC.getDoc();
+        if (apiResult == null) {
+            apiResult = DOC.getDoc();
+        }
         return HtmlView.bind(WebMVC.get(), "/dpstudio/wd/index.html");
     }
 

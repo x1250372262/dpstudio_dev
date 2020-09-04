@@ -9,10 +9,12 @@ import com.dpstudio.dev.doc.bean.ApiInfo;
 import com.dpstudio.dev.doc.bean.ApiModule;
 import com.dpstudio.dev.doc.bean.ApiResult;
 import com.dpstudio.dev.doc.converter.TagConverterHelper;
+import com.dpstudio.dev.doc.exception.DocException;
 import com.dpstudio.dev.utils.ListUtils;
 import com.dpstudio.dev.utils.ObjectUtils;
 import org.apache.commons.lang.StringUtils;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +72,7 @@ public class ApiHelper {
                 .attr("version", iDocConfig.version());
         API_RESULT.setApiModuleList(apiModules);
     }
+
 
     private static ApiDoc create(IDocConfig iDocConfig) throws Exception {
         if (!iDocConfig.isEnabled()) {

@@ -12,6 +12,8 @@ public class ApiInfo {
 
     private String docName;
 
+    private String sdkName;
+
     private List<ApiModule> apiModuleList;
 
     public String getDocName() {
@@ -28,5 +30,13 @@ public class ApiInfo {
 
     public void setApiModuleList(List<ApiModule> apiModuleList) {
         this.apiModuleList = apiModuleList;
+    }
+
+    public String getSdkName() {
+        return sdkName;
+    }
+
+    public void setSdkName(String sdkName) {
+        this.sdkName = sdkName;
     }
 }

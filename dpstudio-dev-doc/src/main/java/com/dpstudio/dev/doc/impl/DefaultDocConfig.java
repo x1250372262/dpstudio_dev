@@ -33,6 +33,8 @@ public final class DefaultDocConfig implements IDocConfig {
 
     private boolean mockEnabled = true;
 
+    private boolean sdkEnabled = false;
+
     /**
      * 文档标题
      */
@@ -85,6 +87,7 @@ public final class DefaultDocConfig implements IDocConfig {
         DocConf confAnn = mainClass == null ? null : mainClass.getAnnotation(DocConf.class);
         enabled = configReader.getBoolean(ENABLED, confAnn == null || confAnn.enabled());
         mockEnabled = configReader.getBoolean(MOCK_ENABLED, confAnn == null || confAnn.mockEnabled());
+        sdkEnabled = configReader.getBoolean(SDK_ENABLED, confAnn == null || confAnn.sdkEnabled());
         sourcePath = configReader.getString(SOURCE_PATH, confAnn != null ? confAnn.sourcePath() : "");
         fileName = configReader.getString(FILE_NAME, confAnn != null ? confAnn.fileName() : "");
         version = configReader.getString(VERSION, confAnn != null ? confAnn.version() : "1.0.0");
@@ -115,6 +118,11 @@ public final class DefaultDocConfig implements IDocConfig {
     @Override
     public boolean isMockEnabled() {
         return mockEnabled;
+    }
+
+    @Override
+    public boolean isSdkEnabled() {
+        return sdkEnabled;
     }
 
     @Override
@@ -178,6 +186,17 @@ public final class DefaultDocConfig implements IDocConfig {
         }
     }
 
+    public void setSdkEnabled(boolean sdkEnabled) {
+        if (!initialized) {
+            this.sdkEnabled = sdkEnabled;
+        }
+    }
+    public void setMockEnabled(boolean mockEnabled) {
+        if (!initialized) {
+            this.mockEnabled = mockEnabled;
+        }
+    }
+
     public static final class Builder {
 
         private final DefaultDocConfig config = new DefaultDocConfig();
@@ -187,6 +206,16 @@ public final class DefaultDocConfig implements IDocConfig {
 
         public Builder enabled(boolean enabled) {
             config.setEnabled(enabled);
+            return this;
+        }
+
+        public Builder mockEnabled(boolean mockEnabled) {
+            config.setMockEnabled(mockEnabled);
+            return this;
+        }
+
+        public Builder sdkEnabled(boolean sdkEnabled) {
+            config.setSdkEnabled(sdkEnabled);
             return this;
         }
 

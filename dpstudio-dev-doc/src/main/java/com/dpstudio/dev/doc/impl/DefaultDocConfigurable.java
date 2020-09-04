@@ -52,6 +52,11 @@ public final class DefaultDocConfigurable extends DefaultModuleConfigurable {
             return this;
         }
 
+        public Builder sdkEnabled(boolean sdkEnabled) {
+            configurable.addConfig(IDocConfig.SDK_ENABLED, String.valueOf(sdkEnabled));
+            return this;
+        }
+
         public Builder title(String title) {
             configurable.addConfig(IDocConfig.TITLE, title);
             return this;

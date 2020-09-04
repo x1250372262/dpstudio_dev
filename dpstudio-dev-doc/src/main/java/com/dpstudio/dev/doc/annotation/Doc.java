@@ -14,4 +14,5 @@ import java.lang.annotation.*;
 public @interface Doc {
 
     String name() default "";
+    String sdkName() default "";
 }

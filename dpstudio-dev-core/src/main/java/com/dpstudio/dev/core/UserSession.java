@@ -28,7 +28,6 @@ public class UserSession implements Serializable {
 
     private Map<String, Serializable> attributes;
 
-    private static final HttpSession HTTP_SESSION = WebContext.getRequest().getSession();
 
 
     private UserSession() {
@@ -36,7 +35,7 @@ public class UserSession implements Serializable {
     }
 
     private UserSession(String id) {
-        this.id = StringUtils.defaultIfBlank(id, HTTP_SESSION.getId());
+        this.id = StringUtils.defaultIfBlank(id, WebContext.getRequest().getSession().getId());
         if (StringUtils.isBlank(this.id)) {
             throw new NullArgumentException("id");
         }
@@ -60,7 +59,12 @@ public class UserSession implements Serializable {
      * @return 获取当前会话中的UserSessionBean对象, 若不存在将返回null值
      */
     public static UserSession current() {
-        return (UserSession) HTTP_SESSION.getAttribute(UserSession.class.getName());
+        try {
+            return (UserSession) WebContext.getRequest().getSession().getAttribute(UserSession.class.getName());
+        } catch (Exception e) {
+            return null;
+        }
+
     }
 
     /**
@@ -75,7 +79,11 @@ public class UserSession implements Serializable {
      * @return 验证当前会话是否合法有效(若IUserSessionHandler配置参数为空则该方法返回值永真)
      */
     public boolean isVerified() {
-        return HTTP_SESSION.getAttribute(this.getClass().getName()) != null;
+        try {
+            return WebContext.getRequest().getSession().getAttribute(this.getClass().getName()) != null;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -89,12 +97,12 @@ public class UserSession implements Serializable {
     }
 
     public UserSession save() {
-        HTTP_SESSION.setAttribute(this.getClass().getName(), this);
+        WebContext.getRequest().getSession().setAttribute(this.getClass().getName(), this);
         return this;
     }
 
     public void destroy() {
-        HTTP_SESSION.setAttribute(this.getClass().getName(), this);
+        WebContext.getRequest().getSession().setAttribute(this.getClass().getName(), this);
     }
 
     public String getId() {

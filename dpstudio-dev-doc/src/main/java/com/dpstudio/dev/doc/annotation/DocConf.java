@@ -38,6 +38,11 @@ public @interface DocConf {
     boolean mockEnabled() default true;
 
     /**
+     * @return sdk是否可用, 默认值: false
+     */
+    boolean sdkEnabled() default false;
+
+    /**
      * @return 文档标题
      */
     String title() default "梦祥文档";

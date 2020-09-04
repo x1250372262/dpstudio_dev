@@ -28,6 +28,7 @@ public interface IDocConfig extends IInitialization<IDoc> {
 
     String ENABLED = "enabled";
     String MOCK_ENABLED = "mock_enabled";
+    String SDK_ENABLED = "sdk_enabled";
     String TITLE = "title";
     String SOURCE_PATH = "source_path";
     String FILE_NAME = "file_name";
@@ -47,6 +48,13 @@ public interface IDocConfig extends IInitialization<IDoc> {
      * @return 返回false表示禁用
      */
     boolean isMockEnabled();
+
+    /**
+     * sdk是否可用, 默认值: true
+     *
+     * @return 返回false表示禁用
+     */
+    boolean isSdkEnabled();
 
     /**
      * 文档标题

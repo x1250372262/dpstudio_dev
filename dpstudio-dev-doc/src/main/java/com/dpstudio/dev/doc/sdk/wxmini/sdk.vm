@@ -1,0 +1,81 @@
+/**
+* http请求
+*/
+function http(url, method, param, success, fail) {
+    let timeStart = Date.now();
+    //设置header
+    CreateHeader(url, function (header) {
+        if (method === "post") {
+            header = {
+            'content-type': 'application/x-www-form-urlencoded',
+            'X-Requested-With': 'XMLHttpRequest'
+            }
+        }
+        //发起请求
+        wx.request({
+            url: url,
+            data: param,
+            dataType: 'json',
+            method: method,
+            header: header,
+            complete(res) {
+                if (res.statusCode === 200) {
+                    if (res.data.ret === 0) {//正常返回数据
+                        wx.stopPullDownRefresh()
+                        success(res.data)
+                    } else if (res.data.ret === -1) {//-1参数 单独验证
+                         for (var key in res.data['data']) {
+                            wx.showToast({
+                                title: res.data['data'][key],
+                                icon: 'none',
+                                duration: 1000
+                            })
+                        }
+                    } else {
+                        //其他错误码
+                        fail(res)
+                        wx.stopPullDownRefresh()
+                    }
+                } else {
+                    fail(res)
+                    wx.stopPullDownRefresh()
+                }
+            }
+        })
+    });
+}
+
+/**
+* 设置请求头
+*/
+function CreateHeader(url, complete) {
+    var header = {
+        'content-type': 'application/json',
+        'X-Requested-With': 'XMLHttpRequest'
+    }
+    complete && typeof complete === 'function' ? complete(header) : null;
+}
+
+/**
+* SDK方法
+*/
+#foreach($sdkInfo in $sdkInfos)
+//$sdkInfo.comment
+function $sdkInfo.name (){
+    #foreach($apiInfo in $sdkInfo.apiInfos)
+    function $sdkInfo.name$apiInfo.methodName (param,success,fail){
+        http("$host/$apiInfo.uri","$apiInfo.method",param,success,fail);
+    }
+    #end
+    return{
+        #foreach($apiInfo in $sdkInfo.apiInfos)
+            $sdkInfo.name$apiInfo.methodName:$sdkInfo.name$apiInfo.methodName,
+        #end
+    }
+}
+#end
+module.exports = {
+#foreach($sdkInfo in $sdkInfos)
+    $sdkInfo.name:$sdkInfo.name,
+#end
+}
