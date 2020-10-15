@@ -80,7 +80,7 @@ public class R implements Serializable {
     public static IView listView(IResultSet resultSet, int page) {
         return WebResult.succeed().data(resultSet.getResultData())
                 .attr("total", resultSet.getRecordCount())
-                .attr("page", page).toJSON();
+                .attr("page", page).keepNullValue().toJSON();
     }
 
     /**
@@ -90,7 +90,7 @@ public class R implements Serializable {
      * @return
      */
     public static IView listView(IResultSet resultSet) {
-        return WebResult.succeed().data(resultSet.getResultData()).toJSON();
+        return WebResult.succeed().data(resultSet.getResultData()).keepNullValue().toJSON();
     }
 
     /**
