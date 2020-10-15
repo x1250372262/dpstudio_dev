@@ -1,9 +1,11 @@
 package com.dpstudio.dev.log.impl;
 
 import com.dpstudio.dev.log.ILogHandler;
+import com.dpstudio.dev.log.LR;
 import com.dpstudio.dev.log.annotation.LogGroup;
 import com.dpstudio.dev.log.model.Log;
 import net.ymate.framework.webmvc.support.UserSessionBean;
+import net.ymate.platform.core.lang.BlurObject;
 import net.ymate.platform.core.util.DateTimeUtils;
 import net.ymate.platform.core.util.UUIDUtils;
 import net.ymate.platform.persistence.jdbc.ISessionExecutor;
@@ -33,24 +35,22 @@ public class DefaultLogHandler implements ILogHandler {
     }
 
     @Override
-    public void create(LogGroup logGroup, Map<String, String> logMap) throws Exception {
-        if (logMap.isEmpty()) {
-            return;
-        }
+    public void create(LogGroup logGroup, LR lr) throws Exception {
         List<Log> logList = new ArrayList<>();
         String createUser = UserSessionBean.current() != null ? UserSessionBean.current().getUid() : "default";
         com.dpstudio.dev.log.annotation.Log[] logs = logGroup.logs();
         for (com.dpstudio.dev.log.annotation.Log log : logs) {
+            String resourceId = BlurObject.bind(lr.get(log.logKey()).get("id")).toStringValue();
             Log logBean = Log.builder()
                     .id(UUIDUtils.UUID())
                     .moduleType(log.moduleType())
                     .moduleName(log.moduleName())
                     .action(log.action())
                     .type(log.type())
-                    .resourceId(logMap.get(log.logKey()))
+                    .resourceId(resourceId)
                     .createTime(DateTimeUtils.currentTimeMillis())
                     .createUser(createUser)
-                    .content(createContent(log.moduleName(), log.action(), logMap.get(log.logKey()), createUser))
+                    .content(createContent(log.moduleName(), log.action(),resourceId, createUser))
                     .build();
             logList.add(logBean);
         }

@@ -62,4 +62,17 @@ public class ObjectUtils {
     public static boolean get(Object value, boolean defaultValue) {
         return Objects.isNull(value) ? defaultValue : BlurObject.bind(value).toBooleanValue();
     }
+
+    public static String toStr(Object value) {
+        return Objects.isNull(value) ? null : BlurObject.bind(value).toStringValue();
+    }
+
+    public static int toInt(Object value) {
+        return Objects.isNull(value) ? 0 : BlurObject.bind(value).toIntValue();
+    }
+
+    public static long toLong(Object value) {
+        return Objects.isNull(value) ? 0L : BlurObject.bind(value).toLongValue();
+    }
+
 }

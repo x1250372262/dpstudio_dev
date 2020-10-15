@@ -1,6 +1,7 @@
 package com.dpstudio.dev.core;
 
 import com.dpstudio.dev.core.code.C;
+import com.dpstudio.dev.log.LR;
 import net.ymate.platform.persistence.IResultSet;
 import net.ymate.platform.webmvc.util.WebResult;
 import net.ymate.platform.webmvc.view.IView;
@@ -23,7 +24,7 @@ public class R implements Serializable {
 
     private String msg;
 
-    private final Map<String, String> logMap = new HashMap<>();
+    private LR lr;
 
     private Map<String, Object> attrs = new HashMap<String, Object>();
 
@@ -34,18 +35,13 @@ public class R implements Serializable {
         this.code = code;
     }
 
-    public R logIds(String key, String logId) {
-        logMap.put(key, logId);
+    public R lr(LR lr) {
+        this.lr = lr;
         return this;
     }
 
-    public R logIds(String logId) {
-        logMap.put("default", logId);
-        return this;
-    }
-
-    public Map<String, String> logMap() {
-        return logMap;
+    public LR lr() {
+        return this.lr;
     }
 
     public static boolean check(R r) {

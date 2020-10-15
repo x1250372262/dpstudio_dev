@@ -13,5 +13,5 @@ import java.util.Map;
  */
 public interface ILogHandler {
 
-    void create(LogGroup logGroup, Map<String, String> logMap) throws Exception;
+    void create(LogGroup logGroup, LR lr) throws Exception;
 }
