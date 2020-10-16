@@ -11,6 +11,7 @@ import org.apache.commons.lang.StringUtils;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: 徐建鹏.
@@ -52,6 +53,9 @@ public class R implements Serializable {
         return this.code() == C.SUCCESS.getCode();
     }
 
+    public static boolean checkVersion(Object var1,Object var2){
+        return Objects.equals(var1,var2);
+    }
 
     /**
      * 根据参数返回成功还是失败

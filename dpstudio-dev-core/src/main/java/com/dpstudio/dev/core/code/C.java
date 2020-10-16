@@ -14,7 +14,8 @@ public enum C {
     SUCCESS(0, "操作成功"),
     ERROR(50000, "操作失败"),
     NO_DATA(50001, "数据不存在"),
-    NAME_EXISTS(50002, "名称已存在");
+    NAME_EXISTS(50002, "名称已存在"),
+    VERSION_NOT_SAME(50003, "数据版本不一致");
 
     private int code;
     private String msg;
