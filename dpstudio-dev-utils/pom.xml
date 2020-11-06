@@ -27,5 +27,10 @@
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-commons</artifactId>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.4.5</version>
+        </dependency>
     </dependencies>
 </project>

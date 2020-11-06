@@ -15,7 +15,8 @@ public enum C {
     ERROR(50000, "操作失败"),
     NO_DATA(50001, "数据不存在"),
     NAME_EXISTS(50002, "名称已存在"),
-    NOT_LOGIN(50003, "用户未授权登录或会话已过期，请重新登录");
+    NOT_LOGIN(50003, "用户未授权登录或会话已过期，请重新登录"),
+    VERSION_NOT_SAME(50004, "数据版本不一致");
 
     private final int code;
     private final String msg;

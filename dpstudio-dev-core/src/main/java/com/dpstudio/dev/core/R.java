@@ -1,12 +1,14 @@
 package com.dpstudio.dev.core;
 
 import com.dpstudio.dev.core.code.C;
+import com.dpstudio.dev.log.LR;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @Author: mengxiang.
@@ -23,6 +25,17 @@ public class R implements Serializable {
     private final Map<String, String> logMap = new HashMap<>();
 
     private Map<String, Object> attrs = new HashMap<String, Object>();
+
+    private LR lr;
+
+    public R lr(LR lr) {
+        this.lr = lr;
+        return this;
+    }
+
+    public LR lr() {
+        return this.lr;
+    }
 
     private R() {
     }
@@ -135,6 +148,23 @@ public class R implements Serializable {
     public R attrs(Map<String, Object> attrs) {
         this.attrs = attrs;
         return this;
+    }
+
+
+    public static R sameName() {
+        return R.create(C.NAME_EXISTS.getCode()).msg(C.NAME_EXISTS.getMsg());
+    }
+
+    public static R noVersion() {
+        return R.create(C.VERSION_NOT_SAME.getCode()).msg(C.VERSION_NOT_SAME.getMsg());
+    }
+
+    public static R noData() {
+        return R.create(C.NO_DATA.getCode()).msg(C.NO_DATA.getMsg());
+    }
+
+    public static boolean checkVersion(Object var1, Object var2) {
+        return Objects.equals(var1, var2);
     }
 
 }
