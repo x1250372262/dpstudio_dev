@@ -41,6 +41,18 @@ public class R implements Serializable {
         return this;
     }
 
+    public static R sameName() {
+        return R.create(C.NAME_EXISTS.getCode()).msg(C.NAME_EXISTS.getMsg());
+    }
+
+    public static R noVersion() {
+        return R.create(C.VERSION_NOT_SAME.getCode()).msg(C.VERSION_NOT_SAME.getMsg());
+    }
+
+    public static R noData() {
+        return R.create(C.NO_DATA.getCode()).msg(C.NO_DATA.getMsg());
+    }
+
     public LR lr() {
         return this.lr;
     }
@@ -53,8 +65,8 @@ public class R implements Serializable {
         return this.code() == C.SUCCESS.getCode();
     }
 
-    public static boolean checkVersion(Object var1,Object var2){
-        return Objects.equals(var1,var2);
+    public static boolean checkVersion(Object var1, Object var2) {
+        return Objects.equals(var1, var2);
     }
 
     /**

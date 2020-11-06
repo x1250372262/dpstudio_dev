@@ -1,5 +1,7 @@
 package com.dpstudio.dev.utils;
 
+
+
 import net.ymate.platform.core.util.ClassUtils;
 
 import java.util.ArrayList;
@@ -34,7 +36,7 @@ public class BeanUtils {
      * @return 目标对象
      */
     public static <S, T> T copy(S source, Supplier<T> target) {
-        return copy(source, target, null,null);
+        return copy(source, target, null, null);
     }
 
     /**
@@ -63,12 +65,68 @@ public class BeanUtils {
     /**
      * 复制bean
      *
+     * @param source 要复制的
+     * @param target 目标对象
+     * @return 目标对象
+     */
+    public static <S, T> T duplicate(S source, T target) {
+        return duplicate(source, target, null, null);
+    }
+
+    /**
+     * 复制bean
+     *
+     * @param source 要复制的
+     * @param target 目标对象
+     * @return 目标对象
+     */
+    public static <S, T> T duplicate(S source, T target, ClassUtils.IFieldValueFilter fieldValueFilter) {
+        return duplicate(source, target, fieldValueFilter, null);
+    }
+
+    /**
+     * 复制bean
+     *
+     * @param source   要复制的
+     * @param target   目标对象
+     * @param callBack 处理额外数据接口
+     * @return 目标对象
+     */
+    public static <S, T> T duplicate(S source, T target, BeanUtilCallBack<S, T> callBack) {
+        return duplicate(source, target, null, callBack);
+    }
+
+    /**
+     * 复制bean
+     *
+     * @param source 要复制的
+     * @param target 目标对象
+     * @return 目标对象
+     */
+    public static <S, T> T duplicate(S source, T target, ClassUtils.IFieldValueFilter fieldValueFilter, BeanUtilCallBack<S, T> callBack) {
+        if (source == null || target == null) {
+            return null;
+        }
+        T t = ClassUtils.wrapper(source).duplicate(target, fieldValueFilter);
+        if (callBack != null) {
+            // 回调
+            callBack.callBack(source, t);
+        }
+        return t;
+    }
+
+    /**
+     * 复制bean
+     *
      * @param source   要复制的
      * @param target   目标对象
      * @param callBack 处理额外数据接口
      * @return 目标对象
      */
     public static <S, T> T copy(S source, Supplier<T> target, ClassUtils.IFieldValueFilter fieldValueFilter, BeanUtilCallBack<S, T> callBack) {
+        if (source == null || target == null || target.get() == null) {
+            return null;
+        }
         T t = ClassUtils.wrapper(source).duplicate(target.get(), fieldValueFilter);
         if (callBack != null) {
             // 回调
@@ -86,7 +144,7 @@ public class BeanUtils {
      * @return 目标对象
      */
     public static <S, T> List<T> copyList(List<S> sources, Supplier<T> target) {
-        return copyList(sources, target, null,null);
+        return copyList(sources, target, null, null);
     }
 
 
@@ -122,6 +180,9 @@ public class BeanUtils {
      * @return 目标对象
      */
     public static <S, T> List<T> copyList(List<S> sources, Supplier<T> target, ClassUtils.IFieldValueFilter fieldValueFilter, BeanUtilCallBack<S, T> callBack) {
+        if (sources == null || target == null || target.get() == null) {
+            return new ArrayList<>();
+        }
         List<T> list = new ArrayList<>(sources.size());
         for (S source : sources) {
             T t = target.get();
@@ -134,4 +195,6 @@ public class BeanUtils {
         }
         return list;
     }
+
+
 }
