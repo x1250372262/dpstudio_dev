@@ -63,7 +63,7 @@ public class MenuMeta {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        _LOG.info("惨淡收集成功");
+        _LOG.info("菜单收集成功");
     }
 
     private static List<MenuBean> menuList(ISecurityModuleCfg moduleCfg) throws Exception {

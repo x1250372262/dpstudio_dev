@@ -1,8 +1,6 @@
 package com.dpstudio.dev.security.taglib;
 
 import com.dpstudio.dev.security.IAuthenticator;
-import com.dpstudio.dev.security.Security;
-import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.NullArgumentException;
 import org.apache.commons.lang.StringUtils;
 
@@ -15,6 +13,11 @@ public class PermissionTag extends BodyTagSupport {
 
     private Boolean checkPermission(String code) throws Exception {
 
+        //如果权限是空的 证明不需要
+        if (StringUtils.isBlank(code)) {
+            return true;
+        }
+
         IAuthenticator iAuthenticator = com.dpstudio.dev.security.Security.get().getModuleCfg().getAuthenticator();
 
         if (iAuthenticator == null) {
@@ -25,13 +28,13 @@ public class PermissionTag extends BodyTagSupport {
             return true;
         }
         List<String> userPermissionCodes = iAuthenticator.userPermission();
-        if (userPermissionCodes == null) {
+
+        //这个人没有权限不行
+        if (userPermissionCodes == null || userPermissionCodes.isEmpty()) {
             return false;
         }
-        if (!userPermissionCodes.contains(code)) {
-            return false;
-        }
-        return true;
+        //判断是否包含权限
+        return userPermissionCodes.contains(permission);
     }
 
 
@@ -44,7 +47,7 @@ public class PermissionTag extends BodyTagSupport {
             } else {
                 return SKIP_BODY;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return SKIP_BODY;
         }
