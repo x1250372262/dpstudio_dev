@@ -23,14 +23,13 @@ import java.util.List;
 public class DefaultLogHandler implements ILogHandler {
 
     private String createContent(String moduleName, String action, String resourceId, String createUser) {
-        StringBuilder stringBuilder = new StringBuilder("模块名:" + moduleName + ",")
-                .append(createUser)
-                .append("在" + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), DateTimeUtils.YYYY_MM_DD_HH_MM_SS))
-                .append(action)
-                .append("了一条id为")
-                .append(resourceId)
-                .append("的数据");
-        return stringBuilder.toString();
+        return "模块名:" + moduleName + "," +
+                createUser +
+                "在" + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), DateTimeUtils.YYYY_MM_DD_HH_MM_SS) +
+                action +
+                "了一条id为" +
+                resourceId +
+                "的数据";
     }
 
     @Override

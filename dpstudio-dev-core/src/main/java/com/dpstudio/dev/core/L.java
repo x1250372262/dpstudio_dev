@@ -29,4 +29,14 @@ public class L<T> {
     public IView listView(IResultSet<T> resultSet) {
         return WebResult.succeed().data(resultSet.getResultData()).keepNullValue().toJsonView();
     }
+
+    /**
+     * 详情
+     * @param t
+     * @return
+     * @throws Exception
+     */
+    public IView detailView(T t) throws Exception{
+        return WebResult.succeed().data(t).keepNullValue().toJsonView();
+    }
 }
