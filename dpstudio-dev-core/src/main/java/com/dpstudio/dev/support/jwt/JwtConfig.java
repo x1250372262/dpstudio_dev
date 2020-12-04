@@ -1,37 +1,39 @@
 package com.dpstudio.dev.support.jwt;
 
- /**
-  * @author mengxiang
-  * @Date 2020.06.30
-  * @Time: 17:30
-  * @Description: jwt配置
-  */
+
+/**
+ * @Author: 徐建鹏.
+ * @Date: 2020/06/13.
+ * @Time: 20:20 .
+ * @Description: jwt专用配置
+ */
 public class JwtConfig {
 
-    public static final String ISUUED_AT = "isuuedAt";
-
-    /**
-     * 密钥
-     */
-    private String secret = "dpstudio";
-
-    /**
-     * 有效期，单位秒，
-     * 默认0  永久有效
-     */
+    // 有效期，单位豪秒， 默认0  永久有效
     private long verifyTime = 0L;
+    //密钥
+    private String secret = "dpstudio_jwt";
+    //header参数名
+    private String headerName = "dpstudio_jwt";
+    //参数名
+    private String paramName = "dpstudio_jwt";
+    //是否自动设置到response
+    private boolean autoResponse = true;
 
-    public JwtConfig() {
-
-    }
-
-    public JwtConfig(String secret, long verifyTime) {
-        this.secret = secret;
-        this.verifyTime = verifyTime;
+    private JwtConfig() {
     }
 
     public static JwtConfig builder() {
         return new JwtConfig();
+    }
+
+    public JwtConfig verifyTime(long verifyTime) {
+        this.verifyTime = verifyTime;
+        return this;
+    }
+
+    public long verifyTime() {
+        return this.verifyTime;
     }
 
     public JwtConfig secret(String secret) {
@@ -43,12 +45,71 @@ public class JwtConfig {
         return this.secret;
     }
 
-    public JwtConfig verifyTime(long verifyTime) {
-        this.verifyTime = verifyTime;
+    public JwtConfig headerName(String headerName) {
+        this.headerName = headerName;
         return this;
     }
 
-    public long verifyTime() {
-        return this.verifyTime;
+    public String headerName() {
+        return this.headerName;
+    }
+
+    public JwtConfig paramName(String paramName) {
+        this.paramName = paramName;
+        return this;
+    }
+
+    public String paramName() {
+        return this.paramName;
+    }
+
+    public JwtConfig autoResponse(boolean autoResponse) {
+        this.autoResponse = autoResponse;
+        return this;
+    }
+
+    public boolean autoResponse() {
+        return this.autoResponse;
+    }
+
+
+    public long getVerifyTime() {
+        return verifyTime;
+    }
+
+    public void setVerifyTime(long verifyTime) {
+        this.verifyTime = verifyTime;
+    }
+
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+
+    public String getHeaderName() {
+        return headerName;
+    }
+
+    public void setHeaderName(String headerName) {
+        this.headerName = headerName;
+    }
+
+    public String getParamName() {
+        return paramName;
+    }
+
+    public void setParamName(String paramName) {
+        this.paramName = paramName;
+    }
+
+    public boolean isAutoResponse() {
+        return autoResponse;
+    }
+
+    public void setAutoResponse(boolean autoResponse) {
+        this.autoResponse = autoResponse;
     }
 }
