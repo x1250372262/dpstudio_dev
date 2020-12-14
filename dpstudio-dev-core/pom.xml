@@ -36,18 +36,22 @@
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-configuration</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-log</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-webmvc</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-persistence-jdbc</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.zxing</groupId>
@@ -79,6 +83,7 @@
         <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-core</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!-- 获取系统信息 -->
         <dependency>
