@@ -37,10 +37,11 @@ public class PageDTO {
         this.pageSize = pageSize;
     }
 
-    public Page toPage(){
-        return Page.createIfNeed(page,pageSize);
+    public Page toPage() {
+        return Page.createIfNeed(page, pageSize);
     }
-    public static PageDTO get(){
+
+    public static PageDTO get() {
         return new PageDTO();
     }
 }
