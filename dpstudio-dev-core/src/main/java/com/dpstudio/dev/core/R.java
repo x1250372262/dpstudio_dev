@@ -2,11 +2,13 @@ package com.dpstudio.dev.core;
 
 import com.dpstudio.dev.core.code.C;
 import com.dpstudio.dev.log.LR;
+import com.dpstudio.dev.utils.ListUtils;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -56,6 +58,26 @@ public class R implements Serializable {
      */
     public static R result(Object object) {
         if (object != null) {
+            return R.ok();
+        }
+        return R.fail();
+    }
+
+    /**
+     * 根据参数返回成功还是失败
+     */
+    public static R result(List<?> list) {
+        if (ListUtils.isNotEmpty(list)) {
+            return R.ok();
+        }
+        return R.fail();
+    }
+
+    /**
+     * 根据参数返回成功还是失败
+     */
+    public static R result(int[] result) {
+        if (result != null && result.length > 0) {
             return R.ok();
         }
         return R.fail();
@@ -136,11 +158,11 @@ public class R implements Serializable {
 
 
     public static R sameName() {
-        return R.create(C.FIELDS_EXISTS.getCode()).msg(String.format(C.FIELDS_EXISTS.getMsg(),"名称"));
+        return R.create(C.FIELDS_EXISTS.getCode()).msg(String.format(C.FIELDS_EXISTS.getMsg(), "名称"));
     }
 
     public static R sameData(String msg) {
-        return R.create(C.FIELDS_EXISTS.getCode()).msg(String.format(C.FIELDS_EXISTS.getMsg(),msg));
+        return R.create(C.FIELDS_EXISTS.getCode()).msg(String.format(C.FIELDS_EXISTS.getMsg(), msg));
     }
 
     public static R noVersion() {
