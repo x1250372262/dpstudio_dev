@@ -12,7 +12,6 @@
         <module>dpstudio-dev-utils</module>
         <module>dpstudio-dev-excel</module>
         <module>dpstudio-dev-bug</module>
-        <module>dpstudio-dev-doc</module>
     </modules>
     <packaging>pom</packaging>
 
