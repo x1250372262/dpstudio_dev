@@ -1,5 +1,6 @@
 package com.dpstudio.dev.excel.analysis.bean;
 
+import com.dpstudio.dev.excel.analysis.IDefaultClass;
 import com.dpstudio.dev.excel.analysis.annotation.ImportColumn;
 import org.apache.commons.lang3.StringUtils;
 
@@ -25,7 +26,7 @@ public class HandlerBean {
             dataHandle = handleClass.newInstance();
             //得到方法对象,有参的方法需要指定参数类型
             Class<?> parameterTypes = importColumn.parameterType();
-            if (parameterTypes != null) {
+            if (!parameterTypes.getName().equals(IDefaultClass.class.getName())) {
                 method = dataHandle.getClass().getMethod(importColumn.method(), parameterTypes);
             } else {
                 method = dataHandle.getClass().getMethod(importColumn.method());

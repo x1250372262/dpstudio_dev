@@ -1,7 +1,12 @@
 package com.dpstudio.dev.excel.analysis.annotation;
 import com.dpstudio.dev.excel.analysis.IDataHandler;
+import com.dpstudio.dev.excel.analysis.IDefaultClass;
+
 import java.lang.annotation.*;
 
+/**
+ * @author xujianpeng
+ */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
@@ -38,5 +43,5 @@ public @interface ImportColumn {
      *
      * @return
      */
-    Class<?> parameterType();
+    Class<?> parameterType() default IDefaultClass.class;
 }
