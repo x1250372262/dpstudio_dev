@@ -3,6 +3,7 @@ package com.dpstudio.dev.core;
 import net.ymate.platform.core.persistence.IResultSet;
 import net.ymate.platform.webmvc.util.WebResult;
 import net.ymate.platform.webmvc.view.IView;
+import org.apache.commons.lang.NullArgumentException;
 
 
 /**
@@ -18,7 +19,9 @@ public class L<T> {
      * 查询列表
      */
     public IView listView(IResultSet<T> resultSet, Integer page) {
-        assert resultSet != null;
+        if(resultSet == null){
+            throw new NullArgumentException("resultSet");
+        }
         return WebResult.succeed().data(resultSet.getResultData())
                 .attr("total", resultSet.getRecordCount())
                 .attr("pageCount", resultSet.getPageCount())
@@ -30,7 +33,9 @@ public class L<T> {
      * 查询列表
      */
     public IView listView(IResultSet<T> resultSet) {
-        assert resultSet != null;
+        if(resultSet == null){
+            throw new NullArgumentException("resultSet");
+        }
         return WebResult.succeed().data(resultSet.getResultData()).keepNullValue().toJsonView();
     }
 
@@ -42,7 +47,9 @@ public class L<T> {
      * @throws Exception
      */
     public IView detailView(T t) {
-        assert t != null;
+        if(t == null){
+            throw new NullArgumentException("t");
+        }
         return WebResult.succeed().data(t).keepNullValue().toJsonView();
     }
 }
