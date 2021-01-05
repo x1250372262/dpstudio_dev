@@ -1,9 +1,9 @@
 package com.dpstudio.dev.server.tomcat;
 
 import com.dpstudio.dev.server.ServerConfig;
+import com.dpstudio.dev.server.listener.WebAppEventListener;
 import com.dpstudio.dev.server.util.FileUtils;
 import net.ymate.platform.webmvc.support.DispatchServlet;
-import net.ymate.platform.webmvc.support.WebAppEventListener;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.core.StandardContext;
@@ -80,7 +80,7 @@ public class TomcatApplication {
         ClassLoader classLoader = TomcatApplication.class.getClassLoader();
         context.setParentClassLoader(classLoader);
         context.addLifecycleListener(new Tomcat.FixContextListener());
-        context.addApplicationEventListener(new WebAppEventListener());
+        context.addApplicationEventListener(new WebAppEventListener(ServerConfig.applicationInitializer()));
         if (!TomcatConfig.isWebProject()) {
             tomcat.addServlet(ServerConfig.CONTEXT_PATH, "dispatchServlet", new DispatchServlet());
             context.addServletMappingDecoded("/*", "dispatchServlet");

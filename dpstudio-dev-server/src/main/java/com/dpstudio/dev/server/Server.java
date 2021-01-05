@@ -3,6 +3,7 @@ package com.dpstudio.dev.server;
 
 import com.dpstudio.dev.server.tomcat.TomcatServer;
 import com.dpstudio.dev.server.undertow.UndertowServer;
+import net.ymate.platform.core.IApplicationInitializer;
 
 /**
  * @Author: mengxiang.
@@ -13,8 +14,9 @@ import com.dpstudio.dev.server.undertow.UndertowServer;
 public class Server {
 
 
-    public static IServer get(boolean testServer) {
+    public static IServer get(boolean testServer, IApplicationInitializer iApplicationInitializer) {
         ServerConfig.setTestServer(testServer);
+        ServerConfig.setApplicationInitializer(iApplicationInitializer);
         String type = ServerConfig.getType();
         switch (type) {
             case "tomcat":

@@ -2,6 +2,7 @@ package com.dpstudio.dev.server;
 
 
 import net.ymate.platform.commons.lang.BlurObject;
+import net.ymate.platform.core.IApplicationInitializer;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
@@ -26,6 +27,8 @@ public class ServerConfig {
     private static String workName;
 
     private static boolean testServer = false;
+
+    private static IApplicationInitializer iApplicationInitializer;
 
     //默认项目路径
     public static final String CONTEXT_PATH = "";
@@ -57,6 +60,13 @@ public class ServerConfig {
     }
     public static boolean isTestServer(){
         return testServer;
+    }
+
+    public static void setApplicationInitializer(IApplicationInitializer applicationInitializer){
+        iApplicationInitializer = applicationInitializer;
+    }
+    public static IApplicationInitializer applicationInitializer(){
+        return iApplicationInitializer;
     }
 
 
