@@ -85,6 +85,7 @@ public class TomcatApplication {
             tomcat.addServlet(ServerConfig.CONTEXT_PATH, "dispatchServlet", new DispatchServlet());
             context.addServletMappingDecoded("/*", "dispatchServlet");
         }
+//        context.setJarScanner(new EmbededStandardJarScanner());
     }
 
     protected static TomcatApplication get() {
@@ -103,7 +104,9 @@ public class TomcatApplication {
         // 注册关闭端口以进行关闭
         // 可以通过Socket关闭tomcat： telnet 127.0.0.1 8005，输入SHUTDOWN字符串
         tomcat.getServer().setPort(TomcatConfig.getCfgParamInt(TomcatConfig.SHUTDOWN_PORT));
-        tomcat.getServer().await();
+        if (!ServerConfig.isTestServer()) {
+            tomcat.getServer().await();
+        }
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {
@@ -113,7 +116,7 @@ public class TomcatApplication {
     }
 
     private void stop() throws LifecycleException {
-        System.out.println(" YMP stop  ... ");
+        System.out.println(" ymp stop  ... ");
         tomcat.stop();
     }
 }

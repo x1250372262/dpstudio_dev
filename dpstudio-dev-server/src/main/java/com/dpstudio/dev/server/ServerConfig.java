@@ -2,8 +2,10 @@ package com.dpstudio.dev.server;
 
 
 import net.ymate.platform.commons.lang.BlurObject;
-import net.ymate.platform.core.IApplication;
-import net.ymate.platform.core.YMP;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @Author: mengxiang.
@@ -13,31 +15,48 @@ import net.ymate.platform.core.YMP;
  */
 public class ServerConfig {
 
-    public static String PORT = "server.port";
-    public static String TYPE = "server.type";
-    public static String WORK_NAME = "server.work_name";
-    public static String HOST_NAME = "server.host_name";
+    public static String PORT = "port";
+    public static String TYPE = "type";
+    public static String WORK_NAME = "work_name";
+    public static String HOST_NAME = "host_name";
 
-    private static final int port;
-    private static final String hostName;
-    private static final String type;
-    private static final String workName;
+    private static int port;
+    private static String hostName;
+    private static String type;
+    private static String workName;
+
+    private static boolean testServer = false;
 
     //默认项目路径
     public static final String CONTEXT_PATH = "";
     //默认编码
     public static final String CHARSET = "UTF-8";
 
+    private static final String MODULE_NAME = "server";
+
+    public static Map<String, String> moduleCfgs;
+
     static {
-        IApplication iApplication = YMP.get();
-        hostName = iApplication.getParam(HOST_NAME, "localhost");
-        type = iApplication.getParam(TYPE, "tomcat");
-        port = BlurObject.bind(iApplication.getParam(PORT, "8080")).toIntValue();
-        workName = iApplication.getParam(WORK_NAME);
+        moduleCfgs = Config.getModuleCfg(MODULE_NAME);
+        init();
+    }
+
+    private static void init(){
+        hostName = getCfgParam(HOST_NAME,"localhost");
+        type = getCfgParam(TYPE,"tomcat");
+        port = getCfgParamInt(PORT,8080);
+        workName = getCfgParam(WORK_NAME);
     }
 
     public static String getHostName() {
         return hostName;
+    }
+
+    public static void setTestServer(boolean test){
+        testServer = test;
+    }
+    public static boolean isTestServer(){
+        return testServer;
     }
 
 
@@ -51,6 +70,58 @@ public class ServerConfig {
 
     public static String getWorkName() {
         return workName;
+    }
+
+    public static String getCfgParam(String prefix) {
+        return moduleCfgs.get(prefix);
+    }
+
+    public static Map<String, String> getModuleCfg(String prefix) {
+        Map<String, String> params = new HashMap<>();
+        for (Object key : moduleCfgs.keySet()) {
+            if (StringUtils.startsWith((String) key, prefix)) {
+                String cfgKey = StringUtils.substring((String) key, prefix.length()+1);
+                String cfgValue = moduleCfgs.get(key);
+                params.put(cfgKey, cfgValue);
+            }
+        }
+        return params;
+    }
+
+    public static String getCfgParam(String prefix, String defaultValue) {
+        return moduleCfgs.get(prefix) != null ? moduleCfgs.get(prefix) : defaultValue;
+    }
+
+    public static int getCfgParamInt(String prefix, int defaultValue) {
+        return moduleCfgs.get(prefix) != null ? BlurObject.bind(moduleCfgs.get(prefix)).toIntValue() : defaultValue;
+    }
+
+    public static int getCfgParamInt(String prefix) {
+        return moduleCfgs.get(prefix) != null ? BlurObject.bind(moduleCfgs.get(prefix)).toIntValue() : 0;
+    }
+
+    public static double getCfgParamDouble(String prefix, double defaultValue) {
+        return moduleCfgs.get(prefix) != null ? BlurObject.bind(moduleCfgs.get(prefix)).toDoubleValue() : defaultValue;
+    }
+
+    public static double getCfgParamDouble(String prefix) {
+        return moduleCfgs.get(prefix) != null ? BlurObject.bind(moduleCfgs.get(prefix)).toDoubleValue() : 0D;
+    }
+
+    public static long getCfgParamLong(String prefix, long defaultValue) {
+        return moduleCfgs.get(prefix) != null ? BlurObject.bind(moduleCfgs.get(prefix)).toLongValue() : defaultValue;
+    }
+
+    public static long getCfgParamLong(String prefix) {
+        return moduleCfgs.get(prefix) != null ? BlurObject.bind(moduleCfgs.get(prefix)).toLongValue() : 0L;
+    }
+
+    public static boolean getCfgParamBool(String prefix, boolean defaultValue) {
+        return moduleCfgs.get(prefix) != null ? BlurObject.bind(moduleCfgs.get(prefix)).toBooleanValue() : defaultValue;
+    }
+
+    public static boolean getCfgParamBool(String prefix) {
+        return moduleCfgs.get(prefix) != null && BlurObject.bind(moduleCfgs.get(prefix)).toBooleanValue();
     }
 
 

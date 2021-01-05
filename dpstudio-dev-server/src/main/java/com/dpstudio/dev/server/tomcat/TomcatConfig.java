@@ -1,5 +1,6 @@
 package com.dpstudio.dev.server.tomcat;
 
+
 import com.dpstudio.dev.server.ServerConfig;
 import net.ymate.platform.commons.lang.BlurObject;
 import org.apache.commons.lang3.StringUtils;
@@ -14,10 +15,6 @@ import java.util.Map;
  */
 public class TomcatConfig {
 
-    public static String PORT = "server.port";
-    public static String TYPE = "server.type";
-    public static String WORK_NAME = "server.work_name";
-    public static String HOST_NAME = "server.host_name";
     public static String SHUTDOWN_PORT = "shutdown_port";
     public static String MAX_THREADS = "max_threads";
     public static String MIN_SPARE_THREADS = "min_spare_threads";

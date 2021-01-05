@@ -34,6 +34,7 @@ public class UndertowApplication {
 
     private static Undertow undertow = null;
 
+    private boolean started = false;
 
     static {
         try {
@@ -88,6 +89,9 @@ public class UndertowApplication {
     protected void startUp() throws Exception {
         if (undertow == null) {
             init();
+        }
+        if (started) {
+            return;
         }
         undertow.start();
     }
