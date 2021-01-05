@@ -1,7 +1,7 @@
 package com.dpstudio.dev.support.jwt;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2020/06/13.
  * @Time: 20:20 .
  * @Description: jwt专用配置

@@ -5,7 +5,7 @@ import net.ymate.platform.validation.validate.VNumeric;
 import net.ymate.platform.webmvc.annotation.RequestParam;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2020/12/14.
  * @Time: 12:02 下午.
  * @Description:

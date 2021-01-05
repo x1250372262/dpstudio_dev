@@ -11,7 +11,7 @@ import net.ymate.platform.core.beans.proxy.IProxy;
 import net.ymate.platform.core.beans.proxy.IProxyChain;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2020/5/26.
  * @Time: 8:40 上午.
  * @Description:

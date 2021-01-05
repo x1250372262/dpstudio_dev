@@ -3,7 +3,7 @@ package com.dpstudio.dev.support.systemInfo.utils;
 import net.ymate.platform.commons.MathCalcHelper;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2020/11/21.
  * @Time: 3:30 下午.
  * @Description:

@@ -1,7 +1,7 @@
 package com.dpstudio.dev.support.jwt;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2020/12/1.
  * @Time: 11:09 上午.
  * @Description:

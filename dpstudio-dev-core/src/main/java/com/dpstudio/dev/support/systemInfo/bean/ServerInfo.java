@@ -1,7 +1,7 @@
 package com.dpstudio.dev.support.systemInfo.bean;
 
 /**
- * @Author: 徐建鹏.
+ * @Author: mengxiang.
  * @Date: 2020/11/21.
  * @Time: 3:48 下午.
  * @Description:

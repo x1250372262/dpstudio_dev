@@ -13,15 +13,13 @@ import org.junit.runners.model.InitializationError;
 
 
 /**
- * @Author: mengxinag.
+ * @Author: mengxiang.
  * @create: 2021-01-04 17:58
  * @Description:
  */
 public class YmpJUnit4ClassRunner extends BlockJUnit4ClassRunner {
 
     private final Class<?> targetClass;
-
-    private Object target;
 
     /**
      * Creates a BlockJUnit4ClassRunner to run {@code klass}
@@ -32,10 +30,8 @@ public class YmpJUnit4ClassRunner extends BlockJUnit4ClassRunner {
     public YmpJUnit4ClassRunner(Class<?> klass) throws InitializationError {
         super(klass);
         this.targetClass = klass;
-
         try {
             YMP.run(new YmpJunitApplicationInitializer());
-            this.target = YMP.get().getBeanFactory().getBean(targetClass);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -43,7 +39,7 @@ public class YmpJUnit4ClassRunner extends BlockJUnit4ClassRunner {
 
     @Override
     public Object createTest() throws Exception {
-        return this.target;
+        return YMP.get().getBeanFactory().getBean(targetClass);
     }
 
     private class YmpJunitApplicationInitializer implements IApplicationInitializer {
