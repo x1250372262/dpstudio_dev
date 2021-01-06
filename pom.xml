@@ -13,6 +13,7 @@
         <module>dpstudio-dev-excel</module>
         <module>dpstudio-dev-bug</module>
         <module>dpstudio-dev-server</module>
+        <module>dpstudio-dev-test</module>
     </modules>
     <packaging>pom</packaging>
 

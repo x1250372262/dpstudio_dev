@@ -1,9 +1,9 @@
 package com.dpstudio.dev.server.tomcat;
 
 import com.dpstudio.dev.server.ServerConfig;
-import com.dpstudio.dev.server.listener.WebAppEventListener;
 import com.dpstudio.dev.server.util.FileUtils;
 import net.ymate.platform.webmvc.support.DispatchServlet;
+import net.ymate.platform.webmvc.support.WebAppEventListener;
 import org.apache.catalina.Host;
 import org.apache.catalina.LifecycleException;
 import org.apache.catalina.core.StandardContext;
@@ -80,7 +80,7 @@ public class TomcatApplication {
         ClassLoader classLoader = TomcatApplication.class.getClassLoader();
         context.setParentClassLoader(classLoader);
         context.addLifecycleListener(new Tomcat.FixContextListener());
-        context.addApplicationEventListener(new WebAppEventListener(ServerConfig.applicationInitializer()));
+        context.addApplicationEventListener(new WebAppEventListener());
         if (!TomcatConfig.isWebProject()) {
             tomcat.addServlet(ServerConfig.CONTEXT_PATH, "dispatchServlet", new DispatchServlet());
             context.addServletMappingDecoded("/*", "dispatchServlet");
@@ -104,9 +104,7 @@ public class TomcatApplication {
         // 注册关闭端口以进行关闭
         // 可以通过Socket关闭tomcat： telnet 127.0.0.1 8005，输入SHUTDOWN字符串
         tomcat.getServer().setPort(TomcatConfig.getCfgParamInt(TomcatConfig.SHUTDOWN_PORT));
-        if (!ServerConfig.isTestServer()) {
-            tomcat.getServer().await();
-        }
+        tomcat.getServer().await();
         Runtime.getRuntime().addShutdownHook(new Thread() {
             @Override
             public void run() {

@@ -1,6 +1,5 @@
-package com.dpstudio.dev.support.junit;
+package com.dpstudio.dev.test;
 
-import com.dpstudio.dev.server.Server;
 import net.ymate.platform.core.IApplication;
 import net.ymate.platform.core.IApplicationInitializer;
 import net.ymate.platform.core.YMP;
@@ -18,7 +17,7 @@ import org.junit.runners.model.InitializationError;
  * @create: 2021-01-04 17:58
  * @Description:
  */
-public class YmpJUnit4MvcClassRunner extends BlockJUnit4ClassRunner {
+public class YmpJUnit4ClassRunner extends BlockJUnit4ClassRunner {
 
     private final Class<?> targetClass;
 
@@ -28,11 +27,10 @@ public class YmpJUnit4MvcClassRunner extends BlockJUnit4ClassRunner {
      * @param klass
      * @throws InitializationError if the test class is malformed.
      */
-    public YmpJUnit4MvcClassRunner(Class<?> klass) throws InitializationError {
+    public YmpJUnit4ClassRunner(Class<?> klass) throws InitializationError {
         super(klass);
         this.targetClass = klass;
         try {
-            Server.get(true,new YmpJunitApplicationInitializer()).startUp();
             YMP.run(new YmpJunitApplicationInitializer());
         } catch (Exception e) {
             e.printStackTrace();
