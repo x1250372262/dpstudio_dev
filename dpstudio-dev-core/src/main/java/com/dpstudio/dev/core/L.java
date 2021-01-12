@@ -5,6 +5,8 @@ import net.ymate.platform.webmvc.util.WebResult;
 import net.ymate.platform.webmvc.view.IView;
 import org.apache.commons.lang.NullArgumentException;
 
+import java.util.List;
+
 
 /**
  * @Author: mengxiang.
@@ -37,6 +39,16 @@ public class L<T> {
             throw new NullArgumentException("resultSet");
         }
         return WebResult.succeed().data(resultSet.getResultData()).keepNullValue().toJsonView();
+    }
+
+    /**
+     * 查询列表
+     */
+    public IView listView(List<T> resultSet) {
+        if(resultSet == null){
+            throw new NullArgumentException("resultSet");
+        }
+        return WebResult.succeed().data(resultSet).keepNullValue().toJsonView();
     }
 
     /**
