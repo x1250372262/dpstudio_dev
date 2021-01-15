@@ -6,13 +6,13 @@ package com.dpstudio.dev.support.jwt;
  * @Time: 11:09 上午.
  * @Description:
  */
-public class JwtBean {
+public class JwtBean implements java.io.Serializable {
 
     private String token;
 
     private long verifyTime;
 
-    private JwtBean(){
+    private JwtBean() {
 
     }
 
@@ -21,25 +21,25 @@ public class JwtBean {
         this.verifyTime = verifyTime;
     }
 
-    public static JwtBean builder(){
+    public static JwtBean builder() {
         return new JwtBean();
     }
 
-    public JwtBean token(String token){
+    public JwtBean token(String token) {
         this.token = token;
         return this;
     }
 
-    public String token(){
+    public String token() {
         return this.token;
     }
 
-    public JwtBean verifyTime(long verifyTime){
+    public JwtBean verifyTime(long verifyTime) {
         this.verifyTime = verifyTime;
         return this;
     }
 
-    public long verifyTime(){
+    public long verifyTime() {
         return this.verifyTime;
     }
 
