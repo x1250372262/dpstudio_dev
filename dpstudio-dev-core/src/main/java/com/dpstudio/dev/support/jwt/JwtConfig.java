@@ -11,11 +11,11 @@ public class JwtConfig {
     // 有效期，单位豪秒， 默认0  永久有效
     private long verifyTime = 0L;
     //密钥
-    private String secret = "dpstudio_jwt";
+    private String secret = "dpstudioJwt";
     //header参数名
-    private String headerName = "dpstudio_jwt";
+    private String headerName = "dpstudioJwt";
     //参数名
-    private String paramName = "dpstudio_jwt";
+    private String paramName = "dpstudioJwt";
     //是否自动设置到response
     private boolean autoResponse = true;
 
