@@ -1,7 +1,7 @@
-package com.dpstudio.dev.core.interCeptor;
+package com.dpstudio.dev.interCeptor;
 
-import com.dpstudio.dev.core.UserSession;
-import com.dpstudio.dev.core.code.C;
+import com.dpstudio.dev.support.UserSession;
+import com.dpstudio.dev.code.C;
 import net.ymate.platform.core.beans.intercept.IInterceptor;
 import net.ymate.platform.core.beans.intercept.InterceptContext;
 import net.ymate.platform.core.beans.intercept.InterceptException;

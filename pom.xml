@@ -9,7 +9,6 @@
     <version>2.0.0</version>
     <modules>
         <module>dpstudio-dev-core</module>
-        <module>dpstudio-dev-utils</module>
         <module>dpstudio-dev-excel</module>
         <module>dpstudio-dev-bug</module>
         <module>dpstudio-dev-server</module>

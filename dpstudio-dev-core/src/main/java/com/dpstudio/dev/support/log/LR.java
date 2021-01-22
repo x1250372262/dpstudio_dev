@@ -1,4 +1,4 @@
-package com.dpstudio.dev.log;
+package com.dpstudio.dev.support.log;
 
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.StringUtils;

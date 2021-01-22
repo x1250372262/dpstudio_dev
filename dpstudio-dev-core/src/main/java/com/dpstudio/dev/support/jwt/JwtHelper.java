@@ -3,7 +3,7 @@ package com.dpstudio.dev.support.jwt;
 
 import com.alibaba.fastjson.JSONObject;
 import com.dpstudio.dev.core.R;
-import com.dpstudio.dev.core.code.C;
+import com.dpstudio.dev.code.C;
 import io.jsonwebtoken.*;
 import net.ymate.platform.commons.json.JsonWrapper;
 import net.ymate.platform.commons.util.DateTimeUtils;

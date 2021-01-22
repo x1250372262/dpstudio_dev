@@ -4,7 +4,7 @@ import com.dpstudio.dev.bug.dao.IBugUserDao;
 import com.dpstudio.dev.bug.model.BugUser;
 import com.dpstudio.dev.bug.service.IBugUserService;
 import com.dpstudio.dev.core.R;
-import com.dpstudio.dev.core.UserSession;
+import com.dpstudio.dev.support.UserSession;
 import net.ymate.platform.core.beans.annotation.Bean;
 import net.ymate.platform.core.beans.annotation.Inject;
 import net.ymate.platform.core.persistence.IResultSet;

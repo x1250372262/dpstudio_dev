@@ -1,11 +1,10 @@
-package com.dpstudio.dev.core;
+package com.dpstudio.dev.support;
 
 import net.ymate.platform.commons.util.DateTimeUtils;
 import net.ymate.platform.webmvc.context.WebContext;
 import org.apache.commons.lang.NullArgumentException;
 import org.apache.commons.lang3.StringUtils;
 
-import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;

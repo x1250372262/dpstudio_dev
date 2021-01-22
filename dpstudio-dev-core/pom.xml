@@ -92,5 +92,10 @@
             <artifactId>oshi-core</artifactId>
             <version>5.3.6</version>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.4.7</version>
+        </dependency>
     </dependencies>
 </project>

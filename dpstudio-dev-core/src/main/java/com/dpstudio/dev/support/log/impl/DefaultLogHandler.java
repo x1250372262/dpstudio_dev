@@ -1,10 +1,10 @@
-package com.dpstudio.dev.log.impl;
+package com.dpstudio.dev.support.log.impl;
 
-import com.dpstudio.dev.core.UserSession;
-import com.dpstudio.dev.log.ILogHandler;
-import com.dpstudio.dev.log.LR;
-import com.dpstudio.dev.log.annotation.LogGroup;
-import com.dpstudio.dev.log.model.Log;
+import com.dpstudio.dev.support.UserSession;
+import com.dpstudio.dev.support.log.ILogHandler;
+import com.dpstudio.dev.support.log.LR;
+import com.dpstudio.dev.support.log.annotation.LogGroup;
+import com.dpstudio.dev.support.log.model.Log;
 import net.ymate.platform.commons.lang.BlurObject;
 import net.ymate.platform.commons.util.DateTimeUtils;
 import net.ymate.platform.commons.util.UUIDUtils;
@@ -36,8 +36,8 @@ public class DefaultLogHandler implements ILogHandler {
     public void create(LogGroup logGroup, LR lr) throws Exception {
         List<Log> logList = new ArrayList<>();
         String createUser = UserSession.current() != null ? UserSession.current().getUid() : "default";
-        com.dpstudio.dev.log.annotation.Log[] logs = logGroup.logs();
-        for (com.dpstudio.dev.log.annotation.Log log : logs) {
+        com.dpstudio.dev.support.log.annotation.Log[] logs = logGroup.logs();
+        for (com.dpstudio.dev.support.log.annotation.Log log : logs) {
             String resourceId = BlurObject.bind(lr.get(log.logKey()).get("id")).toStringValue();
             Log logBean = Log.builder()
                     .id(UUIDUtils.UUID())

@@ -1,6 +1,6 @@
-package com.dpstudio.dev.core.method;
+package com.dpstudio.dev.core;
 
-import com.dpstudio.dev.core.UserSession;
+import com.dpstudio.dev.support.UserSession;
 
 import java.util.Optional;
 

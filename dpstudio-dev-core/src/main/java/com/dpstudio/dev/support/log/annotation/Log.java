@@ -1,4 +1,4 @@
-package com.dpstudio.dev.log.annotation;
+package com.dpstudio.dev.support.log.annotation;
 
 import java.lang.annotation.*;
 
