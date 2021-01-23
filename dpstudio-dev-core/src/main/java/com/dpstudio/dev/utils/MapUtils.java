@@ -16,6 +16,10 @@ public class MapUtils {
     private final static MapUtils ME = new MapUtils();
 
 
+    public static Map<String, Object> emptyMap(){
+        return MAP;
+    }
+
     public static MapUtils builder() {
         return ME;
     }
