@@ -156,6 +156,15 @@ public class R implements Serializable {
         return this;
     }
 
+    public R data(Object value){
+        this.attrs.put("data",value);
+        return this;
+    }
+    public R data(Object value, Object defaultValue){
+        this.attrs.put("data",ObjectUtils.defaultIfNull(value, defaultValue));
+        return this;
+    }
+
 
     public static R sameName() {
         return R.create(C.FIELDS_EXISTS.getCode()).msg(String.format(C.FIELDS_EXISTS.getMsg(), "名称"));
