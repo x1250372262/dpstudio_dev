@@ -22,4 +22,10 @@ public class IExportHelper {
     public static String ZIP_FILE_PATH = RuntimeUtils.getRootPath() + File.separator + "zip" + File.separator;
 
 
+    /**
+     * 模板文件文件目录
+     */
+    public static String TEMPLATE_FILE_PATH;
+
+
 }

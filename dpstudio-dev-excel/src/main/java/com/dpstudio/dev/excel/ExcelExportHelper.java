@@ -1,12 +1,15 @@
 package com.dpstudio.dev.excel;
 
 
+import com.alibaba.excel.EasyExcel;
+import com.dpstudio.dev.excel.analysis.IExportHelper;
 import com.dpstudio.dev.excel.exception.ExcelException;
 import net.ymate.platform.commons.util.DateTimeUtils;
 import net.ymate.platform.commons.util.RuntimeUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.jexl3.JexlBuilder;
 import org.apache.commons.jexl3.JexlEngine;
+import org.apache.commons.lang3.StringUtils;
 import org.jxls.common.Context;
 import org.jxls.expression.JexlExpressionEvaluator;
 import org.jxls.transform.Transformer;
@@ -27,41 +30,31 @@ import java.util.zip.ZipOutputStream;
  * @Time: 14:30.
  * @Description: Excel文件导出助手类
  */
-public class ExcelExportHelper implements Closeable {
+public class ExcelExportHelper extends IExportHelper implements Closeable {
 
-    private final Class<?> funClass;
+    private  Class<?> funClass;
 
     private List<Map<String, Object>> resultData;
 
-    /**
-     * 模板文件路径
-     */
-    private final String templatePath;
-    /**
-     * excel临时文件目录
-     */
-    private final String excelFilePath;
-    /**
-     * zip临时文件目录
-     */
-    private final String zipFilePath;
 
-    private ExcelExportHelper(Class<?> funcClass, String templatePath, String excelFilePath, String zipFilePath) {
+    public ExcelExportHelper() {
+    }
+
+    public ExcelExportHelper init(Class<?> funcClass, String templatePath, String excelFilePath, String zipFilePath) throws Exception {
         this.funClass = funcClass;
-        this.templatePath = templatePath;
-        this.excelFilePath = excelFilePath;
-        this.zipFilePath = zipFilePath;
+        if(StringUtils.isBlank(templatePath)){
+            throw new ExcelException("模板文件目录不能为空");
+        }
+        TEMPLATE_FILE_PATH = templatePath;
+        if(StringUtils.isBlank(excelFilePath)){
+            EXCEL_FILE_PATH = excelFilePath;
+        }
+        if(StringUtils.isBlank(zipFilePath)){
+            ZIP_FILE_PATH = zipFilePath;
+        }
+        return new ExcelExportHelper();
     }
 
-    public static ExcelExportHelper init(Class<?> funcClass, String templatePath, String excelFilePath, String zipFilePath) {
-        return new ExcelExportHelper(funcClass, templatePath, excelFilePath, zipFilePath);
-    }
-
-    public static ExcelExportHelper init(Class<?> funcClass, String templatePath) {
-        String excelFilePath = RuntimeUtils.getRootPath() + File.separator + "export" + File.separator;
-        String zipFilePath = RuntimeUtils.getRootPath() + File.separator + "zip" + File.separator;
-        return new ExcelExportHelper(funcClass, templatePath, excelFilePath, zipFilePath);
-    }
 
     public ExcelExportHelper addData(Map<String, Object> data) {
         if (resultData == null) {
@@ -72,10 +65,10 @@ public class ExcelExportHelper implements Closeable {
     }
 
     public File export(String fileName) throws Exception {
-        fixAndMkDir(excelFilePath);
-        fixAndMkDir(zipFilePath);
+        fixAndMkDir(EXCEL_FILE_PATH);
+        fixAndMkDir(ZIP_FILE_PATH);
         //输入信息
-        File inFile = getTemplate(templatePath);
+        File inFile = getTemplate(TEMPLATE_FILE_PATH);
         if (inFile == null) {
             throw new ExcelException("Excel 模板未找到。");
         }
@@ -92,13 +85,14 @@ public class ExcelExportHelper implements Closeable {
                     break;
                 }
                 //输出信息
-                File outFile = new File(excelFilePath, fileName + idx + ".xlsx");
+                File outFile = new File(EXCEL_FILE_PATH, fileName + idx + ".xlsx");
                 files.add(exportExcel(is, outFile, data));
             }
         }
         return toZip(files, fileName);
 
     }
+
 
     private File exportExcel(InputStream is, File outFile, Map<String, Object> params) throws Exception {
         OutputStream os = new FileOutputStream(outFile);
@@ -126,27 +120,15 @@ public class ExcelExportHelper implements Closeable {
     }
 
     private File toZip(List<File> files, String fileName) throws Exception {
-        File zipFile = new File(zipFilePath, fileName + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMdd-HHmmss") + ".zip");
-        ZipOutputStream outputStream = null;
-        try {
-            outputStream = new ZipOutputStream(new FileOutputStream(zipFile));
+        File zipFile = new File(ZIP_FILE_PATH, fileName + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMdd-HHmmss") + ".zip");
+        try (ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(zipFile))) {
             for (File file : files) {
                 ZipEntry zipEntry = new ZipEntry(file.getName());
                 outputStream.putNextEntry(zipEntry);
                 //
-                InputStream inputStream = null;
-                try {
-                    inputStream = new FileInputStream(file);
+                try (InputStream inputStream = new FileInputStream(file)) {
                     IOUtils.copyLarge(inputStream, outputStream);
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
                 }
-            }
-        } finally {
-            if (outputStream != null) {
-                outputStream.close();
             }
         }
         return zipFile;

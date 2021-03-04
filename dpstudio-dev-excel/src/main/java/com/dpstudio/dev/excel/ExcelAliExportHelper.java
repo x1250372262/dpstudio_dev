@@ -45,9 +45,6 @@ public class ExcelAliExportHelper<T> extends IExportHelper implements Closeable 
         return new ExcelAliExportHelper<>();
     }
 
-    public ExcelAliExportHelper<T> init(Class<?> classes) {
-        return init(classes, null, null);
-    }
 
     public void addData(List<T> data) {
         if (resultData == null) {
@@ -127,7 +124,7 @@ public class ExcelAliExportHelper<T> extends IExportHelper implements Closeable 
 
     }
 
-    public static void fixAndMkDir(String dir) {
+    public static String fixAndMkDir(String dir) {
         File file = new File(dir);
         if (!file.exists()) {
             file.mkdirs();
@@ -135,5 +132,6 @@ public class ExcelAliExportHelper<T> extends IExportHelper implements Closeable 
         if (!dir.endsWith(File.separator)) {
             dir += File.separator;
         }
+        return dir;
     }
 }
