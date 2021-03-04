@@ -13,7 +13,7 @@ public class ExportDTO {
     @RequestParam(defaultValue = "0")
     private Integer export;
 
-    @RequestParam(value = "ids")
+    @RequestParam(value = "ids[]")
     private String[] ids;
 
     public Integer getExport() {
