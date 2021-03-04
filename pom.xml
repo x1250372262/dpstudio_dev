@@ -10,7 +10,6 @@
     <modules>
         <module>dpstudio-dev-core</module>
         <module>dpstudio-dev-excel</module>
-        <module>dpstudio-dev-bug</module>
         <module>dpstudio-dev-server</module>
         <module>dpstudio-dev-test</module>
     </modules>

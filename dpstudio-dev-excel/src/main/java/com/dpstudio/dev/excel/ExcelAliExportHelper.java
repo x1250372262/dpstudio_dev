@@ -2,9 +2,11 @@ package com.dpstudio.dev.excel;
 
 
 import com.alibaba.excel.EasyExcel;
+import com.dpstudio.dev.excel.analysis.IExportHelper;
 import net.ymate.platform.commons.util.DateTimeUtils;
 import net.ymate.platform.commons.util.RuntimeUtils;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -18,45 +20,40 @@ import java.util.zip.ZipOutputStream;
  * @Time: 14:30.
  * @Description: Excel文件导出助手类
  */
-public class ExcelAliExportHelper<T> implements Closeable {
+public class ExcelAliExportHelper<T> extends IExportHelper implements Closeable {
 
     /**
      * 导出数据
      */
     private List<List<T>> resultData;
-    /**
-     * excel临时文件目录
-     */
-    private final String excelFilePath;
-    /**
-     * zip临时文件目录
-     */
-    private final String zipFilePath;
 
-    private static Class<?> instance;
 
-    private ExcelAliExportHelper(String excelFilePath, String zipFilePath) {
-        this.excelFilePath = excelFilePath;
-        this.zipFilePath = zipFilePath;
+    private Class<?> instance;
+
+
+    public ExcelAliExportHelper() {
     }
 
-    public static ExcelAliExportHelper init(String excelFilePath, String zipFilePath) {
-        return new ExcelAliExportHelper(excelFilePath, zipFilePath);
+    public ExcelAliExportHelper<T> init(Class<?> classes, String excelFilePath, String zipFilePath) {
+        this.instance = classes;
+        if(StringUtils.isNotBlank(excelFilePath)){
+            EXCEL_FILE_PATH = excelFilePath;
+        }
+        if(StringUtils.isNotBlank(zipFilePath)){
+            ZIP_FILE_PATH = zipFilePath;
+        }
+        return new ExcelAliExportHelper<>();
     }
 
-    public static ExcelAliExportHelper init(Class<?> classes) {
-        instance = classes;
-        String excelFilePath = RuntimeUtils.getRootPath() + File.separator + "export" + File.separator;
-        String zipFilePath = RuntimeUtils.getRootPath() + File.separator + "zip" + File.separator;
-        return new ExcelAliExportHelper(excelFilePath, zipFilePath);
+    public ExcelAliExportHelper<T> init(Class<?> classes) {
+        return init(classes, null, null);
     }
 
-    public ExcelAliExportHelper addData(List<T> data) {
+    public void addData(List<T> data) {
         if (resultData == null) {
             resultData = new ArrayList<>();
         }
         resultData.add(data);
-        return this;
     }
 
     /**
@@ -67,9 +64,9 @@ public class ExcelAliExportHelper<T> implements Closeable {
      * @throws Exception
      */
     public File exportOneFile(String fileName) throws Exception {
-        fixAndMkDir(excelFilePath);
+        fixAndMkDir(EXCEL_FILE_PATH);
         fileName = fileName + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMddHHmmss");
-        File outFile = new File(excelFilePath, fileName + ".xlsx");
+        File outFile = new File(EXCEL_FILE_PATH, fileName + ".xlsx");
         if (resultData != null && resultData.size() > 0) {
             List<T> data = new ArrayList<>();
             for (int idx = 0; ; idx++) {
@@ -89,8 +86,8 @@ public class ExcelAliExportHelper<T> implements Closeable {
     }
 
     public File export(String fileName) throws Exception {
-        fixAndMkDir(excelFilePath);
-        fixAndMkDir(zipFilePath);
+        fixAndMkDir(EXCEL_FILE_PATH);
+        fixAndMkDir(ZIP_FILE_PATH);
         List<File> files = new ArrayList<>();
         if (resultData != null && resultData.size() > 0) {
             for (int idx = 0; ; idx++) {
@@ -101,7 +98,7 @@ public class ExcelAliExportHelper<T> implements Closeable {
                 if (data == null || data.isEmpty()) {
                     break;
                 }
-                File outFile = new File(excelFilePath, fileName + idx + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMddHHmmss") + ".xlsx");
+                File outFile = new File(EXCEL_FILE_PATH, fileName + idx + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMddHHmmss") + ".xlsx");
 
                 EasyExcel.write(outFile.getPath(), instance).sheet(fileName + idx).doWrite(data);
                 //输出信息
@@ -112,36 +109,25 @@ public class ExcelAliExportHelper<T> implements Closeable {
     }
 
     private File toZip(List<File> files, String fileName) throws Exception {
-        File zipFile = new File(zipFilePath, fileName + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMdd-HHmmss") + ".zip");
-        ZipOutputStream outputStream = null;
-        try {
-            outputStream = new ZipOutputStream(new FileOutputStream(zipFile));
+        File zipFile = new File(ZIP_FILE_PATH, fileName + DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), "yyyyMMdd-HHmmss") + ".zip");
+        try (ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(zipFile))) {
             for (File file : files) {
                 ZipEntry zipEntry = new ZipEntry(file.getName());
                 outputStream.putNextEntry(zipEntry);
-                InputStream inputStream = null;
-                try {
-                    inputStream = new FileInputStream(file);
+                try (InputStream inputStream = new FileInputStream(file)) {
                     IOUtils.copyLarge(inputStream, outputStream);
-                } finally {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
                 }
-            }
-        } finally {
-            if (outputStream != null) {
-                outputStream.close();
             }
         }
         return zipFile;
     }
+
     @Override
     public void close() throws IOException {
 
     }
 
-    public static String fixAndMkDir(String dir) {
+    public static void fixAndMkDir(String dir) {
         File file = new File(dir);
         if (!file.exists()) {
             file.mkdirs();
@@ -149,6 +135,5 @@ public class ExcelAliExportHelper<T> implements Closeable {
         if (!dir.endsWith(File.separator)) {
             dir += File.separator;
         }
-        return dir;
     }
 }
