@@ -14,6 +14,7 @@ import java.util.function.Supplier;
  * @Time: 8:47 上午.
  * @Description:
  */
+@Deprecated
 public class ResultSetUtils {
 
     /**
@@ -24,6 +25,7 @@ public class ResultSetUtils {
      * @param callBack 处理额外数据接口
      * @return 目标对象
      */
+    @Deprecated
     public static <S, T> IResultSet<T> copy(IResultSet<S> sources, Supplier<T> target, ClassUtils.IFieldValueFilter fieldValueFilter, BeanUtils.BeanUtilCallBack<S, T> callBack) {
         List<T> result = BeanUtils.copyList(sources.getResultData(), target, fieldValueFilter, callBack);
         return new DefaultResultSet<T>(result, sources.getPageNumber(), sources.getPageSize(), sources.getRecordCount());
@@ -36,6 +38,7 @@ public class ResultSetUtils {
      * @param target   目标对象
      * @return 目标对象
      */
+    @Deprecated
     public static <S, T> IResultSet<T> copy(IResultSet<S> sources, Supplier<T> target) {
         List<T> result = BeanUtils.copyList(sources.getResultData(), target, null, null);
         return new DefaultResultSet<T>(result, sources.getPageNumber(), sources.getPageSize(), sources.getRecordCount());
