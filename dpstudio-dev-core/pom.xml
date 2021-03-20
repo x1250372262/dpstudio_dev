@@ -86,12 +86,6 @@
             <artifactId>ymate-platform-core</artifactId>
             <scope>provided</scope>
         </dependency>
-        <!-- 获取系统信息 -->
-        <dependency>
-            <groupId>com.github.oshi</groupId>
-            <artifactId>oshi-core</artifactId>
-            <version>5.3.6</version>
-        </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>

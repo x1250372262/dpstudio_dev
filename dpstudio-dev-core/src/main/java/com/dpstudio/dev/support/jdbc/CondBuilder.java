@@ -2,11 +2,9 @@ package com.dpstudio.dev.support.jdbc;
 
 import cn.hutool.core.util.StrUtil;
 import com.dpstudio.dev.support.jdbc.annotation.CondConf;
-import net.ymate.platform.commons.lang.BlurObject;
 import net.ymate.platform.persistence.jdbc.query.Cond;
 
 import java.lang.reflect.Field;
-import java.util.Map;
 
 /**
  * @Author: mengxiang.
@@ -87,9 +85,9 @@ public class CondBuilder {
                             break;
                         case LIKE:
                             if (condConf.exprNotEmpty()) {
-                                condTarget.exprNotEmpty(value, cond -> cond.and().likeWrap(condConf.prefix(), condConf.field()).param(StrUtil.format(condConf.likeExpression(), value)));
+                                condTarget.exprNotEmpty(value, cond -> cond.and().likeWrap(condConf.prefix(), condConf.field()).param(StrUtil.format("%{}%", value)));
                             } else {
-                                condTarget.and().likeWrap(condConf.prefix(), condConf.field()).param(StrUtil.format(condConf.likeExpression(), value));
+                                condTarget.and().likeWrap(condConf.prefix(), condConf.field()).param(StrUtil.format("%{}%", value));
                             }
                             break;
                         default:
@@ -101,109 +99,60 @@ public class CondBuilder {
         return condTarget;
     }
 
-    public interface CallBack {
-        Map<String, Object> handle(Cond condTarget, String prefix, String field, Cond.OPT opt, boolean exprNotEmpty, String likeExpression, Object value);
-    }
 
-    public Cond build(Object condBean, CallBack callBack) throws Exception {
-        Class<?> clazz = condBean.getClass();
-        if (clazz.isAnnotationPresent(com.dpstudio.dev.support.jdbc.annotation.CondBuilder.class)) {
-            Field[] fields = clazz.getDeclaredFields();
-            if (fields.length <= 0) {
-                return condTarget;
-            }
-            for (Field field : fields) {
-                if (field.isAnnotationPresent(CondConf.class)) {
-                    field.setAccessible(true);
-                    Object value = field.get(condBean);
-                    CondConf condConf = field.getAnnotation(CondConf.class);
-                    Map<String, Object> result = callBack.handle(condTarget, condConf.prefix(), condConf.field(), condConf.opt(), condConf.exprNotEmpty(), condConf.likeExpression(), value);
-                    String boolKey = condConf.prefix() + condConf.field() + "bool";
-                    String condKey = condConf.prefix() + condConf.field() + "cond";
-                    boolean condFlag = BlurObject.bind(result.get(boolKey)).toBooleanValue();
-                    switch (condConf.opt()) {
-                        case EQ:
-                            if (condFlag) {
-                                condTarget = (Cond) result.get(condKey);
-                            } else {
-                                if (condConf.exprNotEmpty()) {
-                                    condTarget.exprNotEmpty(value, cond -> cond.and().eqWrap(condConf.prefix(), condConf.field()).param(value));
-                                } else {
-                                    condTarget.and().eqWrap(condConf.prefix(), condConf.field()).param(value);
-                                }
-                            }
-                            break;
-                        case NOT_EQ:
-                            if (condFlag) {
-                                condTarget = (Cond) result.get(condKey);
-                            } else {
-                                if (condConf.exprNotEmpty()) {
-                                    condTarget.exprNotEmpty(value, cond -> cond.and().notEqWrap(condConf.prefix(), condConf.field()).param(value));
-                                } else {
-                                    condTarget.and().notEqWrap(condConf.prefix(), condConf.field()).param(value);
-                                }
-                            }
-                            break;
-                        case LT:
-                            if (condFlag) {
-                                condTarget = (Cond) result.get(condKey);
-                            } else {
-                                if (condConf.exprNotEmpty()) {
-                                    condTarget.exprNotEmpty(value, cond -> cond.and().ltWrap(condConf.prefix(), condConf.field()).param(value));
-                                } else {
-                                    condTarget.and().ltWrap(condConf.prefix(), condConf.field()).param(value);
-                                }
-                            }
-                            break;
-                        case GT:
-                            if (condFlag) {
-                                condTarget = (Cond) result.get(condKey);
-                            } else {
-                                if (condConf.exprNotEmpty()) {
-                                    condTarget.exprNotEmpty(value, cond -> cond.and().gtWrap(condConf.prefix(), condConf.field()).param(value));
-                                } else {
-                                    condTarget.and().gtWrap(condConf.prefix(), condConf.field()).param(value);
-                                }
-                            }
-                            break;
-                        case LT_EQ:
-                            if (condFlag) {
-                                condTarget = (Cond) result.get(condKey);
-                            } else {
-                                if (condConf.exprNotEmpty()) {
-                                    condTarget.exprNotEmpty(value, cond -> cond.and().ltEqWrap(condConf.prefix(), condConf.field()).param(value));
-                                } else {
-                                    condTarget.and().ltEqWrap(condConf.prefix(), condConf.field()).param(value);
-                                }
-                            }
-                            break;
-                        case GT_EQ:
-                            if (condFlag) {
-                                condTarget = (Cond) result.get(condKey);
-                            } else {
-                                if (condConf.exprNotEmpty()) {
-                                    condTarget.exprNotEmpty(value, cond -> cond.and().gtEqWrap(condConf.prefix(), condConf.field()).param(value));
-                                } else {
-                                    condTarget.and().gtEqWrap(condConf.prefix(), condConf.field()).param(value);
-                                }
-                            }
-                            break;
-                        case LIKE:
-                            if (condFlag) {
-                                condTarget = (Cond) result.get(condKey);
-                            } else {
-                                if (condConf.exprNotEmpty()) {
-                                    condTarget.exprNotEmpty(value, cond -> cond.and().likeWrap(condConf.prefix(), condConf.field()).param(StrUtil.format(condConf.likeExpression(), value)));
-                                } else {
-                                    condTarget.and().likeWrap(condConf.prefix(), condConf.field()).param(StrUtil.format(condConf.likeExpression(), value));
-                                }
-                            }
-                            break;
-                        default:
-                            break;
-                    }
+    public Cond build(String prefix, String field, Cond.OPT opt, Object param, boolean exprNotEmpty) throws Exception {
+        switch (opt) {
+            case EQ:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().eqWrap(prefix, field).param(param));
+                } else {
+                    condTarget.and().eqWrap(prefix, field).param(param);
                 }
-            }
+                break;
+            case NOT_EQ:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().notEqWrap(prefix, field).param(param));
+                } else {
+                    condTarget.and().notEqWrap(prefix, field).param(param);
+                }
+                break;
+            case LT:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().ltWrap(prefix, field).param(param));
+                } else {
+                    condTarget.and().ltWrap(prefix, field).param(param);
+                }
+                break;
+            case GT:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().gtWrap(prefix, field).param(param));
+                } else {
+                    condTarget.and().gtWrap(prefix, field).param(param);
+                }
+                break;
+            case LT_EQ:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().ltEqWrap(prefix, field).param(param));
+                } else {
+                    condTarget.and().ltEqWrap(prefix, field).param(param);
+                }
+                break;
+            case GT_EQ:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().gtEqWrap(prefix, field).param(param));
+                } else {
+                    condTarget.and().gtEqWrap(prefix, field).param(param);
+                }
+                break;
+            case LIKE:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().likeWrap(prefix, field).param(StrUtil.format("%{}%", param)));
+                } else {
+                    condTarget.and().likeWrap(prefix, field).param(StrUtil.format("%{}%", param));
+                }
+                break;
+            default:
+                break;
         }
         return condTarget;
     }

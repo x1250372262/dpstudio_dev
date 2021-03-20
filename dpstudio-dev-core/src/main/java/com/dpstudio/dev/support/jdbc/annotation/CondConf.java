@@ -17,7 +17,5 @@ public @interface CondConf {
 
     boolean exprNotEmpty() default true;
 
-    String likeExpression() default "%{}%";
-
 
 }
