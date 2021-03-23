@@ -1,6 +1,7 @@
 package com.dpstudio.dev.support.spi;
 
 
+import com.dpstudio.dev.support.spi.annotation.SpiBean;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
@@ -24,11 +25,18 @@ public class SpiLoader {
      * @return
      */
     public static <T> T load(Class<T> classes, String className) throws Exception {
-        T returnObject = serviceLoad(classes, className);
-        if (returnObject != null) {
-            return returnObject;
-        }
-        return null;
+        return serviceLoad(classes, className);
+    }
+
+    /**
+     * 加载
+     *
+     * @param classes
+     * @param <T>
+     * @return
+     */
+    public static <T> T load(Class<T> classes) throws Exception {
+        return load(classes,null);
     }
 
     /**
@@ -43,7 +51,7 @@ public class SpiLoader {
         ServiceLoader<T> serviceLoader = ServiceLoader.load(classes);
         T returnValue = null;
         for (T t : serviceLoader) {
-            Spi spi = t.getClass().getAnnotation(Spi.class);
+            SpiBean spi = t.getClass().getAnnotation(SpiBean.class);
             if (spi == null) {
                 continue;
             }

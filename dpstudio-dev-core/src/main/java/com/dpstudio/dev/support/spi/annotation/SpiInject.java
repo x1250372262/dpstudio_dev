@@ -1,11 +1,11 @@
-package com.dpstudio.dev.support.spi;
+package com.dpstudio.dev.support.spi.annotation;
 
 import java.lang.annotation.*;
 
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface Spi {
+public @interface SpiInject {
 
     String className() default "";
 }

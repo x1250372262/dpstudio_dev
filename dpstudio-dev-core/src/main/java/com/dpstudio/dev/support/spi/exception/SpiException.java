@@ -6,12 +6,15 @@ package com.dpstudio.dev.support.spi.exception;
  * @Time: 8:44 上午.
  * @Description:
  */
-public class SpiException extends Exception{
+public class SpiException extends RuntimeException{
 
     public SpiException() {
         super();
     }
     public SpiException(String msg) {
         super(msg);
+    }
+    public SpiException(String msg,Throwable e) {
+        super(msg,e);
     }
 }
