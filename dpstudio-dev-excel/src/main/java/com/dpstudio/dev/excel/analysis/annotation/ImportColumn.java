@@ -5,7 +5,7 @@ import com.dpstudio.dev.excel.analysis.IDefaultClass;
 import java.lang.annotation.*;
 
 /**
- * @author xujianpeng
+ * @author mengxiang
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
