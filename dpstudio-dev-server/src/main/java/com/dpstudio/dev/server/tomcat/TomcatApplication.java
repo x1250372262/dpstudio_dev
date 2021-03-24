@@ -2,6 +2,13 @@ package com.dpstudio.dev.server.tomcat;
 
 import com.dpstudio.dev.server.ServerConfig;
 import com.dpstudio.dev.server.util.FileUtils;
+import net.ymate.platform.commons.ReentrantLockHelper;
+import net.ymate.platform.commons.util.ClassUtils;
+import net.ymate.platform.core.IApplication;
+import net.ymate.platform.core.YMP;
+import net.ymate.platform.core.module.IModule;
+import net.ymate.platform.persistence.jdbc.JDBC;
+import net.ymate.platform.webmvc.WebMVC;
 import net.ymate.platform.webmvc.support.DispatchServlet;
 import net.ymate.platform.webmvc.support.WebAppEventListener;
 import org.apache.catalina.Host;
@@ -82,6 +89,20 @@ public class TomcatApplication {
         context.addLifecycleListener(new Tomcat.FixContextListener());
         context.addApplicationEventListener(new WebAppEventListener());
         if (!TomcatConfig.isWebProject()) {
+            try {
+                System.out.println("aaaa");
+                IApplication iApplication = YMP.run();
+                JDBC jc  = iApplication.getModuleManager().getModule(JDBC.class);
+                System.out.println(jc.toString());
+                ClassUtils.getExtensionLoader(IModule.class, true).getExtensionClasses().forEach(a->{
+                    System.out.println(a.getName());
+                });
+                ReentrantLockHelper.putIfAbsentAsync(EXTENSION_LOADERS, clazz, () -> new ClassUtils.ExtensionLoader<>(IModule.class, true));
+                WebMVC owner = iApplication.getModuleManager().getModule(WebMVC.class);
+                owner.initialize(iApplication);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             tomcat.addServlet(ServerConfig.CONTEXT_PATH, "dispatchServlet", new DispatchServlet());
             context.addServletMappingDecoded("/*", "dispatchServlet");
         }
