@@ -6,7 +6,6 @@ import net.ymate.platform.core.YMP;
 import net.ymate.platform.webmvc.support.DispatchServlet;
 import net.ymate.platform.webmvc.support.WebAppEventListener;
 import org.apache.catalina.Host;
-import org.apache.catalina.LifecycleException;
 import org.apache.catalina.core.StandardContext;
 import org.apache.catalina.startup.Tomcat;
 import org.apache.commons.lang3.StringUtils;
@@ -30,7 +29,6 @@ public class TomcatApplication {
     }
 
     private TomcatApplication() {
-
     }
 
     private static void init() {
@@ -78,8 +76,7 @@ public class TomcatApplication {
 
         StandardContext context = (StandardContext) tomcat.addWebapp(host, ServerConfig.CONTEXT_PATH,
                 workHome);
-        ClassLoader classLoader = TomcatApplication.class.getClassLoader();
-        context.setParentClassLoader(classLoader);
+        context.setParentClassLoader(TomcatApplication.class.getClassLoader());
         context.addLifecycleListener(new Tomcat.FixContextListener());
         context.addApplicationEventListener(new WebAppEventListener());
         if (!TomcatConfig.isWebProject()) {
@@ -94,19 +91,26 @@ public class TomcatApplication {
 //        context.setJarScanner(new EmbededStandardJarScanner());
     }
 
+
     protected static TomcatApplication get() {
         return new TomcatApplication();
     }
 
-    protected void startUp() throws Exception {
-        if (tomcat == null) {
-            init();
-        }
+
+    private void doStart() throws Exception {
         if (this.started) {
             return;
         }
+        if (tomcat == null) {
+            init();
+        }
         tomcat.start();
         this.started = true;
+    }
+
+    protected void startUp() throws Exception {
+
+        doStart();
         // 注册关闭端口以进行关闭
         // 可以通过Socket关闭tomcat： telnet 127.0.0.1 8005，输入SHUTDOWN字符串
         tomcat.getServer().setPort(TomcatConfig.getCfgParamInt(TomcatConfig.SHUTDOWN_PORT));
@@ -117,10 +121,20 @@ public class TomcatApplication {
                 stop();
             }
         });
+
     }
 
-    private void stop() throws LifecycleException {
-        System.out.println(" ymp stop  ... ");
+    private void doStop() throws Exception {
+        System.out.println(" YMP stop  ... ");
         tomcat.stop();
+    }
+
+    private void stop() throws Exception {
+        if (started) {
+            started = false;
+        } else {
+            return;
+        }
+        doStop();
     }
 }
