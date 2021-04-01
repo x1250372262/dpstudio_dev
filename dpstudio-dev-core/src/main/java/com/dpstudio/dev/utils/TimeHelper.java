@@ -132,5 +132,11 @@ public class TimeHelper {
         return DateTimeUtils.parseDateTime(bTime, "yyyy-MM-dd HH:mm:ss").getTime() + DateTimeUtils.DAY * day;
     }
 
+    public long timeMillisDay() throws Exception {
+        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), DateTimeUtils.YYYY_MM_DD), DateTimeUtils.YYYY_MM_DD).getTime();
+    }
 
+    public long timeMillisMonth() throws Exception {
+        return DateTimeUtils.parseDateTime(DateTimeUtils.formatTime(DateTimeUtils.currentTimeMillis(), DateTimeUtils.YYYY_MM), DateTimeUtils.YYYY_MM).getTime();
+    }
 }
