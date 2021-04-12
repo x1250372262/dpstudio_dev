@@ -28,12 +28,12 @@ public class CondBuilder {
     }
 
 
-    public Cond build(Object condBean) throws Exception {
+    public CondBuilder build(Object condBean) throws Exception {
         Class<?> clazz = condBean.getClass();
         if (clazz.isAnnotationPresent(com.dpstudio.dev.support.jdbc.annotation.CondBuilder.class)) {
             Field[] fields = clazz.getDeclaredFields();
             if (fields.length <= 0) {
-                return condTarget;
+                return this;
             }
             for (Field field : fields) {
                 if (field.isAnnotationPresent(CondConf.class)) {
@@ -96,11 +96,11 @@ public class CondBuilder {
                 }
             }
         }
-        return condTarget;
+        return this;
     }
 
 
-    public Cond build(String prefix, String field, Cond.OPT opt, Object param, boolean exprNotEmpty) throws Exception {
+    public CondBuilder build(String prefix, String field, Cond.OPT opt, Object param, boolean exprNotEmpty) throws Exception {
         switch (opt) {
             case EQ:
                 if (exprNotEmpty) {
@@ -154,6 +154,68 @@ public class CondBuilder {
             default:
                 break;
         }
+        return this;
+    }
+
+
+    public CondBuilder build(String field, Cond.OPT opt, Object param, boolean exprNotEmpty) throws Exception {
+        switch (opt) {
+            case EQ:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().eqWrap(field).param(param));
+                } else {
+                    condTarget.and().eqWrap(field).param(param);
+                }
+                break;
+            case NOT_EQ:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().notEqWrap(field).param(param));
+                } else {
+                    condTarget.and().notEqWrap(field).param(param);
+                }
+                break;
+            case LT:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().ltWrap(field).param(param));
+                } else {
+                    condTarget.and().ltWrap(field).param(param);
+                }
+                break;
+            case GT:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().gtWrap(field).param(param));
+                } else {
+                    condTarget.and().gtWrap(field).param(param);
+                }
+                break;
+            case LT_EQ:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().ltEqWrap(field).param(param));
+                } else {
+                    condTarget.and().ltEqWrap(field).param(param);
+                }
+                break;
+            case GT_EQ:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().gtEqWrap(field).param(param));
+                } else {
+                    condTarget.and().gtEqWrap(field).param(param);
+                }
+                break;
+            case LIKE:
+                if (exprNotEmpty) {
+                    condTarget.exprNotEmpty(param, cond -> cond.and().likeWrap(field).param(StrUtil.format("%{}%", param)));
+                } else {
+                    condTarget.and().likeWrap(field).param(StrUtil.format("%{}%", param));
+                }
+                break;
+            default:
+                break;
+        }
+        return this;
+    }
+
+    public Cond cond(){
         return condTarget;
     }
 }

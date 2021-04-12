@@ -6,8 +6,6 @@ import net.ymate.platform.core.persistence.IResultSet;
 import net.ymate.platform.core.persistence.Page;
 import net.ymate.platform.core.persistence.annotation.Property;
 import net.ymate.platform.core.persistence.base.IEntity;
-import net.ymate.platform.persistence.jdbc.IDatabaseSession;
-import net.ymate.platform.persistence.jdbc.IDatabaseSessionExecutor;
 import net.ymate.platform.persistence.jdbc.JDBC;
 import net.ymate.platform.persistence.jdbc.base.impl.BeanResultSetHandler;
 import net.ymate.platform.persistence.jdbc.base.impl.EntityResultSetHandler;
@@ -20,43 +18,56 @@ import java.util.List;
 /**
  * @Author: mengxiang.
  * @create: 2021-03-19 14:44
- * @Description:
+ * @Description: 查询助手
  */
 public class QueryHelper {
 
-    private QueryHelper() {
+    private QueryHelper(boolean eqOne) {
+        condBuilder = CondBuilder.create(eqOne);
+        cond = Cond.create();
+        joinList = new ArrayList<>();
+        select = Select.create();
+        where = Where.create();
     }
 
-    private static CondBuilder condBuilder;
+    private final CondBuilder condBuilder;
 
-    private static Cond cond;
+    private final Cond cond;
 
-    private static final List<Join> joinList = new ArrayList<>();
+    private final List<Join> joinList;
 
-    private static Select select = Select.create();
+    private final Select select;
 
-    private static final Where where = Where.create();
+    private final Where where;
 
-    private static Page page;
+    private Page page;
+
+    private static String prefix;
+
+    static {
+        try {
+            prefix = JDBC.get().getDefaultConnectionHolder().getDataSourceConfig().getTablePrefix();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     public static QueryHelper create() {
-        condBuilder = CondBuilder.create(false);
-        return new QueryHelper();
+        return new QueryHelper(false);
     }
 
     public static QueryHelper eqOne() {
-        condBuilder = CondBuilder.create(true);
-        return new QueryHelper();
+        return new QueryHelper(true);
     }
 
 
     public QueryHelper cond(Object condBean) throws Exception {
-        cond = condBuilder.build(condBean);
+        cond.cond(condBuilder.build(condBean).cond());
         return this;
     }
 
     public QueryHelper cond(String prefix, String field, Cond.OPT opt, Object param, boolean exprNotEmpty) throws Exception {
-        cond = condBuilder.build(prefix, field, opt, param, exprNotEmpty);
+        cond.cond(condBuilder.build(prefix, field, opt, param, exprNotEmpty).cond());
         return this;
     }
 
@@ -69,8 +80,9 @@ public class QueryHelper {
         cond(field, opt, param, true);
         return this;
     }
+
     public QueryHelper cond(Cond condition) throws Exception {
-       cond.cond(condition);
+        cond.cond(condition);
         return this;
     }
 
@@ -99,7 +111,6 @@ public class QueryHelper {
     }
 
     public QueryHelper join(String tableName, String alias, Join.Type type, String filedOnePrefix, String filedOne, String filedTwoPrefix, String filedTwo) throws Exception {
-        String prefix = JDBC.get().getDefaultConnectionHolder().getDataSourceConfig().getTablePrefix();
         return join(prefix, tableName, alias, type, filedOnePrefix, filedOne, filedTwoPrefix, filedTwo);
     }
 
@@ -109,7 +120,6 @@ public class QueryHelper {
     }
 
     public QueryHelper select(String tableName, String alias) throws Exception {
-        String prefix = JDBC.get().getDefaultConnectionHolder().getDataSourceConfig().getTablePrefix();
         return select(prefix, tableName, alias);
     }
 
@@ -134,8 +144,8 @@ public class QueryHelper {
     }
 
     public QueryHelper field(String prefix, String... fields) throws Exception {
-       List<String> fieldList = Fields.create(fields).fields();
-        for(String field : fieldList){
+        List<String> fieldList = Fields.create(fields).fields();
+        for (String field : fieldList) {
             select.field(prefix, field);
         }
         return this;
@@ -160,53 +170,52 @@ public class QueryHelper {
         return this;
     }
 
-    public QueryHelper orderBy(String prefix,String field,boolean desc) throws Exception{
-        if(desc){
-            where.orderByDesc(prefix,field);
+    public QueryHelper orderBy(String prefix, String field, boolean desc) throws Exception {
+        if (desc) {
+            where.orderByDesc(prefix, field);
         }
-        where.orderByAsc(prefix,field);
+        where.orderByAsc(prefix, field);
         return this;
     }
 
-    public QueryHelper page(PageDTO pageDTO){
+    public QueryHelper page(PageDTO pageDTO) {
         page = pageDTO.toPage();
         return this;
     }
 
 
-    public <T> IResultSet<T> find(Class<T> clazz) throws Exception{
-        for(Join join : joinList){
+    public <T> IResultSet<T> find(Class<T> clazz) throws Exception {
+        for (Join join : joinList) {
             select.join(join);
         }
         select.where(where.cond().cond(cond));
-        return JDBC.get().openSession(session -> session.find(SQL.create(select), new BeanResultSetHandler<>(clazz),page));
+        return JDBC.get().openSession(session -> session.find(SQL.create(select), new BeanResultSetHandler<>(clazz), page));
     }
 
-    public <T extends IEntity> IResultSet<T> findEntity(Class<T> clazz) throws Exception{
-        for(Join join : joinList){
+    public <T extends IEntity> IResultSet<T> findEntity(Class<T> clazz) throws Exception {
+        for (Join join : joinList) {
             select.join(join);
         }
         select.where(where.cond().cond(cond));
-        return JDBC.get().openSession(session -> session.find(SQL.create(select),new EntityResultSetHandler<>(clazz),page));
+        return JDBC.get().openSession(session -> session.find(SQL.create(select), new EntityResultSetHandler<>(clazz), page));
     }
 
 
-    public <T> T findFirst(Class<T> clazz) throws Exception{
-        for(Join join : joinList){
+    public <T> T findFirst(Class<T> clazz) throws Exception {
+        for (Join join : joinList) {
             select.join(join);
         }
         select.where(where.cond().cond(cond));
-        return JDBC.get().openSession(session -> session.findFirst(SQL.create(select),new BeanResultSetHandler<>(clazz)));
+        return JDBC.get().openSession(session -> session.findFirst(SQL.create(select), new BeanResultSetHandler<>(clazz)));
     }
 
-    public <T extends IEntity> T findFirstEntity(Class<T> clazz) throws Exception{
-        for(Join join : joinList){
+    public <T extends IEntity> T findFirstEntity(Class<T> clazz) throws Exception {
+        for (Join join : joinList) {
             select.join(join);
         }
         select.where(where.cond().cond(cond));
-        return JDBC.get().openSession(session -> session.findFirst(SQL.create(select),new EntityResultSetHandler<>(clazz)));
+        return JDBC.get().openSession(session -> session.findFirst(SQL.create(select), new EntityResultSetHandler<>(clazz)));
     }
-
 
 
 }
