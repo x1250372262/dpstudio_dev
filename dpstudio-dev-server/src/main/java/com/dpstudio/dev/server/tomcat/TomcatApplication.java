@@ -24,6 +24,8 @@ public class TomcatApplication {
 
     private boolean started = false;
 
+    protected volatile HotSwapWatcher hotSwapWatcher;
+
     static {
         init();
     }
@@ -105,6 +107,10 @@ public class TomcatApplication {
             init();
         }
         tomcat.start();
+        if(hotSwapWatcher==null){
+            hotSwapWatcher = new HotSwapWatcher();
+            hotSwapWatcher.start();
+        }
         this.started = true;
     }
 
@@ -127,6 +133,9 @@ public class TomcatApplication {
     private void doStop() throws Exception {
         System.out.println(" YMP stop  ... ");
         tomcat.stop();
+        if(hotSwapWatcher!=null){
+            hotSwapWatcher.exit();
+        }
     }
 
     private void stop() throws Exception {
