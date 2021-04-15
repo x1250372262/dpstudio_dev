@@ -28,14 +28,14 @@ public class ExcelAliExportHelper<T> extends IExportHelper implements Closeable 
     private List<List<T>> resultData;
 
 
-    private Class<?> instance;
+    private static Class<?> instance;
 
 
     public ExcelAliExportHelper() {
     }
 
     public ExcelAliExportHelper<T> init(Class<?> classes, String excelFilePath, String zipFilePath) {
-        this.instance = classes;
+        instance = classes;
         if(StringUtils.isNotBlank(excelFilePath)){
             EXCEL_FILE_PATH = excelFilePath;
         }
