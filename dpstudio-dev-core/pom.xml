@@ -30,11 +30,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>com.dpstudio.dev</groupId>
-            <artifactId>dpstudio-dev-utils</artifactId>
-            <version>2.0.0</version>
-        </dependency>
-        <dependency>
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-configuration</artifactId>
             <scope>provided</scope>
@@ -85,6 +80,10 @@
             <groupId>net.ymate.platform</groupId>
             <artifactId>ymate-platform-core</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.ymate.platform</groupId>
+            <artifactId>ymate-platform-commons</artifactId>
         </dependency>
         <dependency>
             <groupId>cn.hutool</groupId>
