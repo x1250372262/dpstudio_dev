@@ -1,4 +1,4 @@
-package com.dpstudio.dev.support.jwt;
+package com.mx.dev.support.jwt;
 
 /**
  * @Author: mengxiang.
@@ -11,11 +11,11 @@ public class JwtConfig {
     // 有效期，单位豪秒， 默认0  永久有效
     private long verifyTime = 0L;
     //密钥
-    private String secret = "dpstudioJwt";
+    private String secret = "mxJwt";
     //header参数名
-    private String headerName = "dpstudioJwt";
+    private String headerName = "mxJwt";
     //参数名
-    private String paramName = "dpstudioJwt";
+    private String paramName = "mxJwt";
     //是否自动设置到response
     private boolean autoResponse = true;
 

@@ -6,5 +6,5 @@ package com.mx.dev.excel.export.converter;
  * @Time: 16:57.
  * @Description:
  */
-public interface IDpstudioDataHandler {
+public interface IMxDataHandler {
 }

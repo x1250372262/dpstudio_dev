@@ -1,4 +1,4 @@
-package com.dpstudio.dev.utils;
+package com.mx.dev.utils;
 
 import java.util.*;
 

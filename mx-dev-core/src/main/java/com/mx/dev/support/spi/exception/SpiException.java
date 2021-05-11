@@ -1,4 +1,4 @@
-package com.dpstudio.dev.support.spi.exception;
+package com.mx.dev.support.spi.exception;
 
 /**
  * @Author: mengxiang.

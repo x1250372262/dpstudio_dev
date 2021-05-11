@@ -1,6 +1,6 @@
-package com.dpstudio.dev.excel.analysis.annotation;
-import com.dpstudio.dev.excel.analysis.IDataHandler;
-import com.dpstudio.dev.excel.analysis.IDefaultClass;
+package com.mx.dev.excel.analysis.annotation;
+import com.mx.dev.excel.analysis.IDataHandler;
+import com.mx.dev.excel.analysis.IDefaultClass;
 
 import java.lang.annotation.*;
 

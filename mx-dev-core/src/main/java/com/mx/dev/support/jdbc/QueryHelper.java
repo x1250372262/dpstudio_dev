@@ -1,6 +1,6 @@
-package com.dpstudio.dev.support.jdbc;
+package com.mx.dev.support.jdbc;
 
-import com.dpstudio.dev.dto.PageDTO;
+import com.mx.dev.dto.PageDTO;
 import net.ymate.platform.core.persistence.Fields;
 import net.ymate.platform.core.persistence.IResultSet;
 import net.ymate.platform.core.persistence.Page;

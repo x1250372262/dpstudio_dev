@@ -1,4 +1,4 @@
-package com.dpstudio.dev.core;
+package com.mx.dev.core;
 
 import net.ymate.platform.webmvc.view.IView;
 import net.ymate.platform.webmvc.view.View;

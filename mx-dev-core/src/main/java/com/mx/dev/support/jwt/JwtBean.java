@@ -1,4 +1,4 @@
-package com.dpstudio.dev.support.jwt;
+package com.mx.dev.support.jwt;
 
 /**
  * @Author: mengxiang.

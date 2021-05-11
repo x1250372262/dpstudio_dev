@@ -1,4 +1,4 @@
-package com.dpstudio.dev.support.log.exception;
+package com.mx.dev.support.log.exception;
 
 /**
  * @Author: mengxiang.

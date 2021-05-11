@@ -1,6 +1,6 @@
-package com.dpstudio.dev.excel.analysis;
+package com.mx.dev.excel.analysis;
 
-import com.dpstudio.dev.excel.analysis.bean.ResultBean;
+import com.mx.dev.excel.analysis.bean.ResultBean;
 import org.apache.poi.ss.usermodel.Sheet;
 
 /**

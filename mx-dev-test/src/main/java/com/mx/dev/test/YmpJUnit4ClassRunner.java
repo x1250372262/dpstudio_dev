@@ -1,4 +1,4 @@
-package com.dpstudio.dev.test;
+package com.mx.dev.test;
 
 import net.ymate.platform.core.IApplication;
 import net.ymate.platform.core.IApplicationInitializer;

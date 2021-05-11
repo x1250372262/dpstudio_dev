@@ -1,7 +1,7 @@
-package com.dpstudio.dev.excel.analysis.bean;
+package com.mx.dev.excel.analysis.bean;
 
-import com.dpstudio.dev.excel.analysis.IDefaultClass;
-import com.dpstudio.dev.excel.analysis.annotation.ImportColumn;
+import com.mx.dev.excel.analysis.IDefaultClass;
+import com.mx.dev.excel.analysis.annotation.ImportColumn;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;

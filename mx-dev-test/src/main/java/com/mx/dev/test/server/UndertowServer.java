@@ -1,6 +1,6 @@
-package com.dpstudio.dev.test.server;
+package com.mx.dev.test.server;
 
-import com.dpstudio.dev.test.MVC;
+import com.mx.dev.test.MVC;
 import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.jsp.HackInstanceManager;

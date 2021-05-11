@@ -1,6 +1,6 @@
-package com.dpstudio.dev.excel.export.annotation;
+package com.mx.dev.excel.export.annotation;
 
-import com.dpstudio.dev.excel.export.converter.IDpstudioDataHandler;
+import com.mx.dev.excel.export.converter.IMxDataHandler;
 
 import java.lang.annotation.*;
 
@@ -20,7 +20,7 @@ public @interface DConverter {
      *
      * @return
      */
-    Class<? extends IDpstudioDataHandler> handleClass() default IDpstudioDataHandler.class;
+    Class<? extends IMxDataHandler> handleClass() default IMxDataHandler.class;
 
     /**
      * 方法名称

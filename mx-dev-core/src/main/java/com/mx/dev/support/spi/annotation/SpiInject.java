@@ -1,4 +1,4 @@
-package com.dpstudio.dev.support.spi.annotation;
+package com.mx.dev.support.spi.annotation;
 
 import java.lang.annotation.*;
 

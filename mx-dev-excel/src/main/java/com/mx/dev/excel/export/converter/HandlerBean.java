@@ -1,6 +1,6 @@
-package com.dpstudio.dev.excel.export.converter;
+package com.mx.dev.excel.export.converter;
 
-import com.dpstudio.dev.excel.export.annotation.DConverter;
+import com.mx.dev.excel.export.annotation.DConverter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;
@@ -20,7 +20,7 @@ public class HandlerBean {
     private Class<?> parameterType;
 
     private HandlerBean(DConverter dConverter) throws Exception {
-        Class<? extends IDpstudioDataHandler> handleClass = dConverter.handleClass();
+        Class<? extends IMxDataHandler> handleClass = dConverter.handleClass();
         if (!handleClass.isInterface() && StringUtils.isNotBlank(dConverter.method())) {
             dataHandle = handleClass.newInstance();
             method = dataHandle.getClass().getMethod(dConverter.method(), String.class);

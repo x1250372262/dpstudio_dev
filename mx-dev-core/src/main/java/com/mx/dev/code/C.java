@@ -1,4 +1,4 @@
-package com.dpstudio.dev.code;
+package com.mx.dev.code;
 
 /**
  * @Author: mengxiang.

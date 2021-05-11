@@ -1,6 +1,6 @@
-package com.dpstudio.dev.server.undertow;
+package com.mx.dev.server.undertow;
 
-import com.dpstudio.dev.server.ServerConfig;
+import com.mx.dev.server.ServerConfig;
 import io.undertow.Handlers;
 import io.undertow.Undertow;
 import io.undertow.jsp.HackInstanceManager;

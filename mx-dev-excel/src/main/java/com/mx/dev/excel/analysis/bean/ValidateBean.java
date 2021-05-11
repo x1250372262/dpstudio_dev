@@ -1,6 +1,6 @@
-package com.dpstudio.dev.excel.analysis.bean;
+package com.mx.dev.excel.analysis.bean;
 
-import com.dpstudio.dev.excel.analysis.annotation.Validate;
+import com.mx.dev.excel.analysis.annotation.Validate;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;

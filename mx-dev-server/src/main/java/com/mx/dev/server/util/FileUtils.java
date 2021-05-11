@@ -1,4 +1,4 @@
-package com.dpstudio.dev.server.util;
+package com.mx.dev.server.util;
 
 import java.io.File;
 

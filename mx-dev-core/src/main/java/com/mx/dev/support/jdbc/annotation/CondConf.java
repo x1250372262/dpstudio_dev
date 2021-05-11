@@ -1,4 +1,4 @@
-package com.dpstudio.dev.support.jdbc.annotation;
+package com.mx.dev.support.jdbc.annotation;
 
 import net.ymate.platform.persistence.jdbc.query.Cond;
 

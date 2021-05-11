@@ -1,10 +1,10 @@
-package com.dpstudio.dev.support.log.impl;
+package com.mx.dev.support.log.impl;
 
-import com.dpstudio.dev.support.UserSession;
-import com.dpstudio.dev.support.log.ILogHandler;
-import com.dpstudio.dev.support.log.LR;
-import com.dpstudio.dev.support.log.annotation.LogGroup;
-import com.dpstudio.dev.support.log.model.Log;
+import com.mx.dev.support.UserSession;
+import com.mx.dev.support.log.ILogHandler;
+import com.mx.dev.support.log.LR;
+import com.mx.dev.support.log.annotation.Log;
+import com.mx.dev.support.log.annotation.LogGroup;
 import net.ymate.platform.commons.lang.BlurObject;
 import net.ymate.platform.commons.util.DateTimeUtils;
 import net.ymate.platform.commons.util.UUIDUtils;
@@ -34,12 +34,12 @@ public class DefaultLogHandler implements ILogHandler {
 
     @Override
     public void create(LogGroup logGroup, LR lr) throws Exception {
-        List<Log> logList = new ArrayList<>();
+        List<com.mx.dev.support.log.model.Log> logList = new ArrayList<>();
         String createUser = UserSession.current() != null ? UserSession.current().getUid() : "default";
-        com.dpstudio.dev.support.log.annotation.Log[] logs = logGroup.logs();
-        for (com.dpstudio.dev.support.log.annotation.Log log : logs) {
+        Log[] logs = logGroup.logs();
+        for (Log log : logs) {
             String resourceId = BlurObject.bind(lr.get(log.logKey()).get("id")).toStringValue();
-            Log logBean = Log.builder()
+            com.mx.dev.support.log.model.Log logBean = com.mx.dev.support.log.model.Log.builder()
                     .id(UUIDUtils.UUID())
                     .moduleType(log.moduleType())
                     .moduleName(log.moduleName())

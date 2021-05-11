@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.dpstudio.dev.support.log.model;
+package com.mx.dev.support.log.model;
 
 import net.ymate.platform.core.beans.annotation.PropertyState;
 import net.ymate.platform.core.persistence.IShardingable;

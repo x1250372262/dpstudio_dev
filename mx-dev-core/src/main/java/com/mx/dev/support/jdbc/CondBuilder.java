@@ -1,7 +1,7 @@
-package com.dpstudio.dev.support.jdbc;
+package com.mx.dev.support.jdbc;
 
 import cn.hutool.core.util.StrUtil;
-import com.dpstudio.dev.support.jdbc.annotation.CondConf;
+import com.mx.dev.support.jdbc.annotation.CondConf;
 import net.ymate.platform.persistence.jdbc.query.Cond;
 
 import java.lang.reflect.Field;
@@ -30,7 +30,7 @@ public class CondBuilder {
 
     public CondBuilder build(Object condBean) throws Exception {
         Class<?> clazz = condBean.getClass();
-        if (clazz.isAnnotationPresent(com.dpstudio.dev.support.jdbc.annotation.CondBuilder.class)) {
+        if (clazz.isAnnotationPresent(com.mx.dev.support.jdbc.annotation.CondBuilder.class)) {
             Field[] fields = clazz.getDeclaredFields();
             if (fields.length <= 0) {
                 return this;

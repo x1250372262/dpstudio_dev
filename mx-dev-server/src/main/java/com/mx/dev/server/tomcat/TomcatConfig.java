@@ -1,7 +1,7 @@
-package com.dpstudio.dev.server.tomcat;
+package com.mx.dev.server.tomcat;
 
 
-import com.dpstudio.dev.server.ServerConfig;
+import com.mx.dev.server.ServerConfig;
 import net.ymate.platform.commons.lang.BlurObject;
 import org.apache.commons.lang3.StringUtils;
 

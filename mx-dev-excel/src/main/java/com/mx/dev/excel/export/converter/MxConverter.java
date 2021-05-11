@@ -16,7 +16,7 @@ import java.lang.reflect.Field;
  * @Time: 16:57.
  * @Description: excel转换类
  */
-public class DpStudioConverter implements Converter<String> {
+public class MxConverter implements Converter<String> {
     @Override
     public Class supportJavaTypeKey() {
         return String.class;

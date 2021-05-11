@@ -1,9 +1,9 @@
-package com.dpstudio.dev.support.jwt;
+package com.mx.dev.support.jwt;
 
 
 import com.alibaba.fastjson.JSONObject;
-import com.dpstudio.dev.core.R;
-import com.dpstudio.dev.code.C;
+import com.mx.dev.core.R;
+import com.mx.dev.code.C;
 import io.jsonwebtoken.*;
 import net.ymate.platform.commons.json.JsonWrapper;
 import net.ymate.platform.commons.util.DateTimeUtils;

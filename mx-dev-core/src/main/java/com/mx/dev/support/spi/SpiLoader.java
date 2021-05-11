@@ -1,7 +1,7 @@
-package com.dpstudio.dev.support.spi;
+package com.mx.dev.support.spi;
 
 
-import com.dpstudio.dev.support.spi.annotation.SpiBean;
+import com.mx.dev.support.spi.annotation.SpiBean;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;

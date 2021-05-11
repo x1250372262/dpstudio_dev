@@ -1,4 +1,4 @@
-package com.dpstudio.dev.support.qrcode;
+package com.mx.dev.support.qrcode;
 
 import net.ymate.platform.commons.util.RuntimeUtils;
 import net.ymate.platform.core.YMP;
@@ -21,7 +21,7 @@ import java.io.File;
  * @Description:
  */
 @Controller
-@RequestMapping("/dpstudio/qrcode/")
+@RequestMapping("/mx/qrcode/")
 public class QrCodeController {
 
     /**
@@ -36,8 +36,8 @@ public class QrCodeController {
                       @PathVariable(value = "fileName") String fileName,
                       @PathVariable(value = "format") String format,
                       @RequestParam(defaultValue = "false") boolean attach) throws Exception {
-        String fileUrl = YMP.get().getParam("dpstudio.qr_code.filepath");
-        fileUrl = StringUtils.defaultIfBlank(fileUrl, RuntimeUtils.getRootPath().concat("/dpstudio_qrcode"));
+        String fileUrl = YMP.get().getParam("mx.qr_code.filepath");
+        fileUrl = StringUtils.defaultIfBlank(fileUrl, RuntimeUtils.getRootPath().concat("/mx_qrcode"));
         File qrCodeFile = new File(fileUrl, fileName.concat(".").concat(StringUtils.defaultIfBlank(format, "png")));
         if (!qrCodeFile.exists() || qrCodeFile.length() == 0) {
             return View.httpStatusView(404, "文件未找到");

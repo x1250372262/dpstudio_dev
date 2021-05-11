@@ -5,15 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.dpstudio.dev</groupId>
-        <artifactId>dpstudio-dev</artifactId>
-        <version>2.0.0</version>
+        <groupId>com.mx.dev</groupId>
+        <artifactId>mx-dev</artifactId>
+        <version>1.0.0</version>
     </parent>
-    <artifactId>dpstudio-dev-core</artifactId>
-    <version>2.0.0</version>
+    <artifactId>mx-dev-core</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>dpstudio-dev-core</name>
+    <name>mx-dev-core</name>
     <url>http://www.dp-studio.cn/</url>
     <description>基于ymp框架的开发包-核心</description>
 

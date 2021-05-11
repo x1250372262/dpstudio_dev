@@ -1,4 +1,4 @@
-package com.dpstudio.dev.dto;
+package com.mx.dev.dto;
 
 import net.ymate.platform.webmvc.annotation.RequestParam;
 

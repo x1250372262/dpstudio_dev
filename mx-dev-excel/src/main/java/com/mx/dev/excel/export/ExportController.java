@@ -1,7 +1,7 @@
-package com.dpstudio.dev.excel.export;
+package com.mx.dev.excel.export;
 
-import com.dpstudio.dev.excel.analysis.IExportHelper;
-import com.dpstudio.dev.excel.exception.ExcelException;
+import com.mx.dev.excel.analysis.IExportHelper;
+import com.mx.dev.excel.exception.ExcelException;
 import net.ymate.platform.validation.validate.VRequired;
 import net.ymate.platform.webmvc.annotation.Controller;
 import net.ymate.platform.webmvc.annotation.RequestMapping;
@@ -19,7 +19,7 @@ import java.io.File;
  * @Description:
  */
 @Controller
-@RequestMapping("/dpstudio/export/")
+@RequestMapping("/mx/export/")
 public class ExportController {
 
 

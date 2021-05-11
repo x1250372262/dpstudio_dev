@@ -1,4 +1,4 @@
-package com.dpstudio.dev.core;
+package com.mx.dev.core;
 
 import net.ymate.platform.webmvc.context.WebContext;
 import org.apache.commons.lang3.ObjectUtils;

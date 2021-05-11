@@ -1,4 +1,4 @@
-package com.dpstudio.dev.support.qrcode.bean;
+package com.mx.dev.support.qrcode.bean;
 
 import java.io.File;
 

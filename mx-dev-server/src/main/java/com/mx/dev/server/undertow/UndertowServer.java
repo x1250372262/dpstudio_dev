@@ -1,6 +1,6 @@
-package com.dpstudio.dev.server.undertow;
+package com.mx.dev.server.undertow;
 
-import com.dpstudio.dev.server.IServer;
+import com.mx.dev.server.IServer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 

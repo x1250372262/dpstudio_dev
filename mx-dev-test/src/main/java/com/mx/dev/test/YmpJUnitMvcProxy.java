@@ -1,6 +1,6 @@
-package com.dpstudio.dev.test;
+package com.mx.dev.test;
 
-import com.dpstudio.dev.test.server.UndertowServer;
+import com.mx.dev.test.server.UndertowServer;
 import org.junit.Before;
 
 /**

@@ -1,7 +1,7 @@
-package com.dpstudio.dev.support.log;
+package com.mx.dev.support.log;
 
 
-import com.dpstudio.dev.support.log.annotation.LogGroup;
+import com.mx.dev.support.log.annotation.LogGroup;
 
 /**
  * @Author: mengxiang.

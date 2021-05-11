@@ -1,7 +1,7 @@
-package com.dpstudio.dev.support.spi;
+package com.mx.dev.support.spi;
 
-import com.dpstudio.dev.support.spi.annotation.SpiInject;
-import com.dpstudio.dev.support.spi.exception.SpiException;
+import com.mx.dev.support.spi.annotation.SpiInject;
+import com.mx.dev.support.spi.exception.SpiException;
 import net.ymate.platform.core.beans.IBeanFactory;
 import net.ymate.platform.core.beans.IBeanInjector;
 import net.ymate.platform.core.beans.annotation.Injector;

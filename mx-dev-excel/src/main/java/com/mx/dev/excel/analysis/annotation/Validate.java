@@ -1,5 +1,5 @@
-package com.dpstudio.dev.excel.analysis.annotation;
-import com.dpstudio.dev.excel.analysis.IValidate;
+package com.mx.dev.excel.analysis.annotation;
+import com.mx.dev.excel.analysis.IValidate;
 
 import java.lang.annotation.*;
 

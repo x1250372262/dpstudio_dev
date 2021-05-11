@@ -1,4 +1,4 @@
-package com.dpstudio.dev.server;
+package com.mx.dev.server;
 
 
 import net.ymate.platform.commons.lang.BlurObject;

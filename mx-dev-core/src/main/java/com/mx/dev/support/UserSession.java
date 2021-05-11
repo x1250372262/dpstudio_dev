@@ -1,4 +1,4 @@
-package com.dpstudio.dev.support;
+package com.mx.dev.support;
 
 import net.ymate.platform.commons.util.DateTimeUtils;
 import net.ymate.platform.webmvc.context.WebContext;

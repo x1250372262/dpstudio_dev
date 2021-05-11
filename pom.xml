@@ -4,18 +4,18 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.dpstudio.dev</groupId>
-    <artifactId>dpstudio-dev</artifactId>
-    <version>2.0.0</version>
+    <groupId>com.mx.dev</groupId>
+    <artifactId>mx-dev</artifactId>
+    <version>1.0.0</version>
     <modules>
-        <module>dpstudio-dev-core</module>
-        <module>dpstudio-dev-excel</module>
-        <module>dpstudio-dev-server</module>
-        <module>dpstudio-dev-test</module>
+        <module>mx-dev-core</module>
+        <module>mx-dev-excel</module>
+        <module>mx-dev-server</module>
+        <module>mx-dev-test</module>
     </modules>
     <packaging>pom</packaging>
 
-    <name>dpstudio-dev</name>
+    <name>mx-dev</name>
     <url>http://www.dp-studio.cn/</url>
     <description>基于ymp框架的开发包</description>
 

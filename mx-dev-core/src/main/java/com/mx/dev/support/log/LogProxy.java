@@ -1,11 +1,11 @@
-package com.dpstudio.dev.support.log;
+package com.mx.dev.support.log;
 
-import com.dpstudio.dev.core.R;
-import com.dpstudio.dev.support.log.annotation.Log;
-import com.dpstudio.dev.support.log.annotation.LogGroup;
-import com.dpstudio.dev.support.log.exception.LogException;
-import com.dpstudio.dev.support.log.impl.DefaultLogHandler;
-import com.dpstudio.dev.support.spi.SpiLoader;
+import com.mx.dev.core.R;
+import com.mx.dev.support.log.annotation.Log;
+import com.mx.dev.support.log.annotation.LogGroup;
+import com.mx.dev.support.log.exception.LogException;
+import com.mx.dev.support.log.impl.DefaultLogHandler;
+import com.mx.dev.support.spi.SpiLoader;
 import net.ymate.platform.core.beans.annotation.Proxy;
 import net.ymate.platform.core.beans.proxy.IProxy;
 import net.ymate.platform.core.beans.proxy.IProxyChain;

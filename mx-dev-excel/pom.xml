@@ -5,15 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.dpstudio.dev</groupId>
-        <artifactId>dpstudio-dev</artifactId>
-        <version>2.0.0</version>
+        <groupId>com.mx.dev</groupId>
+        <artifactId>mx-dev</artifactId>
+        <version>1.0.0</version>
     </parent>
-    <artifactId>dpstudio-dev-excel</artifactId>
-    <version>2.0.0</version>
+    <artifactId>mx-dev-excel</artifactId>
+    <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>dpstudio-dev-excel</name>
+    <name>mx-dev-excel</name>
     <url>http://www.dp-studio.cn/</url>
     <description>基于ymp框架的开发包-excel</description>
 
@@ -54,9 +54,9 @@
             <version>2.0.5</version>
         </dependency>
         <dependency>
-            <groupId>com.dpstudio.dev</groupId>
-            <artifactId>dpstudio-dev-core</artifactId>
-            <version>2.0.0</version>
+            <groupId>com.mx.dev</groupId>
+            <artifactId>mx-dev-core</artifactId>
+            <version>1.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>

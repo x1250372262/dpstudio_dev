@@ -1,4 +1,4 @@
-package com.dpstudio.dev.utils;
+package com.mx.dev.utils;
 
 
 import net.ymate.platform.commons.util.ClassUtils;

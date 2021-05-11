@@ -1,4 +1,4 @@
-package com.dpstudio.dev.excel.analysis;
+package com.mx.dev.excel.analysis;
 
 public class IDefaultClass {
 }

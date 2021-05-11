@@ -1,4 +1,4 @@
-package com.dpstudio.dev.test;
+package com.mx.dev.test;
 
 import net.ymate.platform.commons.json.IJsonObjectWrapper;
 import net.ymate.platform.commons.json.JsonWrapper;

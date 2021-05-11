@@ -1,10 +1,10 @@
-package com.dpstudio.dev.excel.export;
+package com.mx.dev.excel.export;
 
-import com.dpstudio.dev.dto.PageDTO;
-import com.dpstudio.dev.excel.ExcelAliExportHelper;
-import com.dpstudio.dev.excel.ExcelExportHelper;
-import com.dpstudio.dev.excel.exception.ExcelException;
-import com.dpstudio.dev.utils.ListUtils;
+import com.mx.dev.dto.PageDTO;
+import com.mx.dev.excel.ExcelAliExportHelper;
+import com.mx.dev.excel.ExcelExportHelper;
+import com.mx.dev.excel.exception.ExcelException;
+import com.mx.dev.utils.ListUtils;
 import net.ymate.platform.webmvc.context.WebContext;
 import net.ymate.platform.webmvc.util.WebUtils;
 
@@ -61,7 +61,7 @@ public class ExportHelper<T> {
             default:
                 throw new ExcelException("不支持的导出类型");
         }
-        return WebUtils.baseUrl(WebContext.getRequest()).concat("/dpstudio/export?fileName=" + file.getName());
+        return WebUtils.baseUrl(WebContext.getRequest()).concat("/mx/export?fileName=" + file.getName());
     }
 
     public String exportAli(String title, Class<T> voClass, Type type, PageDTO pageDTO, IExportData<T> iExportData) throws Exception {
@@ -85,7 +85,7 @@ public class ExportHelper<T> {
             }
         }
         File file = helper.export(title);
-        return WebUtils.baseUrl(WebContext.getRequest()).concat("/dpstudio/export?fileName=" + file.getName());
+        return WebUtils.baseUrl(WebContext.getRequest()).concat("/mx/export?fileName=" + file.getName());
     }
 
     public String exportJxls(String title, PageDTO pageDTO, Class<?> funClass, String templateFilePath, IExportData<T> iExportData) throws Exception {

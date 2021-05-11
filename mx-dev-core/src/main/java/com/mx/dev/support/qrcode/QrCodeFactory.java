@@ -1,6 +1,6 @@
-package com.dpstudio.dev.support.qrcode;
+package com.mx.dev.support.qrcode;
 
-import com.dpstudio.dev.support.qrcode.bean.QrCodeResult;
+import com.mx.dev.support.qrcode.bean.QrCodeResult;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import net.ymate.platform.commons.QRCodeHelper;
 import net.ymate.platform.commons.lang.BlurObject;
@@ -25,11 +25,11 @@ public class QrCodeFactory {
     private final String defaultCharset = "UTF-8";
     private final ErrorCorrectionLevel defaultLevel = ErrorCorrectionLevel.L;
     private final boolean createCode;
-    private String fileUrl = YMP.get().getParam("dpstudio.qr_code.filepath");
+    private String fileUrl = YMP.get().getParam("mx.qr_code.filepath");
 
     private QrCodeFactory(boolean createCode) {
         this.createCode = createCode;
-        this.fileUrl = StringUtils.defaultIfBlank(this.fileUrl, RuntimeUtils.getRootPath().concat("/dpstudio_qrcode"));
+        this.fileUrl = StringUtils.defaultIfBlank(this.fileUrl, RuntimeUtils.getRootPath().concat("/mx_qrcode"));
     }
 
     public static QrCodeFactory init() {
@@ -72,7 +72,7 @@ public class QrCodeFactory {
         }
         QrCodeResult qrCodeResult = new QrCodeResult();
         qrCodeResult.setQrCodeFile(qrCodeFile);
-        String qrCodeUrl = WebUtils.baseUrl(WebContext.getRequest()).concat("dpstudio/qrcode/show/" + fileName + "/" + format + "");
+        String qrCodeUrl = WebUtils.baseUrl(WebContext.getRequest()).concat("mx/qrcode/show/" + fileName + "/" + format + "");
         qrCodeResult.setQrCodeUrl(qrCodeUrl);
         return qrCodeResult;
     }
