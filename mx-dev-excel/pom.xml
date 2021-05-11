@@ -64,8 +64,8 @@
             <version>2.2.3</version>
             <exclusions>
                 <exclusion>
-                        <groupId>org.ehcache</groupId>
-                        <artifactId>ehcache</artifactId>
+                    <groupId>org.ehcache</groupId>
+                    <artifactId>ehcache</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
