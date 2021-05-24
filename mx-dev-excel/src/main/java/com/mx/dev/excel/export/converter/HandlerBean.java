@@ -1,6 +1,6 @@
 package com.mx.dev.excel.export.converter;
 
-import com.mx.dev.excel.export.annotation.DConverter;
+import com.mx.dev.excel.export.annotation.MConverter;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Method;
@@ -19,15 +19,27 @@ public class HandlerBean {
 
     private Class<?> parameterType;
 
-    private HandlerBean(DConverter dConverter) throws Exception {
-        Class<? extends IMxDataHandler> handleClass = dConverter.handleClass();
-        if (!handleClass.isInterface() && StringUtils.isNotBlank(dConverter.method())) {
+    private Type type;
+
+    //类型
+    public enum Type{
+        //文本
+        TEXT,
+        //图片
+        IMAGE
+    }
+
+
+    private HandlerBean(MConverter mConverter) throws Exception {
+        Class<? extends IMxDataHandler> handleClass = mConverter.handleClass();
+        if (!handleClass.isInterface() && StringUtils.isNotBlank(mConverter.method())) {
             dataHandle = handleClass.newInstance();
-            method = dataHandle.getClass().getMethod(dConverter.method(), String.class);
+            method = dataHandle.getClass().getMethod(mConverter.method(), String.class);
+            type = mConverter.type();
         }
     }
 
-    public static HandlerBean create(DConverter dConverter) throws Exception {
+    public static HandlerBean create(MConverter dConverter) throws Exception {
         return new HandlerBean(dConverter);
     }
 
@@ -53,5 +65,13 @@ public class HandlerBean {
 
     public void setParameterType(Class<?> parameterType) {
         this.parameterType = parameterType;
+    }
+
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
     }
 }

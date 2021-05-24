@@ -1,5 +1,6 @@
 package com.mx.dev.excel.export.annotation;
 
+import com.mx.dev.excel.export.converter.HandlerBean;
 import com.mx.dev.excel.export.converter.IMxDataHandler;
 
 import java.lang.annotation.*;
@@ -13,7 +14,7 @@ import java.lang.annotation.*;
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface DConverter {
+public @interface MConverter {
 
     /**
      * 数据处理类
@@ -28,5 +29,11 @@ public @interface DConverter {
      * @return
      */
     String method() default "";
+
+    /**
+     * 类型
+     * @return
+     */
+    HandlerBean.Type type() default HandlerBean.Type.TEXT;
 
 }
