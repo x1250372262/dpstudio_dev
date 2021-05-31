@@ -161,4 +161,10 @@ public class ListUtils {
         }
         return mapList;
     }
+
+    public static <T> List<T> createList(T object){
+        List<T> returnValue = new ArrayList<>();
+        returnValue.add(object);
+        return returnValue;
+    }
 }
