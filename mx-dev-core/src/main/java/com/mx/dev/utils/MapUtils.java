@@ -9,36 +9,36 @@ import java.util.Map;
  * @create: 2021-01-22 16:36
  * @Description:
  */
-public class MapUtils {
+public class MapUtils<K,V> {
 
-    private final static Map<String, Object> MAP = new HashMap<>();
+    private final Map<K, V> MAP = new HashMap<>();
 
-    private final static MapUtils ME = new MapUtils();
+//    private final static MapUtils ME = new MapUtils();
 
 
-    public static Map<String, Object> emptyMap(){
+    public Map<K, V> emptyMap(){
         return MAP;
     }
+//
+//    public static MapUtils<k,v> builder() {
+//        return ME;
+//    }
 
-    public static MapUtils builder() {
-        return ME;
-    }
-
-    public MapUtils put(String key, Object value) {
+    public MapUtils<K,V> put(K key, V value) {
         MAP.put(key, value);
-        return ME;
+        return this;
     }
 
-    public static void remove(String key) {
+    public void remove(K key) {
         MAP.remove(key);
     }
 
-    public Map<String, Object> build() {
+    public Map<K, V> toMap() {
         return MAP;
     }
 
-    public static void foreach(Foreach foreach) {
-        for (Map.Entry<String, Object> entry : MAP.entrySet()) {
+    public void foreach(Foreach<K,V> foreach) {
+        for (Map.Entry<K, V> entry : MAP.entrySet()) {
             WAY way = foreach.loop(entry.getKey(), entry.getValue());
             switch (way) {
                 case BREAK:
@@ -50,8 +50,8 @@ public class MapUtils {
         }
     }
 
-    public static void foreachKey(ForeachKey foreachKey) {
-        for (String key : MAP.keySet()) {
+    public void foreachKey(ForeachKey<K,V> foreachKey) {
+        for (K key : MAP.keySet()) {
             WAY way = foreachKey.loop(key);
             switch (way) {
                 case BREAK:
@@ -63,8 +63,8 @@ public class MapUtils {
         }
     }
 
-    public static void foreachValue(ForeachValue foreachValue) {
-        for (Object value : MAP.values()) {
+    public void foreachValue(ForeachValue<K,V> foreachValue) {
+        for (V value : MAP.values()) {
             WAY way = foreachValue.loop(value);
             switch (way) {
                 case BREAK:
@@ -85,18 +85,18 @@ public class MapUtils {
         CONTINUE;
     }
 
-    public interface Foreach {
+    public interface Foreach<K,V> {
 
-        WAY loop(String key, Object value);
+        WAY loop(K key, V value);
     }
 
-    public interface ForeachKey {
+    public interface ForeachKey<K,V> {
 
-        WAY loop(String key);
+        WAY loop(K key);
     }
 
-    public interface ForeachValue {
+    public interface ForeachValue<K,V> {
 
-        WAY loop(Object value);
+        WAY loop(V value);
     }
 }
