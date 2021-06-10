@@ -1,6 +1,7 @@
 package com.mx.dev.dto;
 
-import net.ymate.platform.core.persistence.Page;
+import com.mx.dev.bean.PageBean;
+import com.mx.dev.utils.BeanUtils;
 import net.ymate.platform.validation.validate.VNumeric;
 import net.ymate.platform.webmvc.annotation.RequestParam;
 
@@ -20,6 +21,21 @@ public class PageDTO {
     @RequestParam(defaultValue = "10")
     private Integer pageSize;
 
+    public PageDTO() {
+    }
+
+    public PageDTO(Integer page, Integer pageSize) {
+        this.page = page;
+        this.pageSize = pageSize;
+    }
+
+    public PageBean toBean() {
+        return BeanUtils.copy(this, PageBean::new);
+    }
+
+    public static PageDTO noPage(){
+        return new PageDTO(0,0);
+    }
 
     public Integer getPage() {
         return page;
@@ -35,13 +51,5 @@ public class PageDTO {
 
     public void setPageSize(Integer pageSize) {
         this.pageSize = pageSize;
-    }
-
-    public Page toPage() {
-        return Page.createIfNeed(page, pageSize);
-    }
-
-    public static PageDTO get() {
-        return new PageDTO();
     }
 }

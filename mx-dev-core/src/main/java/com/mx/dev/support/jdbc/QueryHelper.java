@@ -1,5 +1,6 @@
 package com.mx.dev.support.jdbc;
 
+import com.mx.dev.bean.PageBean;
 import com.mx.dev.dto.PageDTO;
 import net.ymate.platform.core.persistence.Fields;
 import net.ymate.platform.core.persistence.IResultSet;
@@ -178,8 +179,8 @@ public class QueryHelper {
         return this;
     }
 
-    public QueryHelper page(PageDTO pageDTO) {
-        page = pageDTO.toPage();
+    public QueryHelper page(PageBean pageBean) {
+        page = pageBean.toPage();
         return this;
     }
 

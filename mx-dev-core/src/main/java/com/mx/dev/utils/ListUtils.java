@@ -13,14 +13,14 @@ public class ListUtils {
     /**
      * 判断集合是否为空
      */
-    public static boolean isEmpty(List<?> list) {
+    public static <T> boolean isEmpty(List<T> list) {
         return list == null || list.isEmpty();
     }
 
     /**
      * 判断集合是否不为空
      */
-    public static boolean isNotEmpty(List<?> list) {
+    public static <T> boolean isNotEmpty(List<T> list) {
         return !isEmpty(list);
     }
 
@@ -30,7 +30,7 @@ public class ListUtils {
      * @param bigResult   大集合
      * @param smallResult 小集合
      */
-    public static boolean checkSame(List<?> bigResult, List<?> smallResult) {
+    public static <T> boolean checkSame(List<T> bigResult, List<T> smallResult) {
         return bigResult.containsAll(smallResult);
     }
 
@@ -40,10 +40,10 @@ public class ListUtils {
      * @param bigResult   大集合
      * @param smallResult 小集合
      */
-    public static List<?> doRemove(List<?> bigResult, List<?> smallResult) {
+    public static <T> List<T> doRemove(List<T> bigResult, List<T> smallResult) {
         if (checkSame(bigResult, smallResult)) {
-            LinkedList<?> bigResultLink = new LinkedList<>(bigResult);
-            HashSet<?> smallResultLink = new HashSet<>(smallResult);
+            LinkedList<T> bigResultLink = new LinkedList<>(bigResult);
+            HashSet<T> smallResultLink = new HashSet<>(smallResult);
 
             bigResultLink.removeIf(smallResultLink::contains);
             return bigResultLink;
@@ -75,7 +75,7 @@ public class ListUtils {
      * @return 分组后的Map集合
      */
     public static <K, V> Map<K, List<V>> groupBy(Collection<V> list, GroupBy<K, V> groupBy) {
-        Map<K, List<V>> resultMap = new LinkedHashMap<K, List<V>>();
+        Map<K, List<V>> resultMap = new LinkedHashMap<>();
         for (V e : list) {
             K k = groupBy.groupBy(e);
             if (resultMap.containsKey(k)) {
@@ -114,8 +114,8 @@ public class ListUtils {
      * @param num  数量
      */
     @SuppressWarnings("unchecked")
-    public static List<Map<String, List<Object>>> groupByNumMap(List<?> list, int num) {
-        List<Map<String, List<Object>>> mapList = new ArrayList<>();
+    public static <T> List<Map<String, List<T>>> groupByNumMap(List<T> list, int num) {
+        List<Map<String, List<T>>> mapList = new ArrayList<>();
         if (list == null || list.size() == 0) {
             return mapList;
         }
@@ -126,8 +126,8 @@ public class ListUtils {
         int count = 0;
         int key = 0;
         while (count < list.size()) {
-            Map<String, List<Object>> map = new HashMap<>();
-            List<Object> wrapList = (List<Object>) list.subList(count, Math.min((count + num), list.size()));
+            Map<String, List<T>> map = new HashMap<>();
+            List<T> wrapList = list.subList(count, Math.min((count + num), list.size()));
             map.put(key + "", wrapList);
             mapList.add(map);
             key++;
@@ -145,8 +145,8 @@ public class ListUtils {
      * @param num  数量
      */
     @SuppressWarnings("unchecked")
-    public static List<List<Object>> groupByNum(List<?> list, int num) {
-        List<List<Object>> mapList = new ArrayList<>();
+    public static <T> List<List<T>> groupByNum(List<T> list, int num) {
+        List<List<T>> mapList = new ArrayList<>();
         if (list == null || list.size() == 0) {
             return mapList;
         }
@@ -155,7 +155,7 @@ public class ListUtils {
         }
         int count = 0;
         while (count < list.size()) {
-            List<Object> wrapList = (List<Object>) list.subList(count, Math.min((count + num), list.size()));
+            List<T> wrapList = list.subList(count, Math.min((count + num), list.size()));
             mapList.add(wrapList);
             count += num;
         }
