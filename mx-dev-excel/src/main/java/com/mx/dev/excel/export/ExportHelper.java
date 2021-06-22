@@ -1,6 +1,6 @@
 package com.mx.dev.excel.export;
 
-import com.mx.dev.dto.PageDTO;
+import com.mx.dev.bean.PageBean;
 import com.mx.dev.excel.ExcelAliExportHelper;
 import com.mx.dev.excel.ExcelExportHelper;
 import com.mx.dev.excel.exception.ExcelException;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class ExportHelper<T> {
 
     public interface IExportData<T> {
-        List<T> exportDataList(PageDTO pageDTO) throws Exception;
+        List<T> exportDataList(PageBean pageBean) throws Exception;
     }
 
     public enum Type {
@@ -37,15 +37,15 @@ public class ExportHelper<T> {
         EXCEL
     }
 
-    public String exportAli(String title, Class<T> voClass, Type type, PageDTO pageDTO, String zipFilePath, String excelFilePath, IExportData<T> iExportData) throws Exception {
+    public String exportAli(String title, Class<T> voClass, Type type, PageBean pageBean, String zipFilePath, String excelFilePath, IExportData<T> iExportData) throws Exception {
         ExcelAliExportHelper<T> helper = new ExcelAliExportHelper<T>().init(voClass, excelFilePath, zipFilePath);
         while (true) {
-            List<T> resultSet = iExportData.exportDataList(pageDTO);
+            List<T> resultSet = iExportData.exportDataList(pageBean);
             if (ListUtils.isNotEmpty(resultSet)) {
                 helper.addData(resultSet);
-                int page = pageDTO.getPage();
+                int page = pageBean.getPage();
                 page++;
-                pageDTO.setPage(page);
+                pageBean.setPage(page);
             } else {
                 break;
             }
@@ -64,22 +64,22 @@ public class ExportHelper<T> {
         return WebUtils.baseUrl(WebContext.getRequest()).concat("/mx/export?fileName=" + file.getName());
     }
 
-    public String exportAli(String title, Class<T> voClass, Type type, PageDTO pageDTO, IExportData<T> iExportData) throws Exception {
-        return exportAli(title, voClass, type, pageDTO, null, null, iExportData);
+    public String exportAli(String title, Class<T> voClass, Type type, PageBean pageBean, IExportData<T> iExportData) throws Exception {
+        return exportAli(title, voClass, type, pageBean, null, null, iExportData);
     }
 
-    public String exportJxls(String title, PageDTO pageDTO, Class<?> funClass, String zipFilePath, String excelFilePath, String templateFilePath, IExportData<T> iExportData) throws Exception {
+    public String exportJxls(String title, PageBean pageBean, Class<?> funClass, String zipFilePath, String excelFilePath, String templateFilePath, IExportData<T> iExportData) throws Exception {
         ExcelExportHelper helper = new ExcelExportHelper().init(funClass, templateFilePath, excelFilePath, zipFilePath);
         while (true) {
-            List<T> resultSet = iExportData.exportDataList(pageDTO);
+            List<T> resultSet = iExportData.exportDataList(pageBean);
             if (ListUtils.isNotEmpty(resultSet)) {
                 List<Map<String, Object>> list = new ArrayList<>();
                 Map<String, Object> param = new HashMap<String, Object>();
                 param.put("data", list);
                 helper.addData(param);
-                int page = pageDTO.getPage();
+                int page = pageBean.getPage();
                 page++;
-                pageDTO.setPage(page);
+                pageBean.setPage(page);
             } else {
                 break;
             }
@@ -88,8 +88,8 @@ public class ExportHelper<T> {
         return WebUtils.baseUrl(WebContext.getRequest()).concat("/mx/export?fileName=" + file.getName());
     }
 
-    public String exportJxls(String title, PageDTO pageDTO, Class<?> funClass, String templateFilePath, IExportData<T> iExportData) throws Exception {
-        return exportJxls(title, pageDTO, funClass, null, null, templateFilePath, iExportData);
+    public String exportJxls(String title, PageBean pageBean, Class<?> funClass, String templateFilePath, IExportData<T> iExportData) throws Exception {
+        return exportJxls(title, pageBean, funClass, null, null, templateFilePath, iExportData);
     }
 
 
