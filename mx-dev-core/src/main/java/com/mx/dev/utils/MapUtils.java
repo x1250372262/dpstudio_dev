@@ -37,8 +37,8 @@ public class MapUtils<K,V> {
         return MAP;
     }
 
-    public void foreach(Foreach<K,V> foreach) {
-        for (Map.Entry<K, V> entry : MAP.entrySet()) {
+    public void foreach(Map<K, V> map,Foreach<K,V> foreach) {
+        for (Map.Entry<K, V> entry : map.entrySet()) {
             WAY way = foreach.loop(entry.getKey(), entry.getValue());
             switch (way) {
                 case BREAK:
@@ -50,8 +50,8 @@ public class MapUtils<K,V> {
         }
     }
 
-    public void foreachKey(ForeachKey<K,V> foreachKey) {
-        for (K key : MAP.keySet()) {
+    public void foreachKey(Map<K, V> map,ForeachKey<K,V> foreachKey) {
+        for (K key : map.keySet()) {
             WAY way = foreachKey.loop(key);
             switch (way) {
                 case BREAK:
@@ -63,8 +63,8 @@ public class MapUtils<K,V> {
         }
     }
 
-    public void foreachValue(ForeachValue<K,V> foreachValue) {
-        for (V value : MAP.values()) {
+    public void foreachValue(Map<K, V> map,ForeachValue<K,V> foreachValue) {
+        for (V value : map.values()) {
             WAY way = foreachValue.loop(value);
             switch (way) {
                 case BREAK:
@@ -82,7 +82,8 @@ public class MapUtils<K,V> {
          * 终止方式
          */
         BREAK,
-        CONTINUE;
+        CONTINUE,
+        NONE;
     }
 
     public interface Foreach<K,V> {
